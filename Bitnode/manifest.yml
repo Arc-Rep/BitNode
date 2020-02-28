@@ -1,0 +1,15 @@
+---
+applications:
+
+- name: 630
+  memory: 768M
+  host: ${hostName}
+  random-route: true
+  path: application/target/630-application.jar
+  buildpack: sap_java_buildpack
+  env:
+    TARGET_RUNTIME: main
+    JBP_CONFIG_SAPJVM_MEMORY_SIZES: 'metaspace:96m..'
+#  services:
+#  - your-application-logs-service
+#  - your-auditlog-service
