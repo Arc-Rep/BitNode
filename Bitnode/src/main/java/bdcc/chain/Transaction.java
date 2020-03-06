@@ -11,15 +11,15 @@ public class Transaction{
         cashAmount = cash;
     }
 
-    public getBuyer(){
+    public int getBuyer(){
         return buyerId;
     }
 
-    public getSeller(){
+    public int getSeller(){
         return sellerId;
     }
 
-    public getAmount(){
+    public int getAmount(){
         return cashAmount;
     }
 }

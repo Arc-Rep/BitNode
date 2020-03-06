@@ -2,27 +2,44 @@ package main.java.bdcc.chain;
 
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.Random;
+import java.util.Date;
 
 public class NodeBlockChain{
+    private static NodeBlockChain chain_instance = null;
+    Random nonce_generator;
     NodeBlock block;
 
-    public NodeBlockChain(){
-        block = new NodeBlock(0/*nonce*/);
+    private NodeBlockChain(){
+        Date date = new Date();
+        nonce_generator = new Random(date.getTime());
+        block = new NodeBlock();
+    }
+
+    public static NodeBlockChain getChainManager(){
+        if(chain_instance == null) 
+            return new NodeBlockChain();
+            
+        else return chain_instance;
+    }
+
+    private int generateNonce(){
+        return nonce_generator.nextInt();
     }
 
     public class NodeBlock{
         private int nonce;
         private int hash;
-        private Bool hasNext;
+        private Boolean hasNext;
         private LinkedList<Transaction> transactions;
         private int maxTransactions;
         private int currentTransactions;
 
-        public NodeBlock(int blockNonce){
-            nonce = blockNonce;
-            transactions = new LinkedList<Transactions>();
+        public NodeBlock(){
+            nonce = generateNonce();
+            transactions = new LinkedList<Transaction>();
             hasNext = false;
-            maxTransactions = 5;
+            maxTransactions = 10;
             currentTransactions = 0;
         }
 
@@ -34,8 +51,9 @@ public class NodeBlockChain{
             }
             else
             {
+                NodeBlock nextBlock = null;
                 if(hasNext == false){
-                    NodeBlock nextBlock = new NodeBlock(0/*new nonce*/);
+                    nextBlock = new NodeBlock();
                     //compute hash to new block
                     hasNext = true;
                 }
