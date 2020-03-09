@@ -1,7 +1,6 @@
 package main.java.bdcc.chain;
 
 import java.security.SecureRandom;
-import java.util.*;
 import java.util.Random;
 import java.util.Date;
 
@@ -29,11 +28,12 @@ public class NodeBlockChain{
 
     public class NodeBlock{
         private int nonce;
-        private int hash;
+        private int prev_hash;
         private Boolean hasNext;
-        private LinkedList<Transaction> transactions;
         private int maxTransactions;
         private int currentTransactions;
+        private LinkedList<Transaction> transactions;
+
 
         public NodeBlock(){
             nonce = generateNonce();
