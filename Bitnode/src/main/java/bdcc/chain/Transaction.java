@@ -1,4 +1,4 @@
-package main.java.bdcc.chain;
+package bdcc.chain;
 
 public class Transaction{
     private int buyerId;

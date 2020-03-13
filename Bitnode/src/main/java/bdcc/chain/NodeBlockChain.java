@@ -1,8 +1,10 @@
-package main.java.bdcc.chain;
+package bdcc.chain;
 
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Date;
+import java.util.List;
+import java.util.LinkedList;
 
 public class NodeBlockChain{
     private static NodeBlockChain chain_instance = null;
@@ -41,6 +43,10 @@ public class NodeBlockChain{
             hasNext = false;
             maxTransactions = 10;
             currentTransactions = 0;
+        }
+
+        public LinkedList<Transaction> getTransactions(){
+            return this.transactions;
         }
 
         public void addTransaction(Transaction newTransaction){
