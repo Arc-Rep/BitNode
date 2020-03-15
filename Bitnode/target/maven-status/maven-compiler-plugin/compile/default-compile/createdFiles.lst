@@ -1,4 +1,2 @@
 bdcc\App.class
-main\java\bdcc\chain\Transaction.class
-main\java\bdcc\chain\NodeBlockChain$NodeBlock.class
-main\java\bdcc\chain\NodeBlockChain.class
+bdcc\chain\Crypto.class

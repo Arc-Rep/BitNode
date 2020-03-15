@@ -1,25 +1,25 @@
 package bdcc.chain;
 
 public class Transaction{
-    private int buyerId;
-    private int sellerId;
-    private int cashAmount;
+    private String buyerId;
+    private String sellerId;
+    private double cashAmount;
 
-    public Transaction(int buyer, int seller, int cash){
+    public Transaction(String buyer, String seller, double cash){
         buyerId = buyer;
         sellerId = seller;
         cashAmount = cash;
     }
 
-    public int getBuyer(){
+    public String getBuyer(){
         return buyerId;
     }
 
-    public int getSeller(){
+    public String getSeller(){
         return sellerId;
     }
 
-    public int getAmount(){
+    public double getAmount(){
         return cashAmount;
     }
 }

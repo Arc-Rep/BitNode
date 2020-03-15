@@ -1,19 +1,24 @@
 package bdcc.chain;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Random;
 import java.util.Date;
-import java.util.List;
 import java.util.LinkedList;
 
 public class NodeBlockChain{
     private static NodeBlockChain chain_instance = null;
-    Random nonce_generator;
+    SecureRandom nonce_generator;
     NodeBlock block;
 
     private NodeBlockChain(){
         Date date = new Date();
-        nonce_generator = new Random(date.getTime());
+        try{
+            nonce_generator = SecureRandom.getInstance("SHA1PRNG");
+            nonce_generator.setSeed(date.getTime());
+        }
+        catch(NoSuchAlgorithmException e){
+            System.out.println("No such algorithm for nonce generation");
+        }
         block = new NodeBlock();
     }
 
