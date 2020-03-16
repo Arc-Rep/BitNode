@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class NodeBlockChain{
     private static NodeBlockChain chain_instance = null;
     SecureRandom nonce_generator;
-    NodeBlock block;
+    NodeBlock head_block;
 
     private NodeBlockChain(){
         Date date = new Date();
@@ -19,7 +19,7 @@ public class NodeBlockChain{
         catch(NoSuchAlgorithmException e){
             System.out.println("No such algorithm for nonce generation");
         }
-        block = new NodeBlock();
+        head_block = new NodeBlock();
     }
 
     public static NodeBlockChain getChainManager(){
@@ -33,9 +33,33 @@ public class NodeBlockChain{
         return nonce_generator.nextInt();
     }
 
+    public Boolean verifyValidity(){
+        // compute hash for each block and compare
+    }
+
+    
+    public void addTransaction(Transaction newTransaction){
+        if(head_block.getCurrentTransactions() < head_block.getMaxTransactions())
+        {
+            head_block.transactions.add(newTransaction);
+            head_block.currentTransactions++;
+        }
+        else
+        {
+
+            NodeBlock new_head = new NodeBlock();
+            new_head.setNext(head_block);
+            //compute hash of previous head to new block
+            
+            new_head.transactions.add(newTransaction);
+            this.head_block = new_head;
+        }
+    }
+
     public class NodeBlock{
         private int nonce;
-        private int prev_hash;
+        private String prev_hash;
+        private NodeBlock next;
         private Boolean hasNext;
         private int maxTransactions;
         private int currentTransactions;
@@ -54,25 +78,21 @@ public class NodeBlockChain{
             return this.transactions;
         }
 
-        public void addTransaction(Transaction newTransaction){
-            if(currentTransactions < maxTransactions)
-            {
-                transactions.add(newTransaction);
-                currentTransactions++;
-            }
-            else
-            {
-                NodeBlock nextBlock = null;
-                if(hasNext == false){
-                    nextBlock = new NodeBlock();
-                    //compute hash to new block
-                    hasNext = true;
-                }
-                else{
-                    //NodeBlock nextBlock = computed Block from hash
-                }
-                nextBlock.addTransaction(newTransaction);
-            }
+        public NodeBlock getNext(){
+            return this.next;
+        }
+
+        public void setNext(NodeBlock block){
+            this.next = block;
+            this.hasNext = true;
+        }
+
+        public int getMaxTransactions(){
+            return this.maxTransactions;
+        }
+
+        public int getCurrentTransactions(){
+            return this.currentTransactions;
         }
 
     }
