@@ -11,12 +11,12 @@ public class NodeBlockChain{
     NodeBlock head_block;
 
     private NodeBlockChain(){
-        Date date = new Date();
+        final Date date = new Date();
         try{
             nonce_generator = SecureRandom.getInstance("SHA1PRNG");
             nonce_generator.setSeed(date.getTime());
         }
-        catch(NoSuchAlgorithmException e){
+        catch(final NoSuchAlgorithmException e){
             System.out.println("No such algorithm for nonce generation");
         }
         head_block = new NodeBlock();
@@ -25,7 +25,7 @@ public class NodeBlockChain{
     public static NodeBlockChain getChainManager(){
         if(chain_instance == null) 
             return new NodeBlockChain();
-            
+
         else return chain_instance;
     }
 
@@ -34,36 +34,47 @@ public class NodeBlockChain{
     }
 
     public Boolean verifyValidity(){
-        // compute hash for each block and compare
+        Boolean check = false;
+        NodeBlock current = new NodeBlock();
+        current = head_block;
+        while(current != null){
+            if(current.getHash() == current.generateHash()){
+                check = true;
+            }
+            else{
+                return false;
+            }
+            current = current.getNext();
+        }
+        return check;
     }
 
     
-    public void addTransaction(Transaction newTransaction){
+    public void addTransaction(final Transaction newTransaction){
         if(head_block.getCurrentTransactions() < head_block.getMaxTransactions())
         {
             head_block.transactions.add(newTransaction);
             head_block.currentTransactions++;
+            head_block.setHash(Crypto.hashBlock(head_block,head_block.getNonce()));
         }
         else
         {
-
-            NodeBlock new_head = new NodeBlock();
+            final NodeBlock new_head = new NodeBlock();
             new_head.setNext(head_block);
-            //compute hash of previous head to new block
-            
             new_head.transactions.add(newTransaction);
+            new_head.hash = new_head.generateHash();
             this.head_block = new_head;
         }
     }
 
     public class NodeBlock{
-        private int nonce;
-        private String prev_hash;
+        private final int nonce;
+        private String hash;
         private NodeBlock next;
         private Boolean hasNext;
-        private int maxTransactions;
+        private final int maxTransactions;
         private int currentTransactions;
-        private LinkedList<Transaction> transactions;
+        private final LinkedList<Transaction> transactions;
 
 
         public NodeBlock(){
@@ -77,14 +88,22 @@ public class NodeBlockChain{
         public LinkedList<Transaction> getTransactions(){
             return this.transactions;
         }
+        
+        private int getNonce() {
+            return this.nonce;
+        }
 
         public NodeBlock getNext(){
             return this.next;
         }
 
-        public void setNext(NodeBlock block){
+        public void setNext(final NodeBlock block){
             this.next = block;
             this.hasNext = true;
+        }
+
+        public void setHash(String h){
+            this.hash = h;
         }
 
         public int getMaxTransactions(){
@@ -93,6 +112,14 @@ public class NodeBlockChain{
 
         public int getCurrentTransactions(){
             return this.currentTransactions;
+        }
+
+        public String getHash(){
+            return this.hash;
+        }
+
+        public String generateHash(){
+            return Crypto.hashBlock(this, this.getNonce());
         }
 
     }
