@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package grpc;
+
+option java_multiple_files = true;
+option java_package = "bdcc.grpc";
+option java_outer_classname = "NodeOperationsProto";
+
+service NodeOperations {
+    // Notify node
+    rpc notifyNode (NodeNotification) returns (NodeInfo) {}
+
+    rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
+    
+}
+  
+  // User notification to join system
+message NodeNotification {
+  string user_id = 1;
+  string user_address = 2;
+}
+
+ // Return with addresses and hash table values
+message NodeInfo {
+  repeated string user_ids = 1;
+  repeated string user_addresses = 2;
+}
+
+message TransactionInfo {
+  string buyer_id = 1;
+  double amount = 2;
+  string seller_id = 3;
+}
+
+message NodeResponse{
+  string status = 1;
+}
