@@ -22,8 +22,8 @@ message NodeNotification {
 
  // Return with addresses and hash table values
 message NodeInfo {
-  repeated string user_ids = 1;
-  repeated string user_addresses = 2;
+  string user_ids = 1;
+  string user_addresses = 2;
 }
 
 message TransactionInfo {

@@ -8,52 +8,26 @@ public interface NodeInfoOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>repeated string user_ids = 1;</code>
-   * @return A list containing the userIds.
+   * <code>string user_ids = 1;</code>
+   * @return The userIds.
    */
-  java.util.List<java.lang.String>
-      getUserIdsList();
+  java.lang.String getUserIds();
   /**
-   * <code>repeated string user_ids = 1;</code>
-   * @return The count of userIds.
-   */
-  int getUserIdsCount();
-  /**
-   * <code>repeated string user_ids = 1;</code>
-   * @param index The index of the element to return.
-   * @return The userIds at the given index.
-   */
-  java.lang.String getUserIds(int index);
-  /**
-   * <code>repeated string user_ids = 1;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the userIds at the given index.
+   * <code>string user_ids = 1;</code>
+   * @return The bytes for userIds.
    */
   com.google.protobuf.ByteString
-      getUserIdsBytes(int index);
+      getUserIdsBytes();
 
   /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @return A list containing the userAddresses.
+   * <code>string user_addresses = 2;</code>
+   * @return The userAddresses.
    */
-  java.util.List<java.lang.String>
-      getUserAddressesList();
+  java.lang.String getUserAddresses();
   /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @return The count of userAddresses.
-   */
-  int getUserAddressesCount();
-  /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @param index The index of the element to return.
-   * @return The userAddresses at the given index.
-   */
-  java.lang.String getUserAddresses(int index);
-  /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the userAddresses at the given index.
+   * <code>string user_addresses = 2;</code>
+   * @return The bytes for userAddresses.
    */
   com.google.protobuf.ByteString
-      getUserAddressesBytes(int index);
+      getUserAddressesBytes();
 }

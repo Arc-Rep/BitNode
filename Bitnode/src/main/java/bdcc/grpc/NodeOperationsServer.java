@@ -3,9 +3,11 @@ package bdcc.grpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import bdcc.kademlia.KBucket;
 
 public class NodeOperationsServer {
     private static final Logger logger = Logger.getLogger(NodeOperationsServer.class.getName());
@@ -13,10 +15,14 @@ public class NodeOperationsServer {
     /* The port on which the server should run */
 
     private Server server;
-  
-    private void start(int port) throws Exception {
+    public static KBucket userBucket;
+    private String server_address;
+
+    public NodeOperationsServer(int port, String user_id, String address, KBucket user_bucket) throws Exception {
+      this.server_address = address;
+      this.userBucket = user_bucket;
       server = ServerBuilder.forPort(port)
-          .addService(new NodeOperationsService(new HashMap<String,String>()))
+          .addService(new NodeOperationsService())
           .build()
           .start();
       logger.info("Server started, listening on " + port);
@@ -31,7 +37,7 @@ public class NodeOperationsServer {
       });
     }
   
-    private void stop() {
+    public void stop() {
       if (server != null) {
         server.shutdown();
       }
@@ -40,7 +46,7 @@ public class NodeOperationsServer {
     /**
      * Await termination on the main thread since the grpc library uses daemon threads.
      */
-    private void blockUntilShutdown() throws InterruptedException {
+    public void blockUntilShutdown() throws InterruptedException {
       if (server != null) {
         server.awaitTermination();
       }
@@ -56,18 +62,15 @@ public class NodeOperationsServer {
     }*/
 
     private class NodeOperationsService extends NodeOperationsGrpc.NodeOperationsImplBase {
-      HashMap<String, String> user_map;
-
-      public NodeOperationsService(HashMap<String,String> map){
-        this.user_map = map;
-      }
+      
+      
       @Override
       public void notifyNode(NodeNotification req, StreamObserver<NodeInfo> responseObserver) {
         //make operations to hashtable
         String[] replyContent = {"Received with success","Yep, totally"};
         NodeInfo reply = NodeInfo.newBuilder()
-                            .setUserIds(replyContent.length,replyContent[0])
-                            .setUserAddresses(replyContent.length,replyContent[0])
+                            .setUserIds(userBucket.getUserId())
+                            .setUserAddresses(server_address)
                             .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();

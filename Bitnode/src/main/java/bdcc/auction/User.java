@@ -27,5 +27,7 @@ public class User{
         wallet+= amount_to_add;
     }
 
-
+    public String getUserId(){
+        return user_id;
+    }
 }

@@ -45,8 +45,8 @@ public final class NodeOperationsProto {
     java.lang.String[] descriptorData = {
       "\n\022grpc_bitnode.proto\022\004grpc\"9\n\020NodeNotifi" +
       "cation\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030" +
-      "\002 \001(\t\"4\n\010NodeInfo\022\020\n\010user_ids\030\001 \003(\t\022\026\n\016u" +
-      "ser_addresses\030\002 \003(\t\"F\n\017TransactionInfo\022\020" +
+      "\002 \001(\t\"4\n\010NodeInfo\022\020\n\010user_ids\030\001 \001(\t\022\026\n\016u" +
+      "ser_addresses\030\002 \001(\t\"F\n\017TransactionInfo\022\020" +
       "\n\010buyer_id\030\001 \001(\t\022\016\n\006amount\030\002 \001(\001\022\021\n\tsell" +
       "er_id\030\003 \001(\t\"\036\n\014NodeResponse\022\016\n\006status\030\001 " +
       "\001(\t2\210\001\n\016NodeOperations\0226\n\nnotifyNode\022\026.g" +

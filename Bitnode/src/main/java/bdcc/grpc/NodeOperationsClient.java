@@ -33,27 +33,16 @@ public class NodeOperationsClient {
       channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    /*public static void chooseGrpcRequest(GrpcNodeClient client, Command command, List<String> command_comp){
-      switch(command){
-        case DOWNLOAD_FILE: client.downloadFile(command_comp);
-                            break;
-        case LIST_FILE: client.listFiles(command_comp);
-                        break;
-        case INFO_FILE: client.getFileInfo(command_comp);
-                        break;
-        default: logger.info("Error: Command went to the wrong place...");
-      }
-    }*/
-
-    public void notifyNode(String user_id, String user_address){
+    public NodeInfo notifyNode(String user_id, String user_address){
+      NodeInfo response = null;
       try
       {
         NodeNotification inforequest = NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
-        NodeInfo response = blockingStub.notifyNode(inforequest);
+         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
-        logger.log(Level.WARNING, "RPC failed", e);
-        return;
+        System.out.println("RPC Error: Failed to establish communication with server");
       }
+      return response;
     }
 
     public void makeTransaction(String buyer_id, double amount, String seller_id){

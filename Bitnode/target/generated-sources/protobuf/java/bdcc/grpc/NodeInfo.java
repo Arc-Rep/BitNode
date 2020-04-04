@@ -20,8 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private NodeInfo() {
-    userIds_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    userAddresses_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    userIds_ = "";
+    userAddresses_ = "";
   }
 
   @java.lang.Override
@@ -44,7 +44,6 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -57,20 +56,14 @@ private static final long serialVersionUID = 0L;
             break;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              userIds_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000001;
-            }
-            userIds_.add(s);
+
+            userIds_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-              userAddresses_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000002;
-            }
-            userAddresses_.add(s);
+
+            userAddresses_ = s;
             break;
           }
           default: {
@@ -88,12 +81,6 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        userIds_ = userIds_.getUnmodifiableView();
-      }
-      if (((mutable_bitField0_ & 0x00000002) != 0)) {
-        userAddresses_ = userAddresses_.getUnmodifiableView();
-      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -112,73 +99,75 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int USER_IDS_FIELD_NUMBER = 1;
-  private com.google.protobuf.LazyStringList userIds_;
+  private volatile java.lang.Object userIds_;
   /**
-   * <code>repeated string user_ids = 1;</code>
-   * @return A list containing the userIds.
+   * <code>string user_ids = 1;</code>
+   * @return The userIds.
    */
-  public com.google.protobuf.ProtocolStringList
-      getUserIdsList() {
-    return userIds_;
+  public java.lang.String getUserIds() {
+    java.lang.Object ref = userIds_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      userIds_ = s;
+      return s;
+    }
   }
   /**
-   * <code>repeated string user_ids = 1;</code>
-   * @return The count of userIds.
-   */
-  public int getUserIdsCount() {
-    return userIds_.size();
-  }
-  /**
-   * <code>repeated string user_ids = 1;</code>
-   * @param index The index of the element to return.
-   * @return The userIds at the given index.
-   */
-  public java.lang.String getUserIds(int index) {
-    return userIds_.get(index);
-  }
-  /**
-   * <code>repeated string user_ids = 1;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the userIds at the given index.
+   * <code>string user_ids = 1;</code>
+   * @return The bytes for userIds.
    */
   public com.google.protobuf.ByteString
-      getUserIdsBytes(int index) {
-    return userIds_.getByteString(index);
+      getUserIdsBytes() {
+    java.lang.Object ref = userIds_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      userIds_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   public static final int USER_ADDRESSES_FIELD_NUMBER = 2;
-  private com.google.protobuf.LazyStringList userAddresses_;
+  private volatile java.lang.Object userAddresses_;
   /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @return A list containing the userAddresses.
+   * <code>string user_addresses = 2;</code>
+   * @return The userAddresses.
    */
-  public com.google.protobuf.ProtocolStringList
-      getUserAddressesList() {
-    return userAddresses_;
+  public java.lang.String getUserAddresses() {
+    java.lang.Object ref = userAddresses_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      userAddresses_ = s;
+      return s;
+    }
   }
   /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @return The count of userAddresses.
-   */
-  public int getUserAddressesCount() {
-    return userAddresses_.size();
-  }
-  /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @param index The index of the element to return.
-   * @return The userAddresses at the given index.
-   */
-  public java.lang.String getUserAddresses(int index) {
-    return userAddresses_.get(index);
-  }
-  /**
-   * <code>repeated string user_addresses = 2;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the userAddresses at the given index.
+   * <code>string user_addresses = 2;</code>
+   * @return The bytes for userAddresses.
    */
   public com.google.protobuf.ByteString
-      getUserAddressesBytes(int index) {
-    return userAddresses_.getByteString(index);
+      getUserAddressesBytes() {
+    java.lang.Object ref = userAddresses_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      userAddresses_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -195,11 +184,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    for (int i = 0; i < userIds_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userIds_.getRaw(i));
+    if (!getUserIdsBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userIds_);
     }
-    for (int i = 0; i < userAddresses_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddresses_.getRaw(i));
+    if (!getUserAddressesBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddresses_);
     }
     unknownFields.writeTo(output);
   }
@@ -210,21 +199,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    {
-      int dataSize = 0;
-      for (int i = 0; i < userIds_.size(); i++) {
-        dataSize += computeStringSizeNoTag(userIds_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getUserIdsList().size();
+    if (!getUserIdsBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userIds_);
     }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < userAddresses_.size(); i++) {
-        dataSize += computeStringSizeNoTag(userAddresses_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getUserAddressesList().size();
+    if (!getUserAddressesBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAddresses_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -241,10 +220,10 @@ private static final long serialVersionUID = 0L;
     }
     bdcc.grpc.NodeInfo other = (bdcc.grpc.NodeInfo) obj;
 
-    if (!getUserIdsList()
-        .equals(other.getUserIdsList())) return false;
-    if (!getUserAddressesList()
-        .equals(other.getUserAddressesList())) return false;
+    if (!getUserIds()
+        .equals(other.getUserIds())) return false;
+    if (!getUserAddresses()
+        .equals(other.getUserAddresses())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -256,14 +235,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (getUserIdsCount() > 0) {
-      hash = (37 * hash) + USER_IDS_FIELD_NUMBER;
-      hash = (53 * hash) + getUserIdsList().hashCode();
-    }
-    if (getUserAddressesCount() > 0) {
-      hash = (37 * hash) + USER_ADDRESSES_FIELD_NUMBER;
-      hash = (53 * hash) + getUserAddressesList().hashCode();
-    }
+    hash = (37 * hash) + USER_IDS_FIELD_NUMBER;
+    hash = (53 * hash) + getUserIds().hashCode();
+    hash = (37 * hash) + USER_ADDRESSES_FIELD_NUMBER;
+    hash = (53 * hash) + getUserAddresses().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -401,10 +376,10 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      userIds_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
-      userAddresses_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      userIds_ = "";
+
+      userAddresses_ = "";
+
       return this;
     }
 
@@ -431,16 +406,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public bdcc.grpc.NodeInfo buildPartial() {
       bdcc.grpc.NodeInfo result = new bdcc.grpc.NodeInfo(this);
-      int from_bitField0_ = bitField0_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        userIds_ = userIds_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
       result.userIds_ = userIds_;
-      if (((bitField0_ & 0x00000002) != 0)) {
-        userAddresses_ = userAddresses_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
       result.userAddresses_ = userAddresses_;
       onBuilt();
       return result;
@@ -490,24 +456,12 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(bdcc.grpc.NodeInfo other) {
       if (other == bdcc.grpc.NodeInfo.getDefaultInstance()) return this;
-      if (!other.userIds_.isEmpty()) {
-        if (userIds_.isEmpty()) {
-          userIds_ = other.userIds_;
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          ensureUserIdsIsMutable();
-          userIds_.addAll(other.userIds_);
-        }
+      if (!other.getUserIds().isEmpty()) {
+        userIds_ = other.userIds_;
         onChanged();
       }
-      if (!other.userAddresses_.isEmpty()) {
-        if (userAddresses_.isEmpty()) {
-          userAddresses_ = other.userAddresses_;
-          bitField0_ = (bitField0_ & ~0x00000002);
-        } else {
-          ensureUserAddressesIsMutable();
-          userAddresses_.addAll(other.userAddresses_);
-        }
+      if (!other.getUserAddresses().isEmpty()) {
+        userAddresses_ = other.userAddresses_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -538,224 +492,155 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
-    private int bitField0_;
 
-    private com.google.protobuf.LazyStringList userIds_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    private void ensureUserIdsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        userIds_ = new com.google.protobuf.LazyStringArrayList(userIds_);
-        bitField0_ |= 0x00000001;
-       }
-    }
+    private java.lang.Object userIds_ = "";
     /**
-     * <code>repeated string user_ids = 1;</code>
-     * @return A list containing the userIds.
+     * <code>string user_ids = 1;</code>
+     * @return The userIds.
      */
-    public com.google.protobuf.ProtocolStringList
-        getUserIdsList() {
-      return userIds_.getUnmodifiableView();
+    public java.lang.String getUserIds() {
+      java.lang.Object ref = userIds_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        userIds_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>repeated string user_ids = 1;</code>
-     * @return The count of userIds.
-     */
-    public int getUserIdsCount() {
-      return userIds_.size();
-    }
-    /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param index The index of the element to return.
-     * @return The userIds at the given index.
-     */
-    public java.lang.String getUserIds(int index) {
-      return userIds_.get(index);
-    }
-    /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the userIds at the given index.
+     * <code>string user_ids = 1;</code>
+     * @return The bytes for userIds.
      */
     public com.google.protobuf.ByteString
-        getUserIdsBytes(int index) {
-      return userIds_.getByteString(index);
+        getUserIdsBytes() {
+      java.lang.Object ref = userIds_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userIds_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
     /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param index The index to set the value at.
+     * <code>string user_ids = 1;</code>
      * @param value The userIds to set.
      * @return This builder for chaining.
      */
     public Builder setUserIds(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureUserIdsIsMutable();
-      userIds_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param value The userIds to add.
-     * @return This builder for chaining.
-     */
-    public Builder addUserIds(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-  ensureUserIdsIsMutable();
-      userIds_.add(value);
+  
+      userIds_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param values The userIds to add.
-     * @return This builder for chaining.
-     */
-    public Builder addAllUserIds(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureUserIdsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(
-          values, userIds_);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string user_ids = 1;</code>
+     * <code>string user_ids = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearUserIds() {
-      userIds_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      
+      userIds_ = getDefaultInstance().getUserIds();
       onChanged();
       return this;
     }
     /**
-     * <code>repeated string user_ids = 1;</code>
-     * @param value The bytes of the userIds to add.
+     * <code>string user_ids = 1;</code>
+     * @param value The bytes for userIds to set.
      * @return This builder for chaining.
      */
-    public Builder addUserIdsBytes(
+    public Builder setUserIdsBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      ensureUserIdsIsMutable();
-      userIds_.add(value);
+      
+      userIds_ = value;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList userAddresses_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    private void ensureUserAddressesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        userAddresses_ = new com.google.protobuf.LazyStringArrayList(userAddresses_);
-        bitField0_ |= 0x00000002;
-       }
-    }
+    private java.lang.Object userAddresses_ = "";
     /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @return A list containing the userAddresses.
+     * <code>string user_addresses = 2;</code>
+     * @return The userAddresses.
      */
-    public com.google.protobuf.ProtocolStringList
-        getUserAddressesList() {
-      return userAddresses_.getUnmodifiableView();
+    public java.lang.String getUserAddresses() {
+      java.lang.Object ref = userAddresses_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        userAddresses_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @return The count of userAddresses.
-     */
-    public int getUserAddressesCount() {
-      return userAddresses_.size();
-    }
-    /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param index The index of the element to return.
-     * @return The userAddresses at the given index.
-     */
-    public java.lang.String getUserAddresses(int index) {
-      return userAddresses_.get(index);
-    }
-    /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the userAddresses at the given index.
+     * <code>string user_addresses = 2;</code>
+     * @return The bytes for userAddresses.
      */
     public com.google.protobuf.ByteString
-        getUserAddressesBytes(int index) {
-      return userAddresses_.getByteString(index);
+        getUserAddressesBytes() {
+      java.lang.Object ref = userAddresses_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userAddresses_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
     /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param index The index to set the value at.
+     * <code>string user_addresses = 2;</code>
      * @param value The userAddresses to set.
      * @return This builder for chaining.
      */
     public Builder setUserAddresses(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureUserAddressesIsMutable();
-      userAddresses_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param value The userAddresses to add.
-     * @return This builder for chaining.
-     */
-    public Builder addUserAddresses(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-  ensureUserAddressesIsMutable();
-      userAddresses_.add(value);
+  
+      userAddresses_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param values The userAddresses to add.
-     * @return This builder for chaining.
-     */
-    public Builder addAllUserAddresses(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureUserAddressesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(
-          values, userAddresses_);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string user_addresses = 2;</code>
+     * <code>string user_addresses = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearUserAddresses() {
-      userAddresses_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      
+      userAddresses_ = getDefaultInstance().getUserAddresses();
       onChanged();
       return this;
     }
     /**
-     * <code>repeated string user_addresses = 2;</code>
-     * @param value The bytes of the userAddresses to add.
+     * <code>string user_addresses = 2;</code>
+     * @param value The bytes for userAddresses to set.
      * @return This builder for chaining.
      */
-    public Builder addUserAddressesBytes(
+    public Builder setUserAddressesBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      ensureUserAddressesIsMutable();
-      userAddresses_.add(value);
+      
+      userAddresses_ = value;
       onChanged();
       return this;
     }

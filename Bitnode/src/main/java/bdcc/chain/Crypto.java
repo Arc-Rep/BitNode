@@ -12,8 +12,6 @@ import java.util.LinkedList;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.security.Security;
@@ -45,7 +43,7 @@ public class Crypto {
    public static String hashString(String input){
         String hashed = "";
         try{
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
             hashed = new String(Hex.encode(hash));
         }
