@@ -28,12 +28,99 @@ public class App {
         return new User(username);
     }
 
+    private static void auctionMenu(String auctionID) {
+        //auction = getAuctionInfo(auctionID)
+        String item = "" /*= auction.getItem*/;
+        int highestBidVal = 0 /*= auction.getHighestBidVal() || if there are no bids, get the starting price*/;
+        String highestBidUser = "" /*= // auction.getHighestBidUser()*/;
+        boolean noBids = false; // auciton.hasBids();
+        boolean inProgress = true;
+        while(inProgress){
+
+            if(noBids){
+                System.out.println("Auctioning: " + item + "    Starting price: "+ highestBidVal);       
+            }
+
+            else{
+                System.out.println("Auctioning: " + item + "    Current highest bid: "+ highestBidVal + " by " + highestBidUser);
+            }
+
+            System.out.println("Actions:");         
+            System.out.println("1 - Make a bid");         
+            System.out.println("2 - Back out");
+            int option = scanner.nextInt();
+
+            if(option == 1){
+                //maybe check if you can make a bid?
+                System.out.println("How much do you want to bid?");
+                int bid = scanner.nextInt();
+                //palceBid(bid,auction)
+            }
+            else{
+                //leave the auction
+                String conf = "y";
+                /**
+                 * if(auction.getHighestBidUser == this.username){
+                 *     System.ou.println("You this auctions current highest bidder, are you sure you want to leave? [y/n]");
+                 *     conf = scanner.nextLine();
+                 * }
+                 */
+                if(conf.equals("y")){
+                    inProgress = false;
+                }
+                else{
+                    inProgress = false;
+                }
+            }
+        }
+    }
+
     private static void setUpAuctionMenu() {
-        System.out.println("To be released");
+        System.out.println("Select item to sell: ");
+        String item = scanner.nextLine();
+        //process 'item': check the users items
+        System.out.println("Select the starting bid value: ");
+        int startingValue = scanner.nextInt();
+        System.out.println("Place the item '" + item + "' for auction with starting bid value:" + startingValue + "? [y/n]");
+        String conf = scanner.nextLine();
+        if(conf.equals("y")){
+            System.out.println("Setting up the auction...");
+            //setup auction
+        }
+        else{
+            System.out.println("Auction canceled");
+        }
     }
 
     private static void makeTranseferMenu() {
-        System.out.println("To be released");
+        System.out.println("Select the user that you want to transfer the money to: ");
+        String targetUser = scanner.nextLine();
+        System.out.println("Select the amount you want to transfer: ");
+        int amount = scanner.nextInt();
+        System.out.println("Transfer " + amount + " to "+ targetUser + "? [y/n]");
+        String conf = scanner.nextLine();
+        if(conf.equals("y")){
+            System.out.println("Processing transfer...");
+            //process transfer
+        }
+        else{
+            System.out.println("Transfer canceled");
+        }
+    }
+
+    private static void joinAucitonMenu(){
+        // displayCurrentAuctions | displays the auction item, number of buyers and current bid value | auctions are selected by ID
+        System.out.println("Enter the ID of the auciton you want to join: ");
+        String targetAuction = scanner.nextLine();
+        System.out.println("Join '" + targetAuction + "'? [y/n]");
+        String conf = scanner.nextLine();
+        if (conf.equals("y")){
+            System.out.println("Joining auction room...");
+            //join auction | make a check first
+        }
+        else{
+            System.out.println("Action canceled");
+        }
     }
 
     private static void integrityCheckMenu() {
@@ -47,12 +134,14 @@ public class App {
         System.out.println("Returning to main menu... \n \n \n");
     }
 
+
     private static void printStartMenu() {
         System.out.println("Select an action to perform:");
         System.out.println("1 => Choose an item to put up for auction");
         System.out.println("2 => Make a transfer");
         System.out.println("3 => Check chain integrity");
-        System.out.println("4 => Exit");
+        System.out.println("4 => Join auction");
+        System.out.println("5 => Exit");
         System.out.print("Option: ");
     }
 
@@ -65,7 +154,7 @@ public class App {
             option = scanner.nextLine();
 
             switch(option){
-                case "1": //setUpAuctionMenu();
+                case "1": setUpAuctionMenu();
                         /*user_client.notifyNode(current_user.getUserId(), 
                             InetAddress.getLocalHost().getHostAddress() + port);*/
                         break;
@@ -76,7 +165,10 @@ public class App {
                 case "3": integrityCheckMenu();
                         break;
 
-                case "4": 
+                case "4": joinAucitonMenu();
+                        break;
+
+                case "5": 
                         System.out.println("Exiting...");
                         break;
 
