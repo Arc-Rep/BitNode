@@ -241,6 +241,7 @@ public class App {
         {
             if(!initialSetup(args[0]))  return;
         }
+        
         try
         {
             block_chain = NodeBlockChain.getChainManager();
