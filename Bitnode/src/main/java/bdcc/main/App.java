@@ -192,6 +192,7 @@ public class App {
             while(response.hasNext())
             {   
                 NodeInfo info = response.next();
+                System.out.println("Server " + info.getUserId() + " found with address " + info.getUserAddress());
                 if(numb_nodes_found == 0) userBucket.addNode(info.getUserId(), info.getUserAddress());
                 else
                 {
