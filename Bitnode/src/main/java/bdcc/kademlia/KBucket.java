@@ -20,8 +20,10 @@ public class KBucket{
     public void addNode(String key, String value){
         KeyNode node = new KeyNode(key,value);
         double distance = node.compareKeyNodeID(node_id),i;
+        System.out.println("Distance between two" + distance);
 
         for(i=1; Math.pow(2,i) < distance; i++);
+        System.out.println("Index" + i);
         LinkedList<KeyNode> correct_list = kbucket.get((int) i);
         correct_list.push(node);
         if(correct_list.size() > k) correct_list.remove(k);
