@@ -238,7 +238,7 @@ public class App {
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
-        if(args[0].equals("Server"))
+        if(!args[0].equals("Server"))
         {
             if(!initialSetup(args[0]))  return;
         }
