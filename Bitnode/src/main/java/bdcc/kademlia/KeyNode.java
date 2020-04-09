@@ -33,6 +33,6 @@ public class KeyNode{
             total += xor;
         }
 
-        return total % Math.pow(2, 8 * 20);
+        return total;
     }
 }

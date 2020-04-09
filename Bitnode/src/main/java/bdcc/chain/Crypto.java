@@ -45,7 +45,7 @@ public class Crypto {
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            hashed = new String(hash,"ASCII");
+            hashed = new String(hash,"UTF-8");
         }
         catch(Exception e){
             System.out.println("Algorithm not available");
