@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class KBucket{
     LinkedList<LinkedList<KeyNode>> kbucket = new LinkedList<LinkedList<KeyNode>>();
-    int k = 20, B, alpha = 3;
+    int k = 20, B, alpha = 3,node_number = 0;
     String node_id;
 
 
@@ -22,10 +22,11 @@ public class KBucket{
         KeyNode node = new KeyNode(key,value);
         double distance = node.compareKeyNodeID(node_id),i;
 
-        for(i=1; Math.pow(2,i) > distance; i++);
+        for(i=1; Math.pow(2,i) < distance; i++);
         LinkedList<KeyNode> correct_list = kbucket.get((int) i);
         correct_list.push(node);
-        if(correct_list.size() > k) correct_list.remove(k);   
+        if(correct_list.size() > k) correct_list.remove(k);
+        else this.node_number++;   
     }
 
     public LinkedList<KeyNode> searchNodeList(String search_node_id, LinkedList<KeyNode> list){
@@ -82,6 +83,43 @@ public class KBucket{
         if(best_list == null) return null;
 
         return searchNodeList(search_node_id, best_list);
+    }
+
+    public LinkedList<KeyNode> findNodeInitialization(String search_node_id){
+        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>(), best_list = null;
+        double best_compare = -1, temp, has_prev = 0, prev_min = 0;
+        while(nodeslist.size() < k && nodeslist.size() < node_number)
+        {
+            best_list = null;
+            for(LinkedList<KeyNode> sublist: kbucket){
+                if(best_list == null && sublist.size() > 0)
+                {
+                    temp = sublist.get(0).compareKeyNodeID(search_node_id);
+                    if(has_prev == 0 || temp > prev_min)
+                    best_list = sublist;
+                    best_compare = sublist.get(0).compareKeyNodeID(search_node_id);
+
+                } 
+                else if(best_list != null && sublist.size() > 0)
+                {
+                    temp = sublist.get(0).compareKeyNodeID(search_node_id);
+                    if(sublist.get(0).compareKeyNodeID(search_node_id) < best_compare && (has_prev == 0 || temp > prev_min))
+                    {
+                        best_list = sublist;
+                        best_compare = temp;
+                    }
+                }
+            }
+            if(best_list == null) break;
+            prev_min = best_list.get(0).compareKeyNodeID(search_node_id);
+            has_prev = 1;
+            for(int i=0;nodeslist.size() < k && i<best_list.size();i++)
+            {
+                nodeslist.add(best_list.get(i));
+            }
+        }
+
+        return nodeslist;
     }
 
     

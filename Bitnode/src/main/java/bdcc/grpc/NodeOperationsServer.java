@@ -6,8 +6,9 @@ import io.grpc.stub.StreamObserver;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.logging.Logger;
+import java.util.LinkedList;
 
-import bdcc.kademlia.KBucket;
+import bdcc.kademlia.*;
 
 public class NodeOperationsServer {
     private static final Logger logger = Logger.getLogger(NodeOperationsServer.class.getName());
@@ -17,8 +18,10 @@ public class NodeOperationsServer {
     private Server server;
     public static KBucket userBucket;
     private String server_address;
+    private String server_id;
 
     public NodeOperationsServer(int port, String user_id, String address, KBucket user_bucket) throws Exception {
+      this.server_id = user_id;
       this.server_address = address;
       this.userBucket = user_bucket;
       server = ServerBuilder.forPort(port)
@@ -51,29 +54,43 @@ public class NodeOperationsServer {
         server.awaitTermination();
       }
     }
-  
-    /**
-     * Main launches the server from the command line.
-     */
-    /*public static void main(String[] args) throws Exception {
-      final NodeOperationsServer server = new NodeOperationsServer();
-      server.start(50051);
-      server.blockUntilShutdown();
-    }*/
 
     private class NodeOperationsService extends NodeOperationsGrpc.NodeOperationsImplBase {
       
       
       @Override
-      public void notifyNode(NodeNotification req, StreamObserver<NodeInfo> responseObserver) {
+      public void notifyNode(NodeInfo req, StreamObserver<NodeInfo> responseObserver) {
         //make operations to hashtable
         String[] replyContent = {"Received with success","Yep, totally"};
         NodeInfo reply = NodeInfo.newBuilder()
-                            .setUserIds(userBucket.getUserId())
-                            .setUserAddresses(server_address)
+                            .setUserId(userBucket.getUserId())
+                            .setUserAddress(server_address)
                             .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
+      }
+
+      @Override
+      public void findNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
+        //make operations to hashtable
+        LinkedList<KeyNode> node_list = userBucket.searchNodeKBucket(node_id.getUserId());
+        NodeInfo reply =                      // send current node
+          NodeInfo.newBuilder()
+            .setUserId(server_id)
+            .setUserAddress(server_address)
+            .build();
+        responseObserver.onNext(reply);
+        for(KeyNode node: node_list)
+        {
+          reply = 
+            NodeInfo.newBuilder()
+              .setUserId(node.getKey())
+              .setUserAddress(node.getValue())
+              .build();
+          responseObserver.onNext(reply);
+        }
+        responseObserver.onCompleted();
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
       }
 
       @Override

@@ -15,11 +15,6 @@ public final class NodeOperationsProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_NodeNotification_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_NodeNotification_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_grpc_NodeInfo_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -43,42 +38,36 @@ public final class NodeOperationsProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022grpc_bitnode.proto\022\004grpc\"9\n\020NodeNotifi" +
-      "cation\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030" +
-      "\002 \001(\t\"4\n\010NodeInfo\022\020\n\010user_ids\030\001 \001(\t\022\026\n\016u" +
-      "ser_addresses\030\002 \001(\t\"F\n\017TransactionInfo\022\020" +
-      "\n\010buyer_id\030\001 \001(\t\022\016\n\006amount\030\002 \001(\001\022\021\n\tsell" +
-      "er_id\030\003 \001(\t\"\036\n\014NodeResponse\022\016\n\006status\030\001 " +
-      "\001(\t2\210\001\n\016NodeOperations\0226\n\nnotifyNode\022\026.g" +
-      "rpc.NodeNotification\032\016.grpc.NodeInfo\"\000\022>" +
-      "\n\017makeTransaction\022\025.grpc.TransactionInfo" +
-      "\032\022.grpc.NodeResponse\"\000B\"\n\tbdcc.grpcB\023Nod" +
-      "eOperationsProtoP\001b\006proto3"
+      "\n\022grpc_bitnode.proto\022\004grpc\"1\n\010NodeInfo\022\017" +
+      "\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 \001(\t\"F\n" +
+      "\017TransactionInfo\022\020\n\010buyer_id\030\001 \001(\t\022\016\n\006am" +
+      "ount\030\002 \001(\001\022\021\n\tseller_id\030\003 \001(\t\"\036\n\014NodeRes" +
+      "ponse\022\016\n\006status\030\001 \001(\t2\260\001\n\016NodeOperations" +
+      "\022.\n\nnotifyNode\022\016.grpc.NodeInfo\032\016.grpc.No" +
+      "deInfo\"\000\022.\n\010findNode\022\016.grpc.NodeInfo\032\016.g" +
+      "rpc.NodeInfo\"\0000\001\022>\n\017makeTransaction\022\025.gr" +
+      "pc.TransactionInfo\032\022.grpc.NodeResponse\"\000" +
+      "B\"\n\tbdcc.grpcB\023NodeOperationsProtoP\001b\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_grpc_NodeNotification_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_grpc_NodeNotification_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_NodeNotification_descriptor,
-        new java.lang.String[] { "UserId", "UserAddress", });
     internal_static_grpc_NodeInfo_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_grpc_NodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_NodeInfo_descriptor,
-        new java.lang.String[] { "UserIds", "UserAddresses", });
+        new java.lang.String[] { "UserId", "UserAddress", });
     internal_static_grpc_TransactionInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_grpc_TransactionInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_TransactionInfo_descriptor,
         new java.lang.String[] { "BuyerId", "Amount", "SellerId", });
     internal_static_grpc_NodeResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_grpc_NodeResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_NodeResponse_descriptor,

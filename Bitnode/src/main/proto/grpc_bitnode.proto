@@ -8,23 +8,21 @@ option java_outer_classname = "NodeOperationsProto";
 
 service NodeOperations {
     // Notify node
-    rpc notifyNode (NodeNotification) returns (NodeInfo) {}
+    rpc notifyNode (NodeInfo) returns (NodeInfo) {}
+
+    rpc findNode(NodeInfo) returns (stream NodeInfo) {}
 
     rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
-    
+
 }
   
-  // User notification to join system
-message NodeNotification {
+
+ // Return with addresses and node info
+message NodeInfo {
   string user_id = 1;
   string user_address = 2;
 }
 
- // Return with addresses and hash table values
-message NodeInfo {
-  string user_ids = 1;
-  string user_addresses = 2;
-}
 
 message TransactionInfo {
   string buyer_id = 1;

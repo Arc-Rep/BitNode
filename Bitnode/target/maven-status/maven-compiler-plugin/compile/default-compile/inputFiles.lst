@@ -1,7 +1,6 @@
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\kademlia\KeyNode.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\chain\Crypto.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\chain\Transaction.java
-C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\App.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\TransactionInfo.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeResponseOrBuilder.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\grpc\NodeOperationsClient.java
@@ -16,4 +15,5 @@ C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeInfo.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\grpc\NodeOperationsServer.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeNotificationOrBuilder.java
+C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\main\App.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeOperationsProto.java

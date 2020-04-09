@@ -1,8 +1,9 @@
 package bdcc.main;
 
 import java.util.Scanner;
+import java.util.Iterator;
 
-
+import io.grpc.stub.StreamObserver;
 import org.apache.log4j.PropertyConfigurator;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -108,9 +109,9 @@ public class App {
         }
     }
 
-    private static void joinAucitonMenu(){
+    private static void joinAuctionMenu(){
         // displayCurrentAuctions | displays the auction item, number of buyers and current bid value | auctions are selected by ID
-        System.out.println("Enter the ID of the auciton you want to join: ");
+        System.out.println("Enter the ID of the auction you want to join: ");
         String targetAuction = scanner.nextLine();
         System.out.println("Join '" + targetAuction + "'? [y/n]");
         String conf = scanner.nextLine();
@@ -165,7 +166,7 @@ public class App {
                 case "3": integrityCheckMenu();
                         break;
 
-                case "4": joinAucitonMenu();
+                case "4": joinAuctionMenu();
                         break;
 
                 case "5": 
@@ -180,28 +181,55 @@ public class App {
     }
 
 
-    private static boolean initialSetup(String address, String port){
+    private static boolean initialSetup(String address){
+        int numb_nodes_found = 0;
         System.out.println("Initializing connection to bitnode system...");
-        NodeOperationsClient initial_requester = new NodeOperationsClient(address, Integer.parseInt(port));
+        NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
+        Iterator<NodeInfo> response;
         try{  
-            NodeInfo response = initial_requester.notifyNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+            response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
             if(response == null) throw new Exception();
-            System.out.println("User " + response.getUserIds() + " found with address " + response.getUserAddresses());
-            userBucket.addNode(response.getUserIds(), response.getUserAddresses());
+            while(response.hasNext())
+            {   
+                NodeInfo info = response.next();
+                if(numb_nodes_found == 0) userBucket.addNode(info.getUserId(), info.getUserAddress());
+                else
+                {
+                    System.out.println("User " + info.getUserId() + " found with address " + info.getUserAddress());
+                    pingNode(info);
+                }
+
+                numb_nodes_found++;
+            }
+            
             initial_requester.shutdown();
         }
         catch(Exception e){
             System.out.println("Error: Initial server not found.");
             return false;
         }
+
         return true;
+    }
+
+    private static void pingNode(NodeInfo info){
+        NodeOperationsClient initial_requester = new NodeOperationsClient(info.getUserAddress(), server_port);
+        try
+        {
+            NodeInfo response = initial_requester.notifyNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+            System.out.println("User " + response.getUserId() + " found with address " + response.getUserAddress());
+            userBucket.addNode(response.getUserId(), response.getUserAddress());
+        }
+        catch(Exception e){
+            System.out.println("Error: Server not found.");
+        }
     }
 
     public static void main( String[] args )
     {
-        if(args.length != 2)
+        if(args.length != 1)
         {
-            System.out.println("Please specify initial bitnode server address and port");
+            System.out.println("Please specify initial bitnode server address");
             return;
         }
         server_port = 4444;
@@ -210,7 +238,7 @@ public class App {
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
 
-        if(!initialSetup(args[0],args[1]))  return;
+        if(!initialSetup(args[0]))  return;
         
         try
         {

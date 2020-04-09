@@ -1,5 +1,6 @@
 package bdcc.grpc;
 
+import java.util.Iterator;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.util.concurrent.TimeUnit;
@@ -13,20 +14,21 @@ import java.io.BufferedReader;
 import java.io.IOException; 
 import java.io.InputStreamReader; 
 import java.io.Reader;
-
+import io.grpc.stub.StreamObserver;
 
 public class NodeOperationsClient {
     private static final Logger logger = Logger.getLogger(NodeOperationsClient.class.getName());
   
     private final ManagedChannel channel;
     private final NodeOperationsGrpc.NodeOperationsBlockingStub blockingStub;
-  
+    private final NodeOperationsGrpc.NodeOperationsStub asyncStub;
     /** Construct client connecting to GrpcFlow server at {@code host:port}. */
     public NodeOperationsClient(String host, int port) {
       channel = ManagedChannelBuilder.forAddress(host, port)
           .usePlaintext()
           .build();
       blockingStub = NodeOperationsGrpc.newBlockingStub(channel);
+      asyncStub = NodeOperationsGrpc.newStub(channel);
     }
   
     public void shutdown() throws InterruptedException {
@@ -37,8 +39,20 @@ public class NodeOperationsClient {
       NodeInfo response = null;
       try
       {
-        NodeNotification inforequest = NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
-         response = blockingStub.notifyNode(inforequest); 
+        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        response = blockingStub.notifyNode(inforequest); 
+      } catch (RuntimeException e) {
+        System.out.println("RPC Error: Failed to establish communication with server");
+      }
+      return response;
+    }
+
+    public Iterator<NodeInfo> findNode(String user_id, String user_address){
+      Iterator<NodeInfo> response = null;
+      try
+      {
+        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        response = blockingStub.findNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server");
       }

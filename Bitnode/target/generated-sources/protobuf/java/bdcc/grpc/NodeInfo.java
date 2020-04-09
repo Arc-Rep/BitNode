@@ -5,7 +5,7 @@ package bdcc.grpc;
 
 /**
  * <pre>
- * Return with addresses and hash table values
+ * Return with addresses and node info
  * </pre>
  *
  * Protobuf type {@code grpc.NodeInfo}
@@ -20,8 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private NodeInfo() {
-    userIds_ = "";
-    userAddresses_ = "";
+    userId_ = "";
+    userAddress_ = "";
   }
 
   @java.lang.Override
@@ -57,13 +57,13 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            userIds_ = s;
+            userId_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            userAddresses_ = s;
+            userAddress_ = s;
             break;
           }
           default: {
@@ -98,72 +98,72 @@ private static final long serialVersionUID = 0L;
             bdcc.grpc.NodeInfo.class, bdcc.grpc.NodeInfo.Builder.class);
   }
 
-  public static final int USER_IDS_FIELD_NUMBER = 1;
-  private volatile java.lang.Object userIds_;
+  public static final int USER_ID_FIELD_NUMBER = 1;
+  private volatile java.lang.Object userId_;
   /**
-   * <code>string user_ids = 1;</code>
-   * @return The userIds.
+   * <code>string user_id = 1;</code>
+   * @return The userId.
    */
-  public java.lang.String getUserIds() {
-    java.lang.Object ref = userIds_;
+  public java.lang.String getUserId() {
+    java.lang.Object ref = userId_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      userIds_ = s;
+      userId_ = s;
       return s;
     }
   }
   /**
-   * <code>string user_ids = 1;</code>
-   * @return The bytes for userIds.
+   * <code>string user_id = 1;</code>
+   * @return The bytes for userId.
    */
   public com.google.protobuf.ByteString
-      getUserIdsBytes() {
-    java.lang.Object ref = userIds_;
+      getUserIdBytes() {
+    java.lang.Object ref = userId_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      userIds_ = b;
+      userId_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int USER_ADDRESSES_FIELD_NUMBER = 2;
-  private volatile java.lang.Object userAddresses_;
+  public static final int USER_ADDRESS_FIELD_NUMBER = 2;
+  private volatile java.lang.Object userAddress_;
   /**
-   * <code>string user_addresses = 2;</code>
-   * @return The userAddresses.
+   * <code>string user_address = 2;</code>
+   * @return The userAddress.
    */
-  public java.lang.String getUserAddresses() {
-    java.lang.Object ref = userAddresses_;
+  public java.lang.String getUserAddress() {
+    java.lang.Object ref = userAddress_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      userAddresses_ = s;
+      userAddress_ = s;
       return s;
     }
   }
   /**
-   * <code>string user_addresses = 2;</code>
-   * @return The bytes for userAddresses.
+   * <code>string user_address = 2;</code>
+   * @return The bytes for userAddress.
    */
   public com.google.protobuf.ByteString
-      getUserAddressesBytes() {
-    java.lang.Object ref = userAddresses_;
+      getUserAddressBytes() {
+    java.lang.Object ref = userAddress_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      userAddresses_ = b;
+      userAddress_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -184,11 +184,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getUserIdsBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userIds_);
+    if (!getUserIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userId_);
     }
-    if (!getUserAddressesBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddresses_);
+    if (!getUserAddressBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddress_);
     }
     unknownFields.writeTo(output);
   }
@@ -199,11 +199,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getUserIdsBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userIds_);
+    if (!getUserIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userId_);
     }
-    if (!getUserAddressesBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAddresses_);
+    if (!getUserAddressBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAddress_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -220,10 +220,10 @@ private static final long serialVersionUID = 0L;
     }
     bdcc.grpc.NodeInfo other = (bdcc.grpc.NodeInfo) obj;
 
-    if (!getUserIds()
-        .equals(other.getUserIds())) return false;
-    if (!getUserAddresses()
-        .equals(other.getUserAddresses())) return false;
+    if (!getUserId()
+        .equals(other.getUserId())) return false;
+    if (!getUserAddress()
+        .equals(other.getUserAddress())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -235,10 +235,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + USER_IDS_FIELD_NUMBER;
-    hash = (53 * hash) + getUserIds().hashCode();
-    hash = (37 * hash) + USER_ADDRESSES_FIELD_NUMBER;
-    hash = (53 * hash) + getUserAddresses().hashCode();
+    hash = (37 * hash) + USER_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getUserId().hashCode();
+    hash = (37 * hash) + USER_ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getUserAddress().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Return with addresses and hash table values
+   * Return with addresses and node info
    * </pre>
    *
    * Protobuf type {@code grpc.NodeInfo}
@@ -376,9 +376,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      userIds_ = "";
+      userId_ = "";
 
-      userAddresses_ = "";
+      userAddress_ = "";
 
       return this;
     }
@@ -406,8 +406,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public bdcc.grpc.NodeInfo buildPartial() {
       bdcc.grpc.NodeInfo result = new bdcc.grpc.NodeInfo(this);
-      result.userIds_ = userIds_;
-      result.userAddresses_ = userAddresses_;
+      result.userId_ = userId_;
+      result.userAddress_ = userAddress_;
       onBuilt();
       return result;
     }
@@ -456,12 +456,12 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(bdcc.grpc.NodeInfo other) {
       if (other == bdcc.grpc.NodeInfo.getDefaultInstance()) return this;
-      if (!other.getUserIds().isEmpty()) {
-        userIds_ = other.userIds_;
+      if (!other.getUserId().isEmpty()) {
+        userId_ = other.userId_;
         onChanged();
       }
-      if (!other.getUserAddresses().isEmpty()) {
-        userAddresses_ = other.userAddresses_;
+      if (!other.getUserAddress().isEmpty()) {
+        userAddress_ = other.userAddress_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -493,154 +493,154 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object userIds_ = "";
+    private java.lang.Object userId_ = "";
     /**
-     * <code>string user_ids = 1;</code>
-     * @return The userIds.
+     * <code>string user_id = 1;</code>
+     * @return The userId.
      */
-    public java.lang.String getUserIds() {
-      java.lang.Object ref = userIds_;
+    public java.lang.String getUserId() {
+      java.lang.Object ref = userId_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        userIds_ = s;
+        userId_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string user_ids = 1;</code>
-     * @return The bytes for userIds.
+     * <code>string user_id = 1;</code>
+     * @return The bytes for userId.
      */
     public com.google.protobuf.ByteString
-        getUserIdsBytes() {
-      java.lang.Object ref = userIds_;
+        getUserIdBytes() {
+      java.lang.Object ref = userId_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        userIds_ = b;
+        userId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string user_ids = 1;</code>
-     * @param value The userIds to set.
+     * <code>string user_id = 1;</code>
+     * @param value The userId to set.
      * @return This builder for chaining.
      */
-    public Builder setUserIds(
+    public Builder setUserId(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      userIds_ = value;
+      userId_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string user_ids = 1;</code>
+     * <code>string user_id = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearUserIds() {
+    public Builder clearUserId() {
       
-      userIds_ = getDefaultInstance().getUserIds();
+      userId_ = getDefaultInstance().getUserId();
       onChanged();
       return this;
     }
     /**
-     * <code>string user_ids = 1;</code>
-     * @param value The bytes for userIds to set.
+     * <code>string user_id = 1;</code>
+     * @param value The bytes for userId to set.
      * @return This builder for chaining.
      */
-    public Builder setUserIdsBytes(
+    public Builder setUserIdBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      userIds_ = value;
+      userId_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object userAddresses_ = "";
+    private java.lang.Object userAddress_ = "";
     /**
-     * <code>string user_addresses = 2;</code>
-     * @return The userAddresses.
+     * <code>string user_address = 2;</code>
+     * @return The userAddress.
      */
-    public java.lang.String getUserAddresses() {
-      java.lang.Object ref = userAddresses_;
+    public java.lang.String getUserAddress() {
+      java.lang.Object ref = userAddress_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        userAddresses_ = s;
+        userAddress_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string user_addresses = 2;</code>
-     * @return The bytes for userAddresses.
+     * <code>string user_address = 2;</code>
+     * @return The bytes for userAddress.
      */
     public com.google.protobuf.ByteString
-        getUserAddressesBytes() {
-      java.lang.Object ref = userAddresses_;
+        getUserAddressBytes() {
+      java.lang.Object ref = userAddress_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        userAddresses_ = b;
+        userAddress_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string user_addresses = 2;</code>
-     * @param value The userAddresses to set.
+     * <code>string user_address = 2;</code>
+     * @param value The userAddress to set.
      * @return This builder for chaining.
      */
-    public Builder setUserAddresses(
+    public Builder setUserAddress(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      userAddresses_ = value;
+      userAddress_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string user_addresses = 2;</code>
+     * <code>string user_address = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearUserAddresses() {
+    public Builder clearUserAddress() {
       
-      userAddresses_ = getDefaultInstance().getUserAddresses();
+      userAddress_ = getDefaultInstance().getUserAddress();
       onChanged();
       return this;
     }
     /**
-     * <code>string user_addresses = 2;</code>
-     * @param value The bytes for userAddresses to set.
+     * <code>string user_address = 2;</code>
+     * @param value The bytes for userAddress to set.
      * @return This builder for chaining.
      */
-    public Builder setUserAddressesBytes(
+    public Builder setUserAddressBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      userAddresses_ = value;
+      userAddress_ = value;
       onChanged();
       return this;
     }

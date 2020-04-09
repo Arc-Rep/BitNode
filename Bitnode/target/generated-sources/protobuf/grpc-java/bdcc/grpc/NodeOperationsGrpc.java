@@ -27,27 +27,27 @@ public final class NodeOperationsGrpc {
   public static final String SERVICE_NAME = "grpc.NodeOperations";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification,
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
       bdcc.grpc.NodeInfo> getNotifyNodeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "notifyNode",
-      requestType = bdcc.grpc.NodeNotification.class,
+      requestType = bdcc.grpc.NodeInfo.class,
       responseType = bdcc.grpc.NodeInfo.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification,
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
       bdcc.grpc.NodeInfo> getNotifyNodeMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification, bdcc.grpc.NodeInfo> getNotifyNodeMethod;
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo> getNotifyNodeMethod;
     if ((getNotifyNodeMethod = NodeOperationsGrpc.getNotifyNodeMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getNotifyNodeMethod = NodeOperationsGrpc.getNotifyNodeMethod) == null) {
           NodeOperationsGrpc.getNotifyNodeMethod = getNotifyNodeMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.NodeNotification, bdcc.grpc.NodeInfo>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "notifyNode"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeNotification.getDefaultInstance()))
+                  bdcc.grpc.NodeInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   bdcc.grpc.NodeInfo.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("notifyNode"))
@@ -56,6 +56,37 @@ public final class NodeOperationsGrpc {
       }
     }
     return getNotifyNodeMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
+      bdcc.grpc.NodeInfo> getFindNodeMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "findNode",
+      requestType = bdcc.grpc.NodeInfo.class,
+      responseType = bdcc.grpc.NodeInfo.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
+      bdcc.grpc.NodeInfo> getFindNodeMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo> getFindNodeMethod;
+    if ((getFindNodeMethod = NodeOperationsGrpc.getFindNodeMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getFindNodeMethod = NodeOperationsGrpc.getFindNodeMethod) == null) {
+          NodeOperationsGrpc.getFindNodeMethod = getFindNodeMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "findNode"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("findNode"))
+              .build();
+        }
+      }
+    }
+    return getFindNodeMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<bdcc.grpc.TransactionInfo,
@@ -142,9 +173,16 @@ public final class NodeOperationsGrpc {
      * Notify node
      * </pre>
      */
-    public void notifyNode(bdcc.grpc.NodeNotification request,
+    public void notifyNode(bdcc.grpc.NodeInfo request,
         io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
       asyncUnimplementedUnaryCall(getNotifyNodeMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void findNode(bdcc.grpc.NodeInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+      asyncUnimplementedUnaryCall(getFindNodeMethod(), responseObserver);
     }
 
     /**
@@ -160,9 +198,16 @@ public final class NodeOperationsGrpc {
             getNotifyNodeMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                bdcc.grpc.NodeNotification,
+                bdcc.grpc.NodeInfo,
                 bdcc.grpc.NodeInfo>(
                   this, METHODID_NOTIFY_NODE)))
+          .addMethod(
+            getFindNodeMethod(),
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                bdcc.grpc.NodeInfo,
+                bdcc.grpc.NodeInfo>(
+                  this, METHODID_FIND_NODE)))
           .addMethod(
             getMakeTransactionMethod(),
             asyncUnaryCall(
@@ -193,10 +238,18 @@ public final class NodeOperationsGrpc {
      * Notify node
      * </pre>
      */
-    public void notifyNode(bdcc.grpc.NodeNotification request,
+    public void notifyNode(bdcc.grpc.NodeInfo request,
         io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getNotifyNodeMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void findNode(bdcc.grpc.NodeInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getFindNodeMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -227,9 +280,17 @@ public final class NodeOperationsGrpc {
      * Notify node
      * </pre>
      */
-    public bdcc.grpc.NodeInfo notifyNode(bdcc.grpc.NodeNotification request) {
+    public bdcc.grpc.NodeInfo notifyNode(bdcc.grpc.NodeInfo request) {
       return blockingUnaryCall(
           getChannel(), getNotifyNodeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<bdcc.grpc.NodeInfo> findNode(
+        bdcc.grpc.NodeInfo request) {
+      return blockingServerStreamingCall(
+          getChannel(), getFindNodeMethod(), getCallOptions(), request);
     }
 
     /**
@@ -260,7 +321,7 @@ public final class NodeOperationsGrpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeInfo> notifyNode(
-        bdcc.grpc.NodeNotification request) {
+        bdcc.grpc.NodeInfo request) {
       return futureUnaryCall(
           getChannel().newCall(getNotifyNodeMethod(), getCallOptions()), request);
     }
@@ -275,7 +336,8 @@ public final class NodeOperationsGrpc {
   }
 
   private static final int METHODID_NOTIFY_NODE = 0;
-  private static final int METHODID_MAKE_TRANSACTION = 1;
+  private static final int METHODID_FIND_NODE = 1;
+  private static final int METHODID_MAKE_TRANSACTION = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -295,7 +357,11 @@ public final class NodeOperationsGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_NOTIFY_NODE:
-          serviceImpl.notifyNode((bdcc.grpc.NodeNotification) request,
+          serviceImpl.notifyNode((bdcc.grpc.NodeInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo>) responseObserver);
+          break;
+        case METHODID_FIND_NODE:
+          serviceImpl.findNode((bdcc.grpc.NodeInfo) request,
               (io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo>) responseObserver);
           break;
         case METHODID_MAKE_TRANSACTION:
@@ -364,6 +430,7 @@ public final class NodeOperationsGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new NodeOperationsFileDescriptorSupplier())
               .addMethod(getNotifyNodeMethod())
+              .addMethod(getFindNodeMethod())
               .addMethod(getMakeTransactionMethod())
               .build();
         }

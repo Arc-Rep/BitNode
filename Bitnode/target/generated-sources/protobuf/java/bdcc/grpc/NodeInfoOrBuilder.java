@@ -8,26 +8,26 @@ public interface NodeInfoOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string user_ids = 1;</code>
-   * @return The userIds.
+   * <code>string user_id = 1;</code>
+   * @return The userId.
    */
-  java.lang.String getUserIds();
+  java.lang.String getUserId();
   /**
-   * <code>string user_ids = 1;</code>
-   * @return The bytes for userIds.
+   * <code>string user_id = 1;</code>
+   * @return The bytes for userId.
    */
   com.google.protobuf.ByteString
-      getUserIdsBytes();
+      getUserIdBytes();
 
   /**
-   * <code>string user_addresses = 2;</code>
-   * @return The userAddresses.
+   * <code>string user_address = 2;</code>
+   * @return The userAddress.
    */
-  java.lang.String getUserAddresses();
+  java.lang.String getUserAddress();
   /**
-   * <code>string user_addresses = 2;</code>
-   * @return The bytes for userAddresses.
+   * <code>string user_address = 2;</code>
+   * @return The bytes for userAddress.
    */
   com.google.protobuf.ByteString
-      getUserAddressesBytes();
+      getUserAddressBytes();
 }
