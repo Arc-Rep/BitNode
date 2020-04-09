@@ -12,9 +12,8 @@ public class KBucket{
         node_id = this_node_id;
         B = bit_size;
 
-        LinkedList<LinkedList<KeyNode>> temp = kbucket;
         for(int i=1; i <= B; i++)
-            temp.add(new LinkedList<KeyNode>());
+            kbucket.add(new LinkedList<KeyNode>());
         
     }
 
