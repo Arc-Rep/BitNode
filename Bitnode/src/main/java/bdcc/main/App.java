@@ -13,7 +13,7 @@ import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
 import bdcc.grpc.NodeOperationsClient;
 import bdcc.grpc.NodeOperationsServer;
-import bdcc.kademlia.KBucket;
+import bdcc.kademlia.*;
 
 public class App {
     private static User current_user;
@@ -228,6 +228,7 @@ public class App {
 
     public static void main( String[] args )
     {
+        double i;
         if(args.length != 1)
         {
             System.out.println("Please specify initial bitnode server address");
