@@ -80,14 +80,17 @@ public class NodeOperationsServer {
             .setUserAddress(server_address)
             .build();
         responseObserver.onNext(reply);
-        for(KeyNode node: node_list)
+        if(node_list != null)           // if there are no other nodes
         {
-          reply = 
-            NodeInfo.newBuilder()
-              .setUserId(node.getKey())
-              .setUserAddress(node.getValue())
-              .build();
-          responseObserver.onNext(reply);
+          for(KeyNode node: node_list)
+          {
+            reply = 
+              NodeInfo.newBuilder()
+                .setUserId(node.getKey())
+                .setUserAddress(node.getValue())
+                .build();
+            responseObserver.onNext(reply);
+          }
         }
         responseObserver.onCompleted();
         userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
