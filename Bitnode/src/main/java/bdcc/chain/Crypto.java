@@ -43,8 +43,8 @@ public class Crypto {
         String hashed = "";
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
-            System.out.println("Undigested byte array has length " + input.getBytes(StandardCharsets.UTF_8).length);
-            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            System.out.println("Undigested byte array has length " + input.getBytes(StandardCharsets.ISO_8859_1).length);
+            byte[] hash = digest.digest(input.getBytes(StandardCharsets.ISO_8859_1));
             System.out.println("Digested byte array has lenth: " + hash.length);
             hashed = new String(hash, "UTF-8");
         }
