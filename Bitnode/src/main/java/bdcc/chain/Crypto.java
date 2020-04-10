@@ -1,12 +1,11 @@
 package bdcc.chain;
 
-import org.bouncycastle.util.encoders.Hex;
 
 import bdcc.chain.NodeBlockChain.NodeBlock;
 
+import org.bouncycastle.util.encoders.Hex;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.security.Key;
@@ -18,7 +17,7 @@ import java.security.Security;
 
 public class Crypto {
 
-   public static String hashBlock(NodeBlock nb, int Nonce) {
+    public static String hashBlock(NodeBlock nb, int Nonce) {
         //final String password = "ListenToMyStory";
         LinkedList<Transaction> transactions = nb.getTransactions();
         StringBuffer sb = new StringBuffer("");
@@ -38,19 +37,26 @@ public class Crypto {
         }
         String trans = sb.append(Integer.toString(Nonce)).toString();
         return hashString(trans);
-   }
+    }
 
-   public static String hashString(String input){
+    public static String hashString(String input){
         String hashed = "";
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            System.out.println("Undigested byte array has length " + input.getBytes(StandardCharsets.UTF_8).length);
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            hashed = new String(hash,"UTF-8");
+            System.out.println("Digested byte array has lenth: " + hash.length);
+            hashed = new String(hash, "UTF-8");
         }
         catch(Exception e){
             System.out.println("Algorithm not available");
         }
         return hashed;
+    }
+
+   public static String toHex(String str){
+       byte[] str_bytes = str.getBytes(StandardCharsets.UTF_8);
+       return new String(Hex.encode(str_bytes));
    }
 
    public static void generateRSAKeys(Key pubKey, Key privKey){

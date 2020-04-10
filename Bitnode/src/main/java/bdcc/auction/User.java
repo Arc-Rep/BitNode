@@ -30,4 +30,8 @@ public class User{
     public String getUserId(){
         return user_id;
     }
+
+    public String getUserName(){
+        return user_name;
+    }
 }

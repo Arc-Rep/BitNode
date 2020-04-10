@@ -22,14 +22,16 @@ public class KeyNode{
     public double compareKeyNodeID(String to_compare){
         byte[] key_b = Key.getBytes();
         byte[] compare_b = to_compare.getBytes();
-        System.out.println();
+        System.out.println("Both strings are " + this.Key + " and " + to_compare);
         System.out.println("Byte lengths are:" + key_b.length + " and " + compare_b.length);
         double total = 0, xor;
         
         for(int i = 0; i < key_b.length; i++){
             int a = key_b[i];
             int b = compare_b[i];
+            System.out.println("This round is " + a + " and " + b);
             xor = (double)(a ^ b); 
+            System.out.println("Which leads to " + xor);
             xor = a * (Math.pow(2 ,8 * (key_b.length - i - 1)));
             total += xor;
         }

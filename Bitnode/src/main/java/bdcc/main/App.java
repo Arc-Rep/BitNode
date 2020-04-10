@@ -230,6 +230,7 @@ public class App {
 
     public static void main( String[] args )
     {
+        double i;
         if(args.length != 1)
         {
             System.out.println("Please specify initial bitnode server address");
@@ -240,7 +241,13 @@ public class App {
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
-
+        System.out.println("Current user id: " + current_user.getUserId());
+        System.out.println("Current user id changed: " + Crypto.toHex(current_user.getUserId()));
+        System.out.println("Current username: " + current_user.getUserName());
+        KeyNode node = new KeyNode(current_user.getUserId(), "hi");
+        double distance = node.compareKeyNodeID(Crypto.hashString("DeyL"));
+        for(i=1; Math.pow(2,i) < distance; i++);
+        System.out.println("Index" + i);
         if(!args[0].equals("Server"))
         {
             if(!initialSetup(args[0]))  return;
