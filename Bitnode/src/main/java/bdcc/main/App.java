@@ -194,11 +194,15 @@ public class App {
             {   
                 NodeInfo info = response.next();
                 System.out.println("Info sent is " + current_user.getUserId());
-                System.out.println("Server " + info.getUserId() + " found with address " + info.getUserAddress());
-                if(numb_nodes_found == 0) userBucket.addNode(info.getUserId(), info.getUserAddress());
+                
+                if(numb_nodes_found == 0)       //first node is always server
+                {
+                     userBucket.addNode(info.getUserId(), info.getUserAddress());
+                     System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
+                }
                 else
                 {
-                    System.out.println("User " + info.getUserId() + " found with address " + info.getUserAddress());
+                    System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
                     pingNode(info);
                 }
 
@@ -220,7 +224,7 @@ public class App {
         try
         {
             NodeInfo response = initial_requester.notifyNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
-            System.out.println("User " + response.getUserId() + " found with address " + response.getUserAddress());
+            System.out.println("User " + Crypto.toHex(response.getUserId())  + " found with address " + response.getUserAddress());
             userBucket.addNode(response.getUserId(), response.getUserAddress());
         }
         catch(Exception e){
@@ -241,6 +245,7 @@ public class App {
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
+
         if(!args[0].equals("Server"))
         {
             if(!initialSetup(args[0]))  return;

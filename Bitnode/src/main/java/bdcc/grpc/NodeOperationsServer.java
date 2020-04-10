@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.LinkedList;
 
 import bdcc.kademlia.*;
+import bdcc.chain.*;
 
 public class NodeOperationsServer {
     private static final Logger logger = Logger.getLogger(NodeOperationsServer.class.getName());
@@ -59,20 +60,20 @@ public class NodeOperationsServer {
       
       
       @Override
-      public void notifyNode(NodeInfo req, StreamObserver<NodeInfo> responseObserver) {
-        //make operations to hashtable
-        String[] replyContent = {"Received with success","Yep, totally"};
+      public void notifyNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
+        System.out.println("User " + Crypto.toHex(node_id.getUserId())  + " from " + node_id.getUserAddress() + " connected");
         NodeInfo reply = NodeInfo.newBuilder()
                             .setUserId(userBucket.getUserId())
                             .setUserAddress(server_address)
                             .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
       }
 
       @Override
       public void findNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
-        //make operations to hashtable
+
         LinkedList<KeyNode> node_list = userBucket.searchNodeKBucket(node_id.getUserId());
         NodeInfo reply =                      // send current node
           NodeInfo.newBuilder()
@@ -80,7 +81,7 @@ public class NodeOperationsServer {
             .setUserAddress(server_address)
             .build();
         responseObserver.onNext(reply);
-        System.out.println("User " + node_id.getUserId() + " from " + node_id.getUserAddress() + " connected");
+        System.out.println("User " + Crypto.toHex(node_id.getUserId()) + " from " + node_id.getUserAddress() + " connected");
         if(node_list != null)           // if there are no other nodes
         {
           for(KeyNode node: node_list)
