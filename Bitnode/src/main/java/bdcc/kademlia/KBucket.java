@@ -23,8 +23,27 @@ public class KBucket{
 
         for(i=1; Math.pow(2,i) < distance; i++);
         LinkedList<KeyNode> correct_list = kbucket.get((int) i);
-        correct_list.push(node);
-        if(correct_list.size() > k) correct_list.remove(k);
+        addNodeToCorrectList(node, correct_list);
+        
+    }
+
+    public void addNodeToCorrectList(KeyNode newNode, LinkedList<KeyNode> list){
+        for(KeyNode node: list)
+        {
+            if(node.Key == newNode.Key)
+            {
+                list.remove(node);
+                list.push(newNode);
+                return;
+            }
+        }
+
+        list.push(newNode);
+        if(list.size() > k)
+        {
+            list.remove(k);
+            this.node_number--;
+        }
         else this.node_number++;   
     }
 
