@@ -1,10 +1,12 @@
 package bdcc.kademlia;
 
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Random;
 
 public class KBucket{
-    LinkedList<LinkedList<KeyNode>> kbucket = new LinkedList<LinkedList<KeyNode>>();
-    int k = 20, B, alpha = 3,node_number = 0;
+    LinkedList<CopyOnWriteArrayList<KeyNode>> kbucket = new LinkedList<CopyOnWriteArrayList<KeyNode>>();
+    int k = 20, B, alpha = 3,node_number = 0, populated_rows = 0;
     String node_id;
 
 
@@ -13,41 +15,46 @@ public class KBucket{
         B = bit_size;
 
         for(int i=1; i <= B; i++)
-            kbucket.add(new LinkedList<KeyNode>());
+            kbucket.add(new CopyOnWriteArrayList<KeyNode>());
         
     }
 
-    public void addNode(String key, String value){
+    public synchronized void addNode(String key, String value){
         KeyNode node = new KeyNode(key,value);
         double distance = node.compareKeyNodeID(node_id),i;
 
         for(i=1; Math.pow(2,i) < distance; i++);
-        LinkedList<KeyNode> correct_list = kbucket.get((int) i);
+        CopyOnWriteArrayList<KeyNode> correct_list = kbucket.get((int) i);
         addNodeToCorrectList(node, correct_list);
         
     }
 
-    public void addNodeToCorrectList(KeyNode newNode, LinkedList<KeyNode> list){
+    public synchronized void addNodeToCorrectList(KeyNode newNode, CopyOnWriteArrayList<KeyNode> list){
         for(KeyNode node: list)
         {
             if(node.Key == newNode.Key)
             {
                 list.remove(node);
-                list.push(newNode);
+                list.add(0, newNode);
                 return;
             }
         }
 
-        list.push(newNode);
+        list.add(0, newNode);
         if(list.size() > k)
         {
             list.remove(k);
             this.node_number--;
         }
+        else if(list.size() == 1)
+        {
+            this.populated_rows++;
+            this.node_number++;
+        }
         else this.node_number++;   
     }
 
-    public LinkedList<KeyNode> searchNodeList(String search_node_id, LinkedList<KeyNode> list){
+    public synchronized LinkedList<KeyNode> searchNodeList(String search_node_id, CopyOnWriteArrayList<KeyNode> list){
         LinkedList<Double> best_values = new LinkedList<Double>();
         LinkedList<KeyNode> best_nodes = new LinkedList<KeyNode>();
 
@@ -64,7 +71,7 @@ public class KBucket{
         return best_nodes;
     }
 
-    public int getListIndex(LinkedList<Double> list, double check){
+    public synchronized int getListIndex(LinkedList<Double> list, double check){
         int i;
         for(i = 0; i < list.size() && i < alpha; i++){
             if(check > list.get(i)) break;
@@ -77,11 +84,11 @@ public class KBucket{
         return i;
     }
 
-    public LinkedList<KeyNode> searchNodeKBucket(String search_node_id){
-        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>(), best_list = null;
+    public synchronized LinkedList<KeyNode> searchNodeKBucket(String search_node_id){
+        CopyOnWriteArrayList<KeyNode> best_list = null;
         double best_compare = -1, temp;
 
-        for(LinkedList<KeyNode> sublist: kbucket){
+        for(CopyOnWriteArrayList<KeyNode> sublist: kbucket){
             if(best_list == null && sublist.size() > 0)
             {
                 best_list = sublist;
@@ -103,13 +110,14 @@ public class KBucket{
         return searchNodeList(search_node_id, best_list);
     }
 
-    public LinkedList<KeyNode> findNodeInitialization(String search_node_id){
-        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>(), best_list = null;
+    public synchronized LinkedList<KeyNode> findNodeInitialization(String search_node_id){
+        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>();
+        CopyOnWriteArrayList<KeyNode> best_list = null;
         double best_compare = -1, temp, has_prev = 0, prev_min = 0;
         while(nodeslist.size() < k && nodeslist.size() < node_number)
         {
             best_list = null;
-            for(LinkedList<KeyNode> sublist: kbucket){
+            for(CopyOnWriteArrayList<KeyNode> sublist: kbucket){
                 if(best_list == null && sublist.size() > 0)
                 {
                     temp = sublist.get(0).compareKeyNodeID(search_node_id);
@@ -131,7 +139,7 @@ public class KBucket{
             if(best_list == null) break;
             prev_min = best_list.get(0).compareKeyNodeID(search_node_id);
             has_prev = 1;
-            for(int i=0;nodeslist.size() < k && i<best_list.size();i++)
+            for(int i=0 ; nodeslist.size() < k && i < best_list.size() ; i++)
             {
                 nodeslist.add(best_list.get(i));
             }
@@ -140,6 +148,41 @@ public class KBucket{
         return nodeslist;
     }
 
+    public synchronized KeyNode getRandomNode(){
+        if(node_number == 0) return null;
+        Random r = new Random();
+        int row_num = ((r.nextInt() % B) % populated_rows), column_num = r.nextInt() % k, current = 0;
+        CopyOnWriteArrayList<KeyNode> selected_list = null;
+        KeyNode to_return = null;
+        for(CopyOnWriteArrayList<KeyNode> sublist: kbucket)     //choose random row
+        {
+            if(sublist.size() > 0)
+            {
+                if(current == row_num)
+                {
+                    selected_list = sublist;
+                    break;
+                }
+                else current++;
+            }
+        }
+
+        if(selected_list == null || selected_list.size() == 0) return null;
+
+        current = 0;
+        column_num = column_num % selected_list.size();
+
+        for(KeyNode subnode: selected_list)
+        {
+            if(current == column_num)
+            {
+                to_return = subnode;
+                break;
+            }
+            else current++;
+        }
+        return to_return;
+    }
     
     public String getUserId(){
         return node_id;

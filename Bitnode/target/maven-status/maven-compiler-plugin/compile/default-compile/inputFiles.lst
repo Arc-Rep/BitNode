@@ -9,11 +9,11 @@ C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\grpc-java\bdcc\grpc\NodeOperationsGrpc.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeInfoOrBuilder.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\TransactionInfoOrBuilder.java
-C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeNotification.java
+C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\kademlia\NodeActions.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\auction\User.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\chain\NodeBlockChain.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeInfo.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\grpc\NodeOperationsServer.java
-C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeNotificationOrBuilder.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\main\App.java
 C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\target\generated-sources\protobuf\java\bdcc\grpc\NodeOperationsProto.java
+C:\Users\DeyL\Desktop\fcup\Seguranca de Dados\BitNode\bitnode\src\main\java\bdcc\kademlia\RenewalManager.java

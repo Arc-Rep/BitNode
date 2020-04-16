@@ -22,7 +22,8 @@ public class App {
     private static int server_port;
     private static NodeOperationsServer user_server;
     private static Scanner scanner;
-    public static KBucket userBucket;
+    private static Thread thread_renewal;
+    public  static KBucket userBucket;
 
     private static User register() {
         System.out.println("Please choose an username");
@@ -203,7 +204,7 @@ public class App {
                 else
                 {
                     System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
-                    pingNode(info);
+                    NodeActions.pingNode(info.getUserAddress(), server_port,userBucket, current_user);
                 }
 
                 numb_nodes_found++;
@@ -219,22 +220,10 @@ public class App {
         return true;
     }
 
-    private static void pingNode(NodeInfo info){
-        NodeOperationsClient initial_requester = new NodeOperationsClient(info.getUserAddress(), server_port);
-        try
-        {
-            NodeInfo response = initial_requester.notifyNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
-            System.out.println("User " + Crypto.toHex(response.getUserId())  + " found with address " + response.getUserAddress());
-            userBucket.addNode(response.getUserId(), response.getUserAddress());
-        }
-        catch(Exception e){
-            System.out.println("Error: Server not found.");
-        }
-    }
 
     public static void main( String[] args )
     {
-        double i;
+        RenewalManager renew_manager;
         if(args.length != 1)
         {
             System.out.println("Please specify initial bitnode server address");
@@ -245,6 +234,7 @@ public class App {
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
+        renew_manager = new RenewalManager(userBucket, current_user, server_port);
 
         if(!args[0].equals("Server"))
         {
@@ -256,9 +246,12 @@ public class App {
             block_chain = NodeBlockChain.getChainManager();
             user_server = new NodeOperationsServer(server_port, current_user.getUserId(),
                             InetAddress.getLocalHost().getHostAddress(), userBucket);
+            
+            thread_renewal = new Thread(renew_manager);
+            thread_renewal.start();
             //inicio de CLI
             menusCLI();
-            shutdownSystem();
+            shutdownSystem(renew_manager);
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
@@ -266,8 +259,10 @@ public class App {
         
     }
 
-    private static void shutdownSystem() throws Exception {
+    private static void shutdownSystem(RenewalManager renew_manager) throws Exception {
         scanner.close();
+        renew_manager.terminate();
         user_server.blockUntilShutdown();
+        thread_renewal.join();
     }
 }
