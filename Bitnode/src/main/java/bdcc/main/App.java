@@ -189,7 +189,7 @@ public class App {
         NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
         Iterator<NodeInfo> response;
         try{  
-            response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+            response = initial_requester.lookupNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
             if(response == null) throw new Exception();
             while(response.hasNext())
             {   
@@ -204,7 +204,7 @@ public class App {
                 else
                 {
                     System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
-                    NodeActions.pingNode(info.getUserAddress(), server_port,userBucket, current_user);
+                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user);
                 }
 
                 numb_nodes_found++;

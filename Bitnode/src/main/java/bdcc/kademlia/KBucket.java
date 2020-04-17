@@ -54,6 +54,28 @@ public class KBucket{
         else this.node_number++;   
     }
 
+    public synchronized void removeNode(KeyNode newNode){
+        double distance = newNode.compareKeyNodeID(node_id),i;
+
+        for(i=1; Math.pow(2,i) < distance; i++);
+        CopyOnWriteArrayList<KeyNode> correct_list = kbucket.get((int) i);
+
+        if(correct_list.size() == 0) return;
+
+        for(KeyNode node: correct_list)
+        {
+            if(node.Key == newNode.Key)
+            {
+                correct_list.remove(node);
+                this.node_number--;
+                if(correct_list.size() == 0)
+                    this.populated_rows--;
+                return;
+            }
+        }
+        return;
+    }
+
     public synchronized LinkedList<KeyNode> searchNodeList(String search_node_id, CopyOnWriteArrayList<KeyNode> list){
         LinkedList<Double> best_values = new LinkedList<Double>();
         LinkedList<KeyNode> best_nodes = new LinkedList<KeyNode>();
@@ -110,11 +132,13 @@ public class KBucket{
         return searchNodeList(search_node_id, best_list);
     }
 
-    public synchronized LinkedList<KeyNode> findNodeInitialization(String search_node_id){
-        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>();
+    public synchronized LinkedList<KeyNode> findNearestNodes(String search_node_id, boolean by_alpha){
+        LinkedList<KeyNode> nodeslist = new LinkedList<KeyNode>(), ordered_list = null;
         CopyOnWriteArrayList<KeyNode> best_list = null;
-        double best_compare = -1, temp, has_prev = 0, prev_min = 0;
-        while(nodeslist.size() < k && nodeslist.size() < node_number)
+        double best_compare = -1, temp, has_prev = 0, prev_min = 0, limit;
+        if(by_alpha) limit = alpha;
+        else limit = k;
+        while(nodeslist.size() < limit && nodeslist.size() < node_number)
         {
             best_list = null;
             for(CopyOnWriteArrayList<KeyNode> sublist: kbucket){
@@ -122,7 +146,7 @@ public class KBucket{
                 {
                     temp = sublist.get(0).compareKeyNodeID(search_node_id);
                     if(has_prev == 0 || temp > prev_min)
-                    best_list = sublist;
+                        best_list = sublist;
                     best_compare = sublist.get(0).compareKeyNodeID(search_node_id);
 
                 } 
@@ -139,13 +163,35 @@ public class KBucket{
             if(best_list == null) break;
             prev_min = best_list.get(0).compareKeyNodeID(search_node_id);
             has_prev = 1;
-            for(int i=0 ; nodeslist.size() < k && i < best_list.size() ; i++)
+            ordered_list = findNearestNodeList(search_node_id, best_list);
+            for(int i=0 ; nodeslist.size() < limit && i < ordered_list.size() ; i++)
             {
-                nodeslist.add(best_list.get(i));
+                nodeslist.add(ordered_list.get(i));
             }
         }
 
         return nodeslist;
+    }
+
+    public synchronized LinkedList<KeyNode> findNearestNodeList(String search_node_id, CopyOnWriteArrayList<KeyNode> correct_list){
+        int i;
+        LinkedList<KeyNode> orderedList = new LinkedList<KeyNode>();
+        for(KeyNode node: correct_list)
+        {
+            for(i=0 ; i < orderedList.size() ; i++)
+                if(node.compareKeyNodeID(search_node_id) <= orderedList.get(i).compareKeyNodeID(search_node_id))
+                    break;
+            orderedList.add(i, node);
+        }
+        return orderedList;
+    }
+
+    public synchronized LinkedList<KeyNode> lookupNode(String search_node_id) {
+        return findNearestNodes(search_node_id, false);
+    }
+
+    public synchronized LinkedList<KeyNode> findNode(String search_node_id) {
+        return findNearestNodes(search_node_id, true);
     }
 
     public synchronized KeyNode getRandomNode(){

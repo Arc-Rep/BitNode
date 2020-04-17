@@ -3,8 +3,6 @@ package bdcc.grpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import java.net.InetAddress;
-import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.LinkedList;
 
@@ -74,7 +72,34 @@ public class NodeOperationsServer {
       @Override
       public void findNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
 
-        LinkedList<KeyNode> node_list = userBucket.searchNodeKBucket(node_id.getUserId());
+        LinkedList<KeyNode> node_list = userBucket.findNode(node_id.getUserId());
+        NodeInfo reply =                      // send current node
+          NodeInfo.newBuilder()
+            .setUserId(server_id)
+            .setUserAddress(server_address)
+            .build();
+        responseObserver.onNext(reply);
+        System.out.println("User " + Crypto.toHex(node_id.getUserId()) + " from " + node_id.getUserAddress() + " connected");
+        if(node_list != null)           // if there are no other nodes
+        {
+          for(KeyNode node: node_list)
+          {
+            reply = 
+              NodeInfo.newBuilder()
+                .setUserId(node.getKey())
+                .setUserAddress(node.getValue())
+                .build();
+            responseObserver.onNext(reply);
+          }
+        }
+        responseObserver.onCompleted();
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
+      }
+
+      @Override
+      public void lookupNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
+
+        LinkedList<KeyNode> node_list = userBucket.lookupNode(node_id.getUserId());
         NodeInfo reply =                      // send current node
           NodeInfo.newBuilder()
             .setUserId(server_id)

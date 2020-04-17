@@ -42,13 +42,14 @@ public final class NodeOperationsProto {
       "\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 \001(\t\"F\n" +
       "\017TransactionInfo\022\020\n\010buyer_id\030\001 \001(\t\022\016\n\006am" +
       "ount\030\002 \001(\001\022\021\n\tseller_id\030\003 \001(\t\"\036\n\014NodeRes" +
-      "ponse\022\016\n\006status\030\001 \001(\t2\260\001\n\016NodeOperations" +
+      "ponse\022\016\n\006status\030\001 \001(\t2\342\001\n\016NodeOperations" +
       "\022.\n\nnotifyNode\022\016.grpc.NodeInfo\032\016.grpc.No" +
       "deInfo\"\000\022.\n\010findNode\022\016.grpc.NodeInfo\032\016.g" +
-      "rpc.NodeInfo\"\0000\001\022>\n\017makeTransaction\022\025.gr" +
-      "pc.TransactionInfo\032\022.grpc.NodeResponse\"\000" +
-      "B\"\n\tbdcc.grpcB\023NodeOperationsProtoP\001b\006pr" +
-      "oto3"
+      "rpc.NodeInfo\"\0000\001\0220\n\nlookupNode\022\016.grpc.No" +
+      "deInfo\032\016.grpc.NodeInfo\"\0000\001\022>\n\017makeTransa" +
+      "ction\022\025.grpc.TransactionInfo\032\022.grpc.Node" +
+      "Response\"\000B\"\n\tbdcc.grpcB\023NodeOperationsP" +
+      "rotoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

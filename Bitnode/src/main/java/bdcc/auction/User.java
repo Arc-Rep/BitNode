@@ -3,7 +3,6 @@ package bdcc.auction;
 
 import bdcc.chain.Crypto;
 import java.security.Key;
-import java.util.Base64;
 
 
 public class User{

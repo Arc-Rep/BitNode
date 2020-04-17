@@ -59,6 +59,18 @@ public class NodeOperationsClient {
       return response;
     }
 
+    public Iterator<NodeInfo> lookupNode(String user_id, String user_address){
+      Iterator<NodeInfo> response = null;
+      try
+      {
+        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        response = blockingStub.lookupNode(inforequest); 
+      } catch (RuntimeException e) {
+        System.out.println("RPC Error: Failed to establish communication with server");
+      }
+      return response;
+    }  
+
     public void makeTransaction(String buyer_id, double amount, String seller_id){
       try
       {
@@ -94,32 +106,5 @@ public class NodeOperationsClient {
       
     }
     */
-
-    public static void main(String[] args) throws Exception {
-      NodeOperationsClient client = new NodeOperationsClient("localhost", 50051);
-      BufferedReader reader =  
-        new BufferedReader(new InputStreamReader(System.in));
-      /*CommandManager command_manager = new CommandManager(logger);
-      Command chosen_command;*/
-      List<String> command_comp;
-      String command_string = "";
-
-      logger.info("BitNode successfully initialized.");
-
-      try {/*
-        while((command_string = reader.readLine()) != "exit") {
-          if(command_string != ""){
-            command_comp = FieldSegmentation.Segment(command_string);
-            chosen_command = command_manager.deduceCommand(command_comp);
-            if((chosen_command.getCommandIndex() & Command.GRPC_COMMAND.getCommandIndex()) != 0)      // if command is grpc request
-              chooseGrpcRequest(client, chosen_command, command_comp);
-          }
-        }    */
-      } finally {
-        logger.info("Exiting...");
-        client.shutdown();
-      }
-    }
-
-  }
+}
   

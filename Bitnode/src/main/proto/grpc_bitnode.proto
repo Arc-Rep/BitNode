@@ -12,6 +12,8 @@ service NodeOperations {
 
     rpc findNode(NodeInfo) returns (stream NodeInfo) {}
 
+    rpc lookupNode(NodeInfo) returns (stream NodeInfo) {}
+
     rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
 
 }
