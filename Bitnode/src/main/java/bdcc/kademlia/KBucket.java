@@ -234,6 +234,8 @@ public class KBucket{
         return node_id;
     }
 
-
+    public int getAlpha(){
+        return alpha;
+    }
 
 }

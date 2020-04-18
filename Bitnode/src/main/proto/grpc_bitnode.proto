@@ -9,10 +9,12 @@ option java_outer_classname = "NodeOperationsProto";
 service NodeOperations {
     // Notify node
     rpc notifyNode (NodeInfo) returns (NodeInfo) {}
-
+    // Find Node
     rpc findNode(NodeInfo) returns (stream NodeInfo) {}
-
+    // Initial node lookup
     rpc lookupNode(NodeInfo) returns (stream NodeInfo) {}
+    // Find if node has value
+    rpc findValue(NodeInfo) returns (stream NodeInfo) {}
 
     rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
 
