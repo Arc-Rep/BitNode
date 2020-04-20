@@ -42,7 +42,7 @@ public class NodeActions {
                 try
                 {
                     response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
-                    if(response == null) throw new Exception();
+                    if(response == null) throw new UnknownHostException("Could not find node");
                     while(response.hasNext())
                     {   
                         NodeInfo info = response.next();
