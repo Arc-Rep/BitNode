@@ -2,13 +2,19 @@ package bdcc.auction;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.Random;
 
 import bdcc.kademlia.KeyNode;
 
 public class AuctionList {
 
-    HashMap<String,Auction> auction_list = new HashMap<String,Auction>();
-    HashMap<String,Auction> completed_list = new HashMap<String,Auction>();
+    HashMap<String,Auction> auction_list;
+    HashMap<String,Auction> completed_list;
+
+    public AuctionList(){
+        auction_list = new HashMap<String,Auction>();
+        completed_list = new HashMap<String,Auction>();
+    }
 
     public synchronized void newAuction(String a, String b, double c){
         String id;
@@ -55,5 +61,11 @@ public class AuctionList {
             return 2;
         }
     }
+
+    /*public synchronized Auction getRandomAuction(){
+        if(auction_list.size() == 0) return null;
+        Random r = new Random();
+        return auction_list.get(r.nextInt() % auction_list.size());
+    }*/
 
 }

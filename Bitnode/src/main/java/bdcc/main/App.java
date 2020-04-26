@@ -8,6 +8,7 @@ import org.apache.log4j.PropertyConfigurator;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import bdcc.auction.AuctionList;
 import bdcc.auction.User;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
@@ -22,6 +23,7 @@ public class App {
     private static int server_port;
     private static NodeOperationsServer user_server;
     private static Scanner scanner;
+    private static AuctionList auction_list;
     private static Thread thread_renewal;
     public  static KBucket userBucket;
 
@@ -234,7 +236,8 @@ public class App {
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
         current_user = register();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
-        renew_manager = new RenewalManager(userBucket, current_user, server_port);
+        auction_list = new AuctionList();
+        renew_manager = new RenewalManager(userBucket, auction_list, current_user, server_port);
 
         if(!args[0].equals("Server"))
         {

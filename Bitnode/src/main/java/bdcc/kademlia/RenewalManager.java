@@ -1,15 +1,19 @@
 package bdcc.kademlia;
 
+import bdcc.auction.AuctionList;
 import bdcc.auction.User;
 
 public class RenewalManager implements Runnable{
     public static KBucket user_bucket;
     public static User current_user;
+    public static AuctionList auction_list;
     private int server_port;
     volatile boolean terminate = false;
 
-    public RenewalManager(KBucket bucket, User current_user, int port){
+    public RenewalManager(KBucket bucket, AuctionList auctions, User user, int port){
         user_bucket = bucket;
+        auction_list = auctions;
+        current_user = user;
         server_port = port;
     }
 
