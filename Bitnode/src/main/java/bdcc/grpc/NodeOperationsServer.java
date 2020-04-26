@@ -131,6 +131,30 @@ public class NodeOperationsServer {
         responseObserver.onCompleted();
       }
 
+      @Override
+      public void infoAuction(InfoAuction infoAuction, StreamObserver<NodeResponse> responseObserver){
+        NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+
+        responseObserver.onNext(replyBuilder.build());
+        responseObserver.onCompleted();
+      }
+
+      @Override
+      public void makeBid(MakeBid makeBid, StreamObserver<NodeResponse> responseObserver){
+        NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+
+        responseObserver.onNext(replyBuilder.build());
+        responseObserver.onCompleted();
+      }
+
+      @Override
+      public void resultsAuction(ResultsAuction resultsAuction, StreamObserver<NodeResponse> responseObserver){
+        NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+
+        responseObserver.onNext(replyBuilder.build());
+        responseObserver.onCompleted();
+      }
+
     }
   }
   

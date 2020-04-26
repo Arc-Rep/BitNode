@@ -30,7 +30,7 @@ public class NodeOperationsClient {
       blockingStub = NodeOperationsGrpc.newBlockingStub(channel);
       asyncStub = NodeOperationsGrpc.newStub(channel);
     }
-  
+    
     public void shutdown() throws InterruptedException {
       channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
@@ -82,6 +82,51 @@ public class NodeOperationsClient {
         NodeResponse response = blockingStub.makeTransaction(inforequest);
       } catch (RuntimeException e) {
         logger.log(Level.WARNING, "RPC failed", e);
+        return;
+      }
+    }
+
+    public void infoAuction(String seller_id, String auction_id, String item, double amount, String buyer_id){
+      try{
+        InfoAuction infoauctionrequest = InfoAuction.newBuilder()
+          .setSellerId(seller_id)
+          .setAuctionId(auction_id)
+          .setItem(item)
+          .setAmount(amount)
+          .setBuyerId(buyer_id)
+          .build();
+        NodeResponse response = blockingStub.infoAuction(infoauctionrequest);
+      } catch(RuntimeException e){
+        logger.log(Level.WARNING, "RPC failed", e);
+        return;
+      }
+    }
+
+    public void makeBid(String buyer_id, String auction_id, double amount){
+      try{
+        MakeBid bidrequest = MakeBid.newBuilder()
+          .setBuyerId(buyer_id)
+          .setAuctionId(auction_id)
+          .setAmount(amount)
+          .build();
+        NodeResponse response = blockingStub.makeBid(bidrequest);
+      } catch(RuntimeException e){
+        logger.log(Level.WARNING, "RCP failed", e);
+        return;
+      }
+      
+    }
+
+    public void resultsAuction(String auction_id, String buyer_id, double value){
+      try{
+        ResultsAuction resutltsauctionrequest = ResultsAuction.newBuilder()
+          .setAuctionId(auction_id)
+          .setBuyerId(buyer_id)
+          .setValue(value)
+          .build();
+        NodeResponse response = blockingStub.resultsAuction(resutltsauctionrequest);
+      } catch(RuntimeException e){
+        logger.log(Level.WARNING, "RCP failed", e);
         return;
       }
     }

@@ -18,6 +18,11 @@ service NodeOperations {
 
     rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
 
+    rpc infoAuction(InfoAuction) returns (NodeResponse) {}
+
+    rpc makeBid(MakeBid) returns (NodeResponse) {}
+
+    rpc resultsAuction(ResultsAuction) returns (NodeResponse) {}
 }
   
 
@@ -33,6 +38,40 @@ message TransactionInfo {
   double amount = 2;
   string seller_id = 3;
 }
+
+message NodeNotification {
+  string user_id = 1;
+  string user_adress = 2;
+  string object_id = 3;
+  double max_bid = 4;
+  string random_user_id = 5;
+  string random_object_id = 6;
+  string random_max_bid = 7; 
+}
+
+
+message InfoAuction {
+  string seller_id = 1;
+  string auction_id = 2;
+  string item = 3;
+  double amount = 4;
+  string buyer_id = 5;
+}
+
+
+message MakeBid {
+  string buyer_id = 1;
+  string auction_id = 2;
+  double amount = 3;
+}
+
+
+message ResultsAuction{
+  string auction_id = 1;
+  string buyer_id = 2;
+  double value = 3;
+}
+
 
 message NodeResponse{
   string status = 1;

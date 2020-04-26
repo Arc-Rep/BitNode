@@ -81,4 +81,8 @@ public class NodeActions {
     
         return closest_node;
     }
+
+    public static int makeBid(){
+        return 0;
+    }
 }

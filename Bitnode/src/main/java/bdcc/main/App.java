@@ -41,11 +41,11 @@ public class App {
         while(inProgress){
 
             if(noBids){
-                System.out.println("Auctioning: " + item + "    Starting price: "+ highestBidVal);       
+                System.out.println("Auctioning: " + item + "    Starting price: " + highestBidVal);       
             }
 
             else{
-                System.out.println("Auctioning: " + item + "    Current highest bid: "+ highestBidVal + " by " + highestBidUser);
+                System.out.println("Auctioning: " + item + "    Current highest bid: " + highestBidVal + " by " + highestBidUser);
             }
 
             System.out.println("Actions:");         

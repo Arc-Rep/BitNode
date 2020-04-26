@@ -182,6 +182,99 @@ public final class NodeOperationsGrpc {
     return getMakeTransactionMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction,
+      bdcc.grpc.NodeResponse> getInfoAuctionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "infoAuction",
+      requestType = bdcc.grpc.InfoAuction.class,
+      responseType = bdcc.grpc.NodeResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction,
+      bdcc.grpc.NodeResponse> getInfoAuctionMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction, bdcc.grpc.NodeResponse> getInfoAuctionMethod;
+    if ((getInfoAuctionMethod = NodeOperationsGrpc.getInfoAuctionMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getInfoAuctionMethod = NodeOperationsGrpc.getInfoAuctionMethod) == null) {
+          NodeOperationsGrpc.getInfoAuctionMethod = getInfoAuctionMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.InfoAuction, bdcc.grpc.NodeResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "infoAuction"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.InfoAuction.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("infoAuction"))
+              .build();
+        }
+      }
+    }
+    return getInfoAuctionMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.MakeBid,
+      bdcc.grpc.NodeResponse> getMakeBidMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "makeBid",
+      requestType = bdcc.grpc.MakeBid.class,
+      responseType = bdcc.grpc.NodeResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.MakeBid,
+      bdcc.grpc.NodeResponse> getMakeBidMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.MakeBid, bdcc.grpc.NodeResponse> getMakeBidMethod;
+    if ((getMakeBidMethod = NodeOperationsGrpc.getMakeBidMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getMakeBidMethod = NodeOperationsGrpc.getMakeBidMethod) == null) {
+          NodeOperationsGrpc.getMakeBidMethod = getMakeBidMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.MakeBid, bdcc.grpc.NodeResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "makeBid"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.MakeBid.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("makeBid"))
+              .build();
+        }
+      }
+    }
+    return getMakeBidMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction,
+      bdcc.grpc.NodeResponse> getResultsAuctionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "resultsAuction",
+      requestType = bdcc.grpc.ResultsAuction.class,
+      responseType = bdcc.grpc.NodeResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction,
+      bdcc.grpc.NodeResponse> getResultsAuctionMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction, bdcc.grpc.NodeResponse> getResultsAuctionMethod;
+    if ((getResultsAuctionMethod = NodeOperationsGrpc.getResultsAuctionMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getResultsAuctionMethod = NodeOperationsGrpc.getResultsAuctionMethod) == null) {
+          NodeOperationsGrpc.getResultsAuctionMethod = getResultsAuctionMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.ResultsAuction, bdcc.grpc.NodeResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "resultsAuction"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.ResultsAuction.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("resultsAuction"))
+              .build();
+        }
+      }
+    }
+    return getResultsAuctionMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -277,6 +370,27 @@ public final class NodeOperationsGrpc {
       asyncUnimplementedUnaryCall(getMakeTransactionMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void infoAuction(bdcc.grpc.InfoAuction request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getInfoAuctionMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void makeBid(bdcc.grpc.MakeBid request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getMakeBidMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void resultsAuction(bdcc.grpc.ResultsAuction request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getResultsAuctionMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -314,6 +428,27 @@ public final class NodeOperationsGrpc {
                 bdcc.grpc.TransactionInfo,
                 bdcc.grpc.NodeResponse>(
                   this, METHODID_MAKE_TRANSACTION)))
+          .addMethod(
+            getInfoAuctionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                bdcc.grpc.InfoAuction,
+                bdcc.grpc.NodeResponse>(
+                  this, METHODID_INFO_AUCTION)))
+          .addMethod(
+            getMakeBidMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                bdcc.grpc.MakeBid,
+                bdcc.grpc.NodeResponse>(
+                  this, METHODID_MAKE_BID)))
+          .addMethod(
+            getResultsAuctionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                bdcc.grpc.ResultsAuction,
+                bdcc.grpc.NodeResponse>(
+                  this, METHODID_RESULTS_AUCTION)))
           .build();
     }
   }
@@ -383,6 +518,30 @@ public final class NodeOperationsGrpc {
       asyncUnaryCall(
           getChannel().newCall(getMakeTransactionMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void infoAuction(bdcc.grpc.InfoAuction request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getInfoAuctionMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void makeBid(bdcc.grpc.MakeBid request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getMakeBidMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void resultsAuction(bdcc.grpc.ResultsAuction request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -448,6 +607,27 @@ public final class NodeOperationsGrpc {
       return blockingUnaryCall(
           getChannel(), getMakeTransactionMethod(), getCallOptions(), request);
     }
+
+    /**
+     */
+    public bdcc.grpc.NodeResponse infoAuction(bdcc.grpc.InfoAuction request) {
+      return blockingUnaryCall(
+          getChannel(), getInfoAuctionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public bdcc.grpc.NodeResponse makeBid(bdcc.grpc.MakeBid request) {
+      return blockingUnaryCall(
+          getChannel(), getMakeBidMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public bdcc.grpc.NodeResponse resultsAuction(bdcc.grpc.ResultsAuction request) {
+      return blockingUnaryCall(
+          getChannel(), getResultsAuctionMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -482,6 +662,30 @@ public final class NodeOperationsGrpc {
       return futureUnaryCall(
           getChannel().newCall(getMakeTransactionMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> infoAuction(
+        bdcc.grpc.InfoAuction request) {
+      return futureUnaryCall(
+          getChannel().newCall(getInfoAuctionMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> makeBid(
+        bdcc.grpc.MakeBid request) {
+      return futureUnaryCall(
+          getChannel().newCall(getMakeBidMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> resultsAuction(
+        bdcc.grpc.ResultsAuction request) {
+      return futureUnaryCall(
+          getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_NOTIFY_NODE = 0;
@@ -489,6 +693,9 @@ public final class NodeOperationsGrpc {
   private static final int METHODID_LOOKUP_NODE = 2;
   private static final int METHODID_FIND_VALUE = 3;
   private static final int METHODID_MAKE_TRANSACTION = 4;
+  private static final int METHODID_INFO_AUCTION = 5;
+  private static final int METHODID_MAKE_BID = 6;
+  private static final int METHODID_RESULTS_AUCTION = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -525,6 +732,18 @@ public final class NodeOperationsGrpc {
           break;
         case METHODID_MAKE_TRANSACTION:
           serviceImpl.makeTransaction((bdcc.grpc.TransactionInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+          break;
+        case METHODID_INFO_AUCTION:
+          serviceImpl.infoAuction((bdcc.grpc.InfoAuction) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+          break;
+        case METHODID_MAKE_BID:
+          serviceImpl.makeBid((bdcc.grpc.MakeBid) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+          break;
+        case METHODID_RESULTS_AUCTION:
+          serviceImpl.resultsAuction((bdcc.grpc.ResultsAuction) request,
               (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
           break;
         default:
@@ -593,6 +812,9 @@ public final class NodeOperationsGrpc {
               .addMethod(getLookupNodeMethod())
               .addMethod(getFindValueMethod())
               .addMethod(getMakeTransactionMethod())
+              .addMethod(getInfoAuctionMethod())
+              .addMethod(getMakeBidMethod())
+              .addMethod(getResultsAuctionMethod())
               .build();
         }
       }
