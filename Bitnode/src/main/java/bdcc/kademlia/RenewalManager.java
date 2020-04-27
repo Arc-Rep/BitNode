@@ -32,7 +32,7 @@ public class RenewalManager implements Runnable{
                     if(randomNode == null) throw new Exception("Could not find node");
                     else
                     {
-                        NodeActions.pingNode(randomNode, server_port,user_bucket, current_user);
+                        //NodeActions.pingNode(randomNode, server_port,user_bucket, current_user);
                     }
                 }
             }

@@ -1,4 +1,5 @@
 package bdcc.auction;
+
 import bdcc.kademlia.KeyNode;
 
 
@@ -14,6 +15,10 @@ public class Auction {
         seller_id = a;
         item = b;
         value = c; //starting value
+    }
+
+    public String getAuctionId(){
+        return this.auction_id;
     }
 
     public String getSeller(){
@@ -51,6 +56,13 @@ public class Auction {
             return true;
         }
 
+        return false;
+    }
+
+    public boolean compareAuctionId(String id){
+        if(this.auction_id.equals(id)){
+            return true;
+        }
         return false;
     }
 

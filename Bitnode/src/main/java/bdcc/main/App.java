@@ -206,7 +206,7 @@ public class App {
                 else
                 {
                     System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
-                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user);
+                    //NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user);
                 }
 
                 numb_nodes_found++;

@@ -5,7 +5,9 @@ import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import bdcc.auction.Auction;
 import bdcc.auction.AuctionList;
+import bdcc.auction.Bid;
 import bdcc.auction.User;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
@@ -85,7 +87,25 @@ public class NodeActions {
         return closest_node;
     }
 
-    public static int makeBid(){
-        return 0;
+    public static int makeBid(String id, double value, KeyNode bidder, AuctionList list){ // 1 - accepted, 2 - rejected, 3 - auction not live
+        Auction temp = list.auctionIsLive(id);
+        if(temp == null){
+            return 3;
+        }
+
+        Bid bid = new Bid(id, value, bidder);
+
+        if(temp.updateBid(bid)){
+            list.updateList(temp,1);
+            return 1;
+        }
+
+        return 2;
+    }
+
+    public static void completeAuction(AuctionList list, User current_user){
+        Auction temp = current_user.getUserAuction();
+        current_user.concludeAuction();
+        list.updateList(temp, 2);
     }
 }
