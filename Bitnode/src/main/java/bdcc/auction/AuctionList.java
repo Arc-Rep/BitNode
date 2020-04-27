@@ -41,6 +41,18 @@ public class AuctionList {
         
     }
 
+    public synchronized void addToAuctionList(Auction to_add){
+        for (Auction auction : auction_list) {
+            if(auction.getAuctionId().equals(to_add.getAuctionId())){
+                auction_list.remove(auction);
+                auction_list.add(to_add);
+                return;
+            }
+        }
+        auction_list.add(to_add);
+    }
+
+    
     public synchronized Auction getRandomAuction(){
         if(auction_list.size() == 0) return null;
         Random r = new Random();

@@ -7,8 +7,8 @@ option java_package = "bdcc.grpc";
 option java_outer_classname = "NodeOperationsProto";
 
 service NodeOperations {
-    // Notify node
-    rpc notifyNode (NodeInfo) returns (NodeInfo) {}
+    // Notify node with node info + random auction info
+    rpc notifyNode (NodeNotification) returns (NodeNotification) {}
     // Find Node
     rpc findNode(NodeInfo) returns (stream NodeInfo) {}
     // Initial node lookup
@@ -41,12 +41,14 @@ message TransactionInfo {
 
 message NodeNotification {
   string user_id = 1;
-  string user_adress = 2;
-  string object_id = 3;
-  double max_bid = 4;
-  string random_user_id = 5;
-  string random_object_id = 6;
-  string random_max_bid = 7; 
+  string user_address = 2;
+  string auction_id = 3;
+  string item = 4;
+  double max_bid = 5;
+  string random_auction_id = 6;
+  string random_user_id = 7;
+  string random_item = 8;
+  double random_max_bid = 9; 
 }
 
 

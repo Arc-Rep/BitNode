@@ -35,11 +35,17 @@ public class NodeOperationsClient {
       channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public NodeInfo notifyNode(String user_id, String user_address){
-      NodeInfo response = null;
+    public NodeNotification notifyNode(String user_id, String user_address, String auction_id,
+                                       String item, double max_bid, String random_auction_id,
+                                       String random_user_id, String random_item, double random_max_bid){
+      NodeNotification response = null;
       try
       {
-        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        NodeNotification inforequest = 
+          NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).
+          setAuctionId(auction_id).setItem(item).setMaxBid(max_bid).
+          setRandomAuctionId(random_auction_id).setRandomUserId(random_user_id).
+          setRandomItem(random_item).setRandomMaxBid(random_max_bid).build();
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server");

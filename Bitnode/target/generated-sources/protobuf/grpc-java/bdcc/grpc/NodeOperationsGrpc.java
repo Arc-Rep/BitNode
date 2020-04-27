@@ -27,29 +27,29 @@ public final class NodeOperationsGrpc {
   public static final String SERVICE_NAME = "grpc.NodeOperations";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getNotifyNodeMethod;
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification,
+      bdcc.grpc.NodeNotification> getNotifyNodeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "notifyNode",
-      requestType = bdcc.grpc.NodeInfo.class,
-      responseType = bdcc.grpc.NodeInfo.class,
+      requestType = bdcc.grpc.NodeNotification.class,
+      responseType = bdcc.grpc.NodeNotification.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getNotifyNodeMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo> getNotifyNodeMethod;
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification,
+      bdcc.grpc.NodeNotification> getNotifyNodeMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeNotification, bdcc.grpc.NodeNotification> getNotifyNodeMethod;
     if ((getNotifyNodeMethod = NodeOperationsGrpc.getNotifyNodeMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getNotifyNodeMethod = NodeOperationsGrpc.getNotifyNodeMethod) == null) {
           NodeOperationsGrpc.getNotifyNodeMethod = getNotifyNodeMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeNotification, bdcc.grpc.NodeNotification>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "notifyNode"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeNotification.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeNotification.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("notifyNode"))
               .build();
         }
@@ -325,11 +325,11 @@ public final class NodeOperationsGrpc {
 
     /**
      * <pre>
-     * Notify node
+     * Notify node with node info + random auction info
      * </pre>
      */
-    public void notifyNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void notifyNode(bdcc.grpc.NodeNotification request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeNotification> responseObserver) {
       asyncUnimplementedUnaryCall(getNotifyNodeMethod(), responseObserver);
     }
 
@@ -397,8 +397,8 @@ public final class NodeOperationsGrpc {
             getNotifyNodeMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                bdcc.grpc.NodeInfo,
-                bdcc.grpc.NodeInfo>(
+                bdcc.grpc.NodeNotification,
+                bdcc.grpc.NodeNotification>(
                   this, METHODID_NOTIFY_NODE)))
           .addMethod(
             getFindNodeMethod(),
@@ -469,11 +469,11 @@ public final class NodeOperationsGrpc {
 
     /**
      * <pre>
-     * Notify node
+     * Notify node with node info + random auction info
      * </pre>
      */
-    public void notifyNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void notifyNode(bdcc.grpc.NodeNotification request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeNotification> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getNotifyNodeMethod(), getCallOptions()), request, responseObserver);
     }
@@ -560,10 +560,10 @@ public final class NodeOperationsGrpc {
 
     /**
      * <pre>
-     * Notify node
+     * Notify node with node info + random auction info
      * </pre>
      */
-    public bdcc.grpc.NodeInfo notifyNode(bdcc.grpc.NodeInfo request) {
+    public bdcc.grpc.NodeNotification notifyNode(bdcc.grpc.NodeNotification request) {
       return blockingUnaryCall(
           getChannel(), getNotifyNodeMethod(), getCallOptions(), request);
     }
@@ -646,11 +646,11 @@ public final class NodeOperationsGrpc {
 
     /**
      * <pre>
-     * Notify node
+     * Notify node with node info + random auction info
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeInfo> notifyNode(
-        bdcc.grpc.NodeInfo request) {
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeNotification> notifyNode(
+        bdcc.grpc.NodeNotification request) {
       return futureUnaryCall(
           getChannel().newCall(getNotifyNodeMethod(), getCallOptions()), request);
     }
@@ -715,8 +715,8 @@ public final class NodeOperationsGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_NOTIFY_NODE:
-          serviceImpl.notifyNode((bdcc.grpc.NodeInfo) request,
-              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo>) responseObserver);
+          serviceImpl.notifyNode((bdcc.grpc.NodeNotification) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeNotification>) responseObserver);
           break;
         case METHODID_FIND_NODE:
           serviceImpl.findNode((bdcc.grpc.NodeInfo) request,

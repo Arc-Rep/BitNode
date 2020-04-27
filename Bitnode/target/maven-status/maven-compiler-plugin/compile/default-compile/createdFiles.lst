@@ -38,4 +38,5 @@ bdcc\grpc\TransactionInfo$Builder.class
 bdcc\grpc\NodeNotification$1.class
 bdcc\grpc\NodeInfo$Builder.class
 bdcc\grpc\ResultsAuction.class
+bdcc\grpc\NodeOperationsProto.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsBaseDescriptorSupplier.class

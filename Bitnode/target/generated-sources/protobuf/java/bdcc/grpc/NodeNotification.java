@@ -17,11 +17,12 @@ private static final long serialVersionUID = 0L;
   }
   private NodeNotification() {
     userId_ = "";
-    userAdress_ = "";
-    objectId_ = "";
+    userAddress_ = "";
+    auctionId_ = "";
+    item_ = "";
+    randomAuctionId_ = "";
     randomUserId_ = "";
-    randomObjectId_ = "";
-    randomMaxBid_ = "";
+    randomItem_ = "";
   }
 
   @java.lang.Override
@@ -63,36 +64,47 @@ private static final long serialVersionUID = 0L;
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            userAdress_ = s;
+            userAddress_ = s;
             break;
           }
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            objectId_ = s;
+            auctionId_ = s;
             break;
           }
-          case 33: {
-
-            maxBid_ = input.readDouble();
-            break;
-          }
-          case 42: {
+          case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            randomUserId_ = s;
+            item_ = s;
+            break;
+          }
+          case 41: {
+
+            maxBid_ = input.readDouble();
             break;
           }
           case 50: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            randomObjectId_ = s;
+            randomAuctionId_ = s;
             break;
           }
           case 58: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            randomMaxBid_ = s;
+            randomUserId_ = s;
+            break;
+          }
+          case 66: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            randomItem_ = s;
+            break;
+          }
+          case 73: {
+
+            randomMaxBid_ = input.readDouble();
             break;
           }
           default: {
@@ -163,92 +175,164 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int USER_ADRESS_FIELD_NUMBER = 2;
-  private volatile java.lang.Object userAdress_;
+  public static final int USER_ADDRESS_FIELD_NUMBER = 2;
+  private volatile java.lang.Object userAddress_;
   /**
-   * <code>string user_adress = 2;</code>
-   * @return The userAdress.
+   * <code>string user_address = 2;</code>
+   * @return The userAddress.
    */
-  public java.lang.String getUserAdress() {
-    java.lang.Object ref = userAdress_;
+  public java.lang.String getUserAddress() {
+    java.lang.Object ref = userAddress_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      userAdress_ = s;
+      userAddress_ = s;
       return s;
     }
   }
   /**
-   * <code>string user_adress = 2;</code>
-   * @return The bytes for userAdress.
+   * <code>string user_address = 2;</code>
+   * @return The bytes for userAddress.
    */
   public com.google.protobuf.ByteString
-      getUserAdressBytes() {
-    java.lang.Object ref = userAdress_;
+      getUserAddressBytes() {
+    java.lang.Object ref = userAddress_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      userAdress_ = b;
+      userAddress_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int OBJECT_ID_FIELD_NUMBER = 3;
-  private volatile java.lang.Object objectId_;
+  public static final int AUCTION_ID_FIELD_NUMBER = 3;
+  private volatile java.lang.Object auctionId_;
   /**
-   * <code>string object_id = 3;</code>
-   * @return The objectId.
+   * <code>string auction_id = 3;</code>
+   * @return The auctionId.
    */
-  public java.lang.String getObjectId() {
-    java.lang.Object ref = objectId_;
+  public java.lang.String getAuctionId() {
+    java.lang.Object ref = auctionId_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      objectId_ = s;
+      auctionId_ = s;
       return s;
     }
   }
   /**
-   * <code>string object_id = 3;</code>
-   * @return The bytes for objectId.
+   * <code>string auction_id = 3;</code>
+   * @return The bytes for auctionId.
    */
   public com.google.protobuf.ByteString
-      getObjectIdBytes() {
-    java.lang.Object ref = objectId_;
+      getAuctionIdBytes() {
+    java.lang.Object ref = auctionId_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      objectId_ = b;
+      auctionId_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int MAX_BID_FIELD_NUMBER = 4;
+  public static final int ITEM_FIELD_NUMBER = 4;
+  private volatile java.lang.Object item_;
+  /**
+   * <code>string item = 4;</code>
+   * @return The item.
+   */
+  public java.lang.String getItem() {
+    java.lang.Object ref = item_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      item_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string item = 4;</code>
+   * @return The bytes for item.
+   */
+  public com.google.protobuf.ByteString
+      getItemBytes() {
+    java.lang.Object ref = item_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      item_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int MAX_BID_FIELD_NUMBER = 5;
   private double maxBid_;
   /**
-   * <code>double max_bid = 4;</code>
+   * <code>double max_bid = 5;</code>
    * @return The maxBid.
    */
   public double getMaxBid() {
     return maxBid_;
   }
 
-  public static final int RANDOM_USER_ID_FIELD_NUMBER = 5;
+  public static final int RANDOM_AUCTION_ID_FIELD_NUMBER = 6;
+  private volatile java.lang.Object randomAuctionId_;
+  /**
+   * <code>string random_auction_id = 6;</code>
+   * @return The randomAuctionId.
+   */
+  public java.lang.String getRandomAuctionId() {
+    java.lang.Object ref = randomAuctionId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      randomAuctionId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string random_auction_id = 6;</code>
+   * @return The bytes for randomAuctionId.
+   */
+  public com.google.protobuf.ByteString
+      getRandomAuctionIdBytes() {
+    java.lang.Object ref = randomAuctionId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      randomAuctionId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int RANDOM_USER_ID_FIELD_NUMBER = 7;
   private volatile java.lang.Object randomUserId_;
   /**
-   * <code>string random_user_id = 5;</code>
+   * <code>string random_user_id = 7;</code>
    * @return The randomUserId.
    */
   public java.lang.String getRandomUserId() {
@@ -264,7 +348,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string random_user_id = 5;</code>
+   * <code>string random_user_id = 7;</code>
    * @return The bytes for randomUserId.
    */
   public com.google.protobuf.ByteString
@@ -281,76 +365,50 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RANDOM_OBJECT_ID_FIELD_NUMBER = 6;
-  private volatile java.lang.Object randomObjectId_;
+  public static final int RANDOM_ITEM_FIELD_NUMBER = 8;
+  private volatile java.lang.Object randomItem_;
   /**
-   * <code>string random_object_id = 6;</code>
-   * @return The randomObjectId.
+   * <code>string random_item = 8;</code>
+   * @return The randomItem.
    */
-  public java.lang.String getRandomObjectId() {
-    java.lang.Object ref = randomObjectId_;
+  public java.lang.String getRandomItem() {
+    java.lang.Object ref = randomItem_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      randomObjectId_ = s;
+      randomItem_ = s;
       return s;
     }
   }
   /**
-   * <code>string random_object_id = 6;</code>
-   * @return The bytes for randomObjectId.
+   * <code>string random_item = 8;</code>
+   * @return The bytes for randomItem.
    */
   public com.google.protobuf.ByteString
-      getRandomObjectIdBytes() {
-    java.lang.Object ref = randomObjectId_;
+      getRandomItemBytes() {
+    java.lang.Object ref = randomItem_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      randomObjectId_ = b;
+      randomItem_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int RANDOM_MAX_BID_FIELD_NUMBER = 7;
-  private volatile java.lang.Object randomMaxBid_;
+  public static final int RANDOM_MAX_BID_FIELD_NUMBER = 9;
+  private double randomMaxBid_;
   /**
-   * <code>string random_max_bid = 7;</code>
+   * <code>double random_max_bid = 9;</code>
    * @return The randomMaxBid.
    */
-  public java.lang.String getRandomMaxBid() {
-    java.lang.Object ref = randomMaxBid_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      randomMaxBid_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string random_max_bid = 7;</code>
-   * @return The bytes for randomMaxBid.
-   */
-  public com.google.protobuf.ByteString
-      getRandomMaxBidBytes() {
-    java.lang.Object ref = randomMaxBid_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      randomMaxBid_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public double getRandomMaxBid() {
+    return randomMaxBid_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -370,23 +428,29 @@ private static final long serialVersionUID = 0L;
     if (!getUserIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userId_);
     }
-    if (!getUserAdressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAdress_);
+    if (!getUserAddressBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddress_);
     }
-    if (!getObjectIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, objectId_);
+    if (!getAuctionIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, auctionId_);
+    }
+    if (!getItemBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, item_);
     }
     if (maxBid_ != 0D) {
-      output.writeDouble(4, maxBid_);
+      output.writeDouble(5, maxBid_);
+    }
+    if (!getRandomAuctionIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, randomAuctionId_);
     }
     if (!getRandomUserIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, randomUserId_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, randomUserId_);
     }
-    if (!getRandomObjectIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, randomObjectId_);
+    if (!getRandomItemBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, randomItem_);
     }
-    if (!getRandomMaxBidBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, randomMaxBid_);
+    if (randomMaxBid_ != 0D) {
+      output.writeDouble(9, randomMaxBid_);
     }
     unknownFields.writeTo(output);
   }
@@ -400,24 +464,31 @@ private static final long serialVersionUID = 0L;
     if (!getUserIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userId_);
     }
-    if (!getUserAdressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAdress_);
+    if (!getUserAddressBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAddress_);
     }
-    if (!getObjectIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, objectId_);
+    if (!getAuctionIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, auctionId_);
+    }
+    if (!getItemBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, item_);
     }
     if (maxBid_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(4, maxBid_);
+        .computeDoubleSize(5, maxBid_);
+    }
+    if (!getRandomAuctionIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, randomAuctionId_);
     }
     if (!getRandomUserIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, randomUserId_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, randomUserId_);
     }
-    if (!getRandomObjectIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, randomObjectId_);
+    if (!getRandomItemBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, randomItem_);
     }
-    if (!getRandomMaxBidBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, randomMaxBid_);
+    if (randomMaxBid_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(9, randomMaxBid_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -436,19 +507,24 @@ private static final long serialVersionUID = 0L;
 
     if (!getUserId()
         .equals(other.getUserId())) return false;
-    if (!getUserAdress()
-        .equals(other.getUserAdress())) return false;
-    if (!getObjectId()
-        .equals(other.getObjectId())) return false;
+    if (!getUserAddress()
+        .equals(other.getUserAddress())) return false;
+    if (!getAuctionId()
+        .equals(other.getAuctionId())) return false;
+    if (!getItem()
+        .equals(other.getItem())) return false;
     if (java.lang.Double.doubleToLongBits(getMaxBid())
         != java.lang.Double.doubleToLongBits(
             other.getMaxBid())) return false;
+    if (!getRandomAuctionId()
+        .equals(other.getRandomAuctionId())) return false;
     if (!getRandomUserId()
         .equals(other.getRandomUserId())) return false;
-    if (!getRandomObjectId()
-        .equals(other.getRandomObjectId())) return false;
-    if (!getRandomMaxBid()
-        .equals(other.getRandomMaxBid())) return false;
+    if (!getRandomItem()
+        .equals(other.getRandomItem())) return false;
+    if (java.lang.Double.doubleToLongBits(getRandomMaxBid())
+        != java.lang.Double.doubleToLongBits(
+            other.getRandomMaxBid())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -462,19 +538,24 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + USER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getUserId().hashCode();
-    hash = (37 * hash) + USER_ADRESS_FIELD_NUMBER;
-    hash = (53 * hash) + getUserAdress().hashCode();
-    hash = (37 * hash) + OBJECT_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getObjectId().hashCode();
+    hash = (37 * hash) + USER_ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getUserAddress().hashCode();
+    hash = (37 * hash) + AUCTION_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getAuctionId().hashCode();
+    hash = (37 * hash) + ITEM_FIELD_NUMBER;
+    hash = (53 * hash) + getItem().hashCode();
     hash = (37 * hash) + MAX_BID_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getMaxBid()));
+    hash = (37 * hash) + RANDOM_AUCTION_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getRandomAuctionId().hashCode();
     hash = (37 * hash) + RANDOM_USER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getRandomUserId().hashCode();
-    hash = (37 * hash) + RANDOM_OBJECT_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getRandomObjectId().hashCode();
+    hash = (37 * hash) + RANDOM_ITEM_FIELD_NUMBER;
+    hash = (53 * hash) + getRandomItem().hashCode();
     hash = (37 * hash) + RANDOM_MAX_BID_FIELD_NUMBER;
-    hash = (53 * hash) + getRandomMaxBid().hashCode();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getRandomMaxBid()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -610,17 +691,21 @@ private static final long serialVersionUID = 0L;
       super.clear();
       userId_ = "";
 
-      userAdress_ = "";
+      userAddress_ = "";
 
-      objectId_ = "";
+      auctionId_ = "";
+
+      item_ = "";
 
       maxBid_ = 0D;
 
+      randomAuctionId_ = "";
+
       randomUserId_ = "";
 
-      randomObjectId_ = "";
+      randomItem_ = "";
 
-      randomMaxBid_ = "";
+      randomMaxBid_ = 0D;
 
       return this;
     }
@@ -649,11 +734,13 @@ private static final long serialVersionUID = 0L;
     public bdcc.grpc.NodeNotification buildPartial() {
       bdcc.grpc.NodeNotification result = new bdcc.grpc.NodeNotification(this);
       result.userId_ = userId_;
-      result.userAdress_ = userAdress_;
-      result.objectId_ = objectId_;
+      result.userAddress_ = userAddress_;
+      result.auctionId_ = auctionId_;
+      result.item_ = item_;
       result.maxBid_ = maxBid_;
+      result.randomAuctionId_ = randomAuctionId_;
       result.randomUserId_ = randomUserId_;
-      result.randomObjectId_ = randomObjectId_;
+      result.randomItem_ = randomItem_;
       result.randomMaxBid_ = randomMaxBid_;
       onBuilt();
       return result;
@@ -707,28 +794,35 @@ private static final long serialVersionUID = 0L;
         userId_ = other.userId_;
         onChanged();
       }
-      if (!other.getUserAdress().isEmpty()) {
-        userAdress_ = other.userAdress_;
+      if (!other.getUserAddress().isEmpty()) {
+        userAddress_ = other.userAddress_;
         onChanged();
       }
-      if (!other.getObjectId().isEmpty()) {
-        objectId_ = other.objectId_;
+      if (!other.getAuctionId().isEmpty()) {
+        auctionId_ = other.auctionId_;
+        onChanged();
+      }
+      if (!other.getItem().isEmpty()) {
+        item_ = other.item_;
         onChanged();
       }
       if (other.getMaxBid() != 0D) {
         setMaxBid(other.getMaxBid());
       }
+      if (!other.getRandomAuctionId().isEmpty()) {
+        randomAuctionId_ = other.randomAuctionId_;
+        onChanged();
+      }
       if (!other.getRandomUserId().isEmpty()) {
         randomUserId_ = other.randomUserId_;
         onChanged();
       }
-      if (!other.getRandomObjectId().isEmpty()) {
-        randomObjectId_ = other.randomObjectId_;
+      if (!other.getRandomItem().isEmpty()) {
+        randomItem_ = other.randomItem_;
         onChanged();
       }
-      if (!other.getRandomMaxBid().isEmpty()) {
-        randomMaxBid_ = other.randomMaxBid_;
-        onChanged();
+      if (other.getRandomMaxBid() != 0D) {
+        setRandomMaxBid(other.getRandomMaxBid());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -835,168 +929,244 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object userAdress_ = "";
+    private java.lang.Object userAddress_ = "";
     /**
-     * <code>string user_adress = 2;</code>
-     * @return The userAdress.
+     * <code>string user_address = 2;</code>
+     * @return The userAddress.
      */
-    public java.lang.String getUserAdress() {
-      java.lang.Object ref = userAdress_;
+    public java.lang.String getUserAddress() {
+      java.lang.Object ref = userAddress_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        userAdress_ = s;
+        userAddress_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string user_adress = 2;</code>
-     * @return The bytes for userAdress.
+     * <code>string user_address = 2;</code>
+     * @return The bytes for userAddress.
      */
     public com.google.protobuf.ByteString
-        getUserAdressBytes() {
-      java.lang.Object ref = userAdress_;
+        getUserAddressBytes() {
+      java.lang.Object ref = userAddress_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        userAdress_ = b;
+        userAddress_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string user_adress = 2;</code>
-     * @param value The userAdress to set.
+     * <code>string user_address = 2;</code>
+     * @param value The userAddress to set.
      * @return This builder for chaining.
      */
-    public Builder setUserAdress(
+    public Builder setUserAddress(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      userAdress_ = value;
+      userAddress_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string user_adress = 2;</code>
+     * <code>string user_address = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearUserAdress() {
+    public Builder clearUserAddress() {
       
-      userAdress_ = getDefaultInstance().getUserAdress();
+      userAddress_ = getDefaultInstance().getUserAddress();
       onChanged();
       return this;
     }
     /**
-     * <code>string user_adress = 2;</code>
-     * @param value The bytes for userAdress to set.
+     * <code>string user_address = 2;</code>
+     * @param value The bytes for userAddress to set.
      * @return This builder for chaining.
      */
-    public Builder setUserAdressBytes(
+    public Builder setUserAddressBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      userAdress_ = value;
+      userAddress_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object objectId_ = "";
+    private java.lang.Object auctionId_ = "";
     /**
-     * <code>string object_id = 3;</code>
-     * @return The objectId.
+     * <code>string auction_id = 3;</code>
+     * @return The auctionId.
      */
-    public java.lang.String getObjectId() {
-      java.lang.Object ref = objectId_;
+    public java.lang.String getAuctionId() {
+      java.lang.Object ref = auctionId_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        objectId_ = s;
+        auctionId_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string object_id = 3;</code>
-     * @return The bytes for objectId.
+     * <code>string auction_id = 3;</code>
+     * @return The bytes for auctionId.
      */
     public com.google.protobuf.ByteString
-        getObjectIdBytes() {
-      java.lang.Object ref = objectId_;
+        getAuctionIdBytes() {
+      java.lang.Object ref = auctionId_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        objectId_ = b;
+        auctionId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string object_id = 3;</code>
-     * @param value The objectId to set.
+     * <code>string auction_id = 3;</code>
+     * @param value The auctionId to set.
      * @return This builder for chaining.
      */
-    public Builder setObjectId(
+    public Builder setAuctionId(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      objectId_ = value;
+      auctionId_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string object_id = 3;</code>
+     * <code>string auction_id = 3;</code>
      * @return This builder for chaining.
      */
-    public Builder clearObjectId() {
+    public Builder clearAuctionId() {
       
-      objectId_ = getDefaultInstance().getObjectId();
+      auctionId_ = getDefaultInstance().getAuctionId();
       onChanged();
       return this;
     }
     /**
-     * <code>string object_id = 3;</code>
-     * @param value The bytes for objectId to set.
+     * <code>string auction_id = 3;</code>
+     * @param value The bytes for auctionId to set.
      * @return This builder for chaining.
      */
-    public Builder setObjectIdBytes(
+    public Builder setAuctionIdBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      objectId_ = value;
+      auctionId_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object item_ = "";
+    /**
+     * <code>string item = 4;</code>
+     * @return The item.
+     */
+    public java.lang.String getItem() {
+      java.lang.Object ref = item_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        item_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string item = 4;</code>
+     * @return The bytes for item.
+     */
+    public com.google.protobuf.ByteString
+        getItemBytes() {
+      java.lang.Object ref = item_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        item_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string item = 4;</code>
+     * @param value The item to set.
+     * @return This builder for chaining.
+     */
+    public Builder setItem(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      item_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string item = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearItem() {
+      
+      item_ = getDefaultInstance().getItem();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string item = 4;</code>
+     * @param value The bytes for item to set.
+     * @return This builder for chaining.
+     */
+    public Builder setItemBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      item_ = value;
       onChanged();
       return this;
     }
 
     private double maxBid_ ;
     /**
-     * <code>double max_bid = 4;</code>
+     * <code>double max_bid = 5;</code>
      * @return The maxBid.
      */
     public double getMaxBid() {
       return maxBid_;
     }
     /**
-     * <code>double max_bid = 4;</code>
+     * <code>double max_bid = 5;</code>
      * @param value The maxBid to set.
      * @return This builder for chaining.
      */
@@ -1007,7 +1177,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double max_bid = 4;</code>
+     * <code>double max_bid = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearMaxBid() {
@@ -1017,9 +1187,85 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object randomAuctionId_ = "";
+    /**
+     * <code>string random_auction_id = 6;</code>
+     * @return The randomAuctionId.
+     */
+    public java.lang.String getRandomAuctionId() {
+      java.lang.Object ref = randomAuctionId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        randomAuctionId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string random_auction_id = 6;</code>
+     * @return The bytes for randomAuctionId.
+     */
+    public com.google.protobuf.ByteString
+        getRandomAuctionIdBytes() {
+      java.lang.Object ref = randomAuctionId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        randomAuctionId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string random_auction_id = 6;</code>
+     * @param value The randomAuctionId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRandomAuctionId(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      randomAuctionId_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string random_auction_id = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearRandomAuctionId() {
+      
+      randomAuctionId_ = getDefaultInstance().getRandomAuctionId();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string random_auction_id = 6;</code>
+     * @param value The bytes for randomAuctionId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRandomAuctionIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      randomAuctionId_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object randomUserId_ = "";
     /**
-     * <code>string random_user_id = 5;</code>
+     * <code>string random_user_id = 7;</code>
      * @return The randomUserId.
      */
     public java.lang.String getRandomUserId() {
@@ -1035,7 +1281,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_user_id = 5;</code>
+     * <code>string random_user_id = 7;</code>
      * @return The bytes for randomUserId.
      */
     public com.google.protobuf.ByteString
@@ -1052,7 +1298,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_user_id = 5;</code>
+     * <code>string random_user_id = 7;</code>
      * @param value The randomUserId to set.
      * @return This builder for chaining.
      */
@@ -1067,7 +1313,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_user_id = 5;</code>
+     * <code>string random_user_id = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomUserId() {
@@ -1077,7 +1323,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_user_id = 5;</code>
+     * <code>string random_user_id = 7;</code>
      * @param value The bytes for randomUserId to set.
      * @return This builder for chaining.
      */
@@ -1093,154 +1339,108 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object randomObjectId_ = "";
+    private java.lang.Object randomItem_ = "";
     /**
-     * <code>string random_object_id = 6;</code>
-     * @return The randomObjectId.
+     * <code>string random_item = 8;</code>
+     * @return The randomItem.
      */
-    public java.lang.String getRandomObjectId() {
-      java.lang.Object ref = randomObjectId_;
+    public java.lang.String getRandomItem() {
+      java.lang.Object ref = randomItem_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        randomObjectId_ = s;
+        randomItem_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string random_object_id = 6;</code>
-     * @return The bytes for randomObjectId.
+     * <code>string random_item = 8;</code>
+     * @return The bytes for randomItem.
      */
     public com.google.protobuf.ByteString
-        getRandomObjectIdBytes() {
-      java.lang.Object ref = randomObjectId_;
+        getRandomItemBytes() {
+      java.lang.Object ref = randomItem_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        randomObjectId_ = b;
+        randomItem_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string random_object_id = 6;</code>
-     * @param value The randomObjectId to set.
+     * <code>string random_item = 8;</code>
+     * @param value The randomItem to set.
      * @return This builder for chaining.
      */
-    public Builder setRandomObjectId(
+    public Builder setRandomItem(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      randomObjectId_ = value;
+      randomItem_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string random_object_id = 6;</code>
+     * <code>string random_item = 8;</code>
      * @return This builder for chaining.
      */
-    public Builder clearRandomObjectId() {
+    public Builder clearRandomItem() {
       
-      randomObjectId_ = getDefaultInstance().getRandomObjectId();
+      randomItem_ = getDefaultInstance().getRandomItem();
       onChanged();
       return this;
     }
     /**
-     * <code>string random_object_id = 6;</code>
-     * @param value The bytes for randomObjectId to set.
+     * <code>string random_item = 8;</code>
+     * @param value The bytes for randomItem to set.
      * @return This builder for chaining.
      */
-    public Builder setRandomObjectIdBytes(
+    public Builder setRandomItemBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      randomObjectId_ = value;
+      randomItem_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object randomMaxBid_ = "";
+    private double randomMaxBid_ ;
     /**
-     * <code>string random_max_bid = 7;</code>
+     * <code>double random_max_bid = 9;</code>
      * @return The randomMaxBid.
      */
-    public java.lang.String getRandomMaxBid() {
-      java.lang.Object ref = randomMaxBid_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        randomMaxBid_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public double getRandomMaxBid() {
+      return randomMaxBid_;
     }
     /**
-     * <code>string random_max_bid = 7;</code>
-     * @return The bytes for randomMaxBid.
-     */
-    public com.google.protobuf.ByteString
-        getRandomMaxBidBytes() {
-      java.lang.Object ref = randomMaxBid_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        randomMaxBid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string random_max_bid = 7;</code>
+     * <code>double random_max_bid = 9;</code>
      * @param value The randomMaxBid to set.
      * @return This builder for chaining.
      */
-    public Builder setRandomMaxBid(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setRandomMaxBid(double value) {
+      
       randomMaxBid_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string random_max_bid = 7;</code>
+     * <code>double random_max_bid = 9;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomMaxBid() {
       
-      randomMaxBid_ = getDefaultInstance().getRandomMaxBid();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string random_max_bid = 7;</code>
-     * @param value The bytes for randomMaxBid to set.
-     * @return This builder for chaining.
-     */
-    public Builder setRandomMaxBidBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      randomMaxBid_ = value;
+      randomMaxBid_ = 0D;
       onChanged();
       return this;
     }

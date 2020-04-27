@@ -11,15 +11,25 @@ import bdcc.auction.Bid;
 import bdcc.auction.User;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
+import bdcc.grpc.NodeNotification;
 import bdcc.grpc.NodeOperationsClient;
 
 public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
+        Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
+        NodeNotification response = null;
         try
         {
-            NodeInfo response = initial_requester.notifyNode(
-                current_user.getUserId(), InetAddress.getLocalHost().getHostAddress()
+            response = initial_requester.notifyNode(
+                current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
+                (user_auction == null) ? "" : user_auction.getAuctionId(),
+                (user_auction == null) ? "" : user_auction.getItem(),
+                (user_auction == null) ? 0 : user_auction.getHighestBid(),
+                (random_auction == null) ? "" : random_auction.getAuctionId(),
+                (random_auction == null) ? "" : random_auction.getSeller(),
+                (random_auction == null) ? "" : random_auction.getItem(),
+                (random_auction == null) ? 0 : random_auction.getHighestBid()
             );
             System.out.println("User " + Crypto.toHex(response.getUserId())  + " found with address " + response.getUserAddress());
             userBucket.addNode(response.getUserId(), response.getUserAddress());
@@ -28,6 +38,24 @@ public class NodeActions {
             //if node not found it is removed from the KBucket
             userBucket.removeNode(node);
         }
+    }
+
+    public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
+                                                    User current_user, AuctionList auctions){
+        if(notification.getAuctionId() != "")
+        {
+            Auction sender_auction = new Auction(notification.getAuctionId(), "",
+                                                notification.getMaxBid(), notification.getItem());
+            auctions.addToAuctionList(sender_auction);
+        }   
+        
+        if(notification.getRandomAuctionId() != "")
+        {
+            Auction random_auction = new Auction(notification.getRandomAuctionId(), "",
+                                                notification.getRandomMaxBid(), notification.getRandomItem());
+            auctions.addToAuctionList(random_auction);
+        }
+        userBucket.addNode(notification.getUserId(), notification.getUserAddress());
     }
 
     public static KeyNode findNode(String Key, int server_port, KBucket userBucket, User current_user){

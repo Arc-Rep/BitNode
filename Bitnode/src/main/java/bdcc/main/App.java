@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import bdcc.auction.AuctionList;
 import bdcc.auction.User;
 import bdcc.chain.*;
+import bdcc.grpc.NodeNotification;
 import bdcc.grpc.NodeInfo;
 import bdcc.grpc.NodeOperationsClient;
 import bdcc.grpc.NodeOperationsServer;
@@ -206,7 +207,7 @@ public class App {
                 else
                 {
                     System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
-                    //NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user);
+                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user,auction_list);
                 }
 
                 numb_nodes_found++;
@@ -248,7 +249,7 @@ public class App {
         {
             block_chain = NodeBlockChain.getChainManager();
             user_server = new NodeOperationsServer(server_port, current_user.getUserId(),
-                            InetAddress.getLocalHost().getHostAddress(), userBucket);
+                            InetAddress.getLocalHost().getHostAddress(), userBucket, current_user, auction_list);
             
             thread_renewal = new Thread(renew_manager);
             thread_renewal.start();

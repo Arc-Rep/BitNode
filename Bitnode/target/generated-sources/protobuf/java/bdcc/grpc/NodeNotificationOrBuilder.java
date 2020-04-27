@@ -20,68 +20,86 @@ public interface NodeNotificationOrBuilder extends
       getUserIdBytes();
 
   /**
-   * <code>string user_adress = 2;</code>
-   * @return The userAdress.
+   * <code>string user_address = 2;</code>
+   * @return The userAddress.
    */
-  java.lang.String getUserAdress();
+  java.lang.String getUserAddress();
   /**
-   * <code>string user_adress = 2;</code>
-   * @return The bytes for userAdress.
-   */
-  com.google.protobuf.ByteString
-      getUserAdressBytes();
-
-  /**
-   * <code>string object_id = 3;</code>
-   * @return The objectId.
-   */
-  java.lang.String getObjectId();
-  /**
-   * <code>string object_id = 3;</code>
-   * @return The bytes for objectId.
+   * <code>string user_address = 2;</code>
+   * @return The bytes for userAddress.
    */
   com.google.protobuf.ByteString
-      getObjectIdBytes();
+      getUserAddressBytes();
 
   /**
-   * <code>double max_bid = 4;</code>
+   * <code>string auction_id = 3;</code>
+   * @return The auctionId.
+   */
+  java.lang.String getAuctionId();
+  /**
+   * <code>string auction_id = 3;</code>
+   * @return The bytes for auctionId.
+   */
+  com.google.protobuf.ByteString
+      getAuctionIdBytes();
+
+  /**
+   * <code>string item = 4;</code>
+   * @return The item.
+   */
+  java.lang.String getItem();
+  /**
+   * <code>string item = 4;</code>
+   * @return The bytes for item.
+   */
+  com.google.protobuf.ByteString
+      getItemBytes();
+
+  /**
+   * <code>double max_bid = 5;</code>
    * @return The maxBid.
    */
   double getMaxBid();
 
   /**
-   * <code>string random_user_id = 5;</code>
+   * <code>string random_auction_id = 6;</code>
+   * @return The randomAuctionId.
+   */
+  java.lang.String getRandomAuctionId();
+  /**
+   * <code>string random_auction_id = 6;</code>
+   * @return The bytes for randomAuctionId.
+   */
+  com.google.protobuf.ByteString
+      getRandomAuctionIdBytes();
+
+  /**
+   * <code>string random_user_id = 7;</code>
    * @return The randomUserId.
    */
   java.lang.String getRandomUserId();
   /**
-   * <code>string random_user_id = 5;</code>
+   * <code>string random_user_id = 7;</code>
    * @return The bytes for randomUserId.
    */
   com.google.protobuf.ByteString
       getRandomUserIdBytes();
 
   /**
-   * <code>string random_object_id = 6;</code>
-   * @return The randomObjectId.
+   * <code>string random_item = 8;</code>
+   * @return The randomItem.
    */
-  java.lang.String getRandomObjectId();
+  java.lang.String getRandomItem();
   /**
-   * <code>string random_object_id = 6;</code>
-   * @return The bytes for randomObjectId.
+   * <code>string random_item = 8;</code>
+   * @return The bytes for randomItem.
    */
   com.google.protobuf.ByteString
-      getRandomObjectIdBytes();
+      getRandomItemBytes();
 
   /**
-   * <code>string random_max_bid = 7;</code>
+   * <code>double random_max_bid = 9;</code>
    * @return The randomMaxBid.
    */
-  java.lang.String getRandomMaxBid();
-  /**
-   * <code>string random_max_bid = 7;</code>
-   * @return The bytes for randomMaxBid.
-   */
-  com.google.protobuf.ByteString
-      getRandomMaxBidBytes();
+  double getRandomMaxBid();
 }

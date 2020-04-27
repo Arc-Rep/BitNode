@@ -7,6 +7,9 @@ import java.util.logging.Logger;
 import java.util.LinkedList;
 
 import bdcc.kademlia.*;
+import bdcc.auction.Auction;
+import bdcc.auction.AuctionList;
+import bdcc.auction.User;
 import bdcc.chain.*;
 
 public class NodeOperationsServer {
@@ -15,14 +18,19 @@ public class NodeOperationsServer {
     /* The port on which the server should run */
 
     private Server server;
-    public static KBucket userBucket;
+    private static KBucket userBucket;
+    private static User user;
+    private static AuctionList auction_list;
     private String server_address;
     private String server_id;
 
-    public NodeOperationsServer(int port, String user_id, String address, KBucket user_bucket) throws Exception {
+    public NodeOperationsServer(int port, String user_id, String address, 
+                                KBucket user_bucket, User this_user, AuctionList list) throws Exception {
       this.server_id = user_id;
       this.server_address = address;
       this.userBucket = user_bucket;
+      this.auction_list = list;
+      this.user = this_user;
       server = ServerBuilder.forPort(port)
           .addService(new NodeOperationsService())
           .build()
@@ -58,15 +66,22 @@ public class NodeOperationsServer {
       
       
       @Override
-      public void notifyNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
-        System.out.println("User " + Crypto.toHex(node_id.getUserId())  + " from " + node_id.getUserAddress() + " connected");
-        NodeInfo reply = NodeInfo.newBuilder()
-                            .setUserId(userBucket.getUserId())
-                            .setUserAddress(server_address)
-                            .build();
+      public void notifyNode(NodeNotification notification, StreamObserver<NodeNotification> responseObserver) {
+        Auction random_auction = auction_list.getRandomAuction(), user_auction = user.getUserAuction();
+        NodeActions.proccessPingNode(notification, userBucket, user, auction_list);
+        System.out.println("User " + Crypto.toHex(notification.getUserId())  + " from " + notification.getUserAddress() + " connected");
+        NodeNotification reply = NodeNotification.newBuilder()
+                            .setUserId(userBucket.getUserId()).setUserAddress(server_address).
+                            setAuctionId((user_auction == null) ? "" : user_auction.getAuctionId()).
+                            setItem((user_auction == null) ? "" : user_auction.getItem()).
+                            setMaxBid((user_auction == null) ? 0 : user_auction.getHighestBid()).
+                            setRandomAuctionId((random_auction == null) ? "" : random_auction.getAuctionId()).
+                            setRandomUserId((random_auction == null) ? "" : random_auction.getSeller()).
+                            setRandomItem((random_auction == null) ? "" : random_auction.getItem()).
+                            setRandomMaxBid((random_auction == null) ? 0 : random_auction.getHighestBid()).build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
-        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
+        
       }
 
       @Override
