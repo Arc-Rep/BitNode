@@ -121,7 +121,6 @@ public class NodeOperationsClient {
         logger.log(Level.WARNING, "RCP failed", e);
         return;
       }
-      
     }
 
     public void resultsAuction(String auction_id, String buyer_id, double value){

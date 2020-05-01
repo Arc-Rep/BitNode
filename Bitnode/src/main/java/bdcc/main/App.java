@@ -137,6 +137,7 @@ public class App {
             //setup auction
             if(current_user.setUpAuction(item, startingValue)){
                 System.out.println("Auction successfully setup!");
+                /*
                 NodeOperationsClient initial_rquester = new NodeOperationsClient(address, server_port);
 
                 try{
@@ -149,7 +150,7 @@ public class App {
                 } catch(Exception e){
                     System.out.println("Error: Initial server not found.");
                 }
-
+            */
             } 
             
             else{
