@@ -254,7 +254,6 @@ public class App {
         String option = "init";
         while(option != "0"){
             printStartMenu();
-            scanner.skip("\\R");
             option = scanner.nextLine();
 
             switch(option){
