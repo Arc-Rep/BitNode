@@ -58,6 +58,7 @@ message InfoAuction {
   string item = 3;
   double amount = 4;
   string buyer_id = 5;
+  double buyer_bid = 6;
 }
 
 

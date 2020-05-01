@@ -5,25 +5,25 @@ import java.util.Random;
 
 public class AuctionList {
 
-    CopyOnWriteArrayList<Auction> auction_list;
+    CopyOnWriteArrayList<Auction> live_list;
     CopyOnWriteArrayList<Auction> completed_list;
 
     public AuctionList(){
-        auction_list = new CopyOnWriteArrayList<Auction>();
+        live_list = new CopyOnWriteArrayList<Auction>();
         completed_list = new CopyOnWriteArrayList<Auction>();
     }
 
-    public synchronized Auction auctionIsLive(String id){
-        for(int i = 0; i < auction_list.size(); i++){
-            if(auction_list.get(i).compareAuctionId(id)){
-                return auction_list.get(i);
+    public synchronized boolean auctionIsLive(String id){
+        for (Auction auction : live_list) {
+            if(auction.getAuctionId().equals(id)){
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public synchronized Auction getAuctionById(String id){
-        for (Auction auction : auction_list) {
+        for (Auction auction : live_list) {
             if(auction.getAuctionId().equals(id)){
                 return auction;
             }
@@ -31,32 +31,46 @@ public class AuctionList {
         return null;
     }
 
+    public synchronized void getLiveAuctions(){
+        for (Auction au : live_list) {
+            System.out.println("=============================================");
+            System.out.println("Auction ID: " + au.getAuctionId());
+            System.out.println("    - Item: " + au.getItem());
+            if(au.getHighestBid() == -1){
+                System.out.println("    - Value: " + au.getValue());
+            }else {
+                System.out.println("    - Highest Bid: " + au.getHighestBid());
+                System.out.println("    - Bidder: " + au.getHighestBidder());
+            }
+            System.out.println("=============================================");
+        }
+    }
+
     public synchronized void updateList(Auction au, int i){ //fazer verificações?
         if(i==1){ //new bid
-            auction_list.remove(au);
-            auction_list.add(au);
-        } else { // completed
+            live_list.remove(au);
+            live_list.add(au);
+        } else if(i==2){ // completed
             completed_list.add(au);
         }
         
     }
 
     public synchronized void addToAuctionList(Auction to_add){
-        for (Auction auction : auction_list) {
+        for (Auction auction : live_list) {
             if(auction.getAuctionId().equals(to_add.getAuctionId())){
-                auction_list.remove(auction);
-                auction_list.add(to_add);
+                live_list.remove(auction);
+                live_list.add(to_add);
                 return;
             }
         }
-        auction_list.add(to_add);
+        live_list.add(to_add);
     }
 
-    
     public synchronized Auction getRandomAuction(){
-        if(auction_list.size() == 0) return null;
+        if(live_list.size() == 0) return null;
         Random r = new Random();
-        return auction_list.get(r.nextInt() % auction_list.size());
+        return live_list.get(r.nextInt() % live_list.size());
     }
 
 }

@@ -60,4 +60,10 @@ public interface InfoAuctionOrBuilder extends
    */
   com.google.protobuf.ByteString
       getBuyerIdBytes();
+
+  /**
+   * <code>double buyer_bid = 6;</code>
+   * @return The buyerBid.
+   */
+  double getBuyerBid();
 }

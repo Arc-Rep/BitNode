@@ -92,7 +92,7 @@ public class NodeOperationsClient {
       }
     }
 
-    public void infoAuction(String seller_id, String auction_id, String item, double amount, String buyer_id){
+    public void infoAuction(String seller_id, String auction_id, String item, double amount, String buyer_id, double buyer_bid){
       try{
         InfoAuction infoauctionrequest = InfoAuction.newBuilder()
           .setSellerId(seller_id)
@@ -100,6 +100,7 @@ public class NodeOperationsClient {
           .setItem(item)
           .setAmount(amount)
           .setBuyerId(buyer_id)
+          .setBuyerBid(buyer_bid)
           .build();
         NodeResponse response = blockingStub.infoAuction(infoauctionrequest);
       } catch(RuntimeException e){

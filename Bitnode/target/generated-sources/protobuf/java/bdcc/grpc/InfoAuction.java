@@ -81,6 +81,11 @@ private static final long serialVersionUID = 0L;
             buyerId_ = s;
             break;
           }
+          case 49: {
+
+            buyerBid_ = input.readDouble();
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -267,6 +272,16 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int BUYER_BID_FIELD_NUMBER = 6;
+  private double buyerBid_;
+  /**
+   * <code>double buyer_bid = 6;</code>
+   * @return The buyerBid.
+   */
+  public double getBuyerBid() {
+    return buyerBid_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -296,6 +311,9 @@ private static final long serialVersionUID = 0L;
     if (!getBuyerIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, buyerId_);
     }
+    if (buyerBid_ != 0D) {
+      output.writeDouble(6, buyerBid_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -320,6 +338,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!getBuyerIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, buyerId_);
+    }
+    if (buyerBid_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(6, buyerBid_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -347,6 +369,9 @@ private static final long serialVersionUID = 0L;
             other.getAmount())) return false;
     if (!getBuyerId()
         .equals(other.getBuyerId())) return false;
+    if (java.lang.Double.doubleToLongBits(getBuyerBid())
+        != java.lang.Double.doubleToLongBits(
+            other.getBuyerBid())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -369,6 +394,9 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getAmount()));
     hash = (37 * hash) + BUYER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getBuyerId().hashCode();
+    hash = (37 * hash) + BUYER_BID_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getBuyerBid()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -512,6 +540,8 @@ private static final long serialVersionUID = 0L;
 
       buyerId_ = "";
 
+      buyerBid_ = 0D;
+
       return this;
     }
 
@@ -543,6 +573,7 @@ private static final long serialVersionUID = 0L;
       result.item_ = item_;
       result.amount_ = amount_;
       result.buyerId_ = buyerId_;
+      result.buyerBid_ = buyerBid_;
       onBuilt();
       return result;
     }
@@ -609,6 +640,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getBuyerId().isEmpty()) {
         buyerId_ = other.buyerId_;
         onChanged();
+      }
+      if (other.getBuyerBid() != 0D) {
+        setBuyerBid(other.getBuyerBid());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -969,6 +1003,36 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       buyerId_ = value;
+      onChanged();
+      return this;
+    }
+
+    private double buyerBid_ ;
+    /**
+     * <code>double buyer_bid = 6;</code>
+     * @return The buyerBid.
+     */
+    public double getBuyerBid() {
+      return buyerBid_;
+    }
+    /**
+     * <code>double buyer_bid = 6;</code>
+     * @param value The buyerBid to set.
+     * @return This builder for chaining.
+     */
+    public Builder setBuyerBid(double value) {
+      
+      buyerBid_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double buyer_bid = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearBuyerBid() {
+      
+      buyerBid_ = 0D;
       onChanged();
       return this;
     }

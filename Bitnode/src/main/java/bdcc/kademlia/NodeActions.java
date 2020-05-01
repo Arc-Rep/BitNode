@@ -5,10 +5,7 @@ import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import bdcc.auction.Auction;
-import bdcc.auction.AuctionList;
-import bdcc.auction.Bid;
-import bdcc.auction.User;
+import bdcc.auction.*;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
 import bdcc.grpc.NodeNotification;
@@ -45,14 +42,14 @@ public class NodeActions {
         if(notification.getAuctionId() != "")
         {
             Auction sender_auction = new Auction(notification.getAuctionId(), "",
-                                                notification.getMaxBid(), notification.getItem());
+                                                notification.getMaxBid(), notification.getItem(), null);
             auctions.addToAuctionList(sender_auction);
         }   
         
         if(notification.getRandomAuctionId() != "")
         {
             Auction random_auction = new Auction(notification.getRandomAuctionId(), "",
-                                                notification.getRandomMaxBid(), notification.getRandomItem());
+                                                notification.getRandomMaxBid(), notification.getRandomItem(), null);
             auctions.addToAuctionList(random_auction);
         }
         userBucket.addNode(notification.getUserId(), notification.getUserAddress());
@@ -115,8 +112,11 @@ public class NodeActions {
         return closest_node;
     }
 
-    public static int makeBid(String id, double value, KeyNode bidder, AuctionList list){ // 1 - accepted, 2 - rejected, 3 - auction not live
-        Auction temp = list.auctionIsLive(id);
+
+    //needs fine tuning
+    public static int makeBid(String id, double value, String bidder, AuctionList list, String host, int port){ // 1 - accepted, 2 - rejected, 3 - auction not live
+        NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
+        Auction temp = list.getAuctionById(id);
         if(temp == null){
             return 3;
         }
@@ -124,6 +124,7 @@ public class NodeActions {
         Bid bid = new Bid(id, value, bidder);
 
         if(temp.updateBid(bid)){
+            initial_requester.makeBid(bidder, id, value);
             list.updateList(temp,1);
             return 1;
         }
@@ -131,9 +132,11 @@ public class NodeActions {
         return 2;
     }
 
-    public static void completeAuction(AuctionList list, User current_user){
+    public static void completeAuction(AuctionList list, User current_user, String host, int port){
+        NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
         Auction temp = current_user.getUserAuction();
         current_user.concludeAuction();
         list.updateList(temp, 2);
+        initial_requester.resultsAuction(temp.getAuctionId(), temp.getHighestBidder(), temp.getHighestBid());
     }
 }

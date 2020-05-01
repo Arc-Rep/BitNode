@@ -1,13 +1,11 @@
 package bdcc.auction;
 
-import bdcc.kademlia.KeyNode;
-
 public class Bid {
     String auction_id;
     double value;
-    KeyNode bidder;
+    String bidder;
 
-    public Bid(String a, double b, KeyNode c){
+    public Bid(String a, double b, String c){
         this.auction_id = a;
         this.value = b;
         this.bidder = c;
@@ -21,7 +19,7 @@ public class Bid {
         return this.value;
     }
     
-    public KeyNode getInfoBidder(){
+    public String getInfoBidder(){
         return this.bidder;
     }
 }

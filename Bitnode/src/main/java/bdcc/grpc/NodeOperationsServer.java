@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import bdcc.kademlia.*;
 import bdcc.auction.Auction;
 import bdcc.auction.AuctionList;
+import bdcc.auction.Bid;
 import bdcc.auction.User;
 import bdcc.chain.*;
 
@@ -148,6 +149,17 @@ public class NodeOperationsServer {
 
       @Override
       public void infoAuction(InfoAuction infoAuction, StreamObserver<NodeResponse> responseObserver){
+        Auction temp;
+        if(infoAuction.getBuyerId() == ""){
+          temp = new Auction(infoAuction.getSellerId(), infoAuction.getItem(), infoAuction.getAmount(), infoAuction.getAuctionId(), null);
+        }
+        else{
+          Bid bid_info = new Bid(infoAuction.getAuctionId(), infoAuction.getBuyerBid(), infoAuction.getBuyerId());
+          temp = new Auction(infoAuction.getSellerId(), infoAuction.getItem(), infoAuction.getAmount(), infoAuction.getAuctionId(), bid_info);
+        }
+        //add the announced aution to the list
+        auction_list.addToAuctionList(temp);
+
         NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
 
         responseObserver.onNext(replyBuilder.build());
@@ -156,6 +168,7 @@ public class NodeOperationsServer {
 
       @Override
       public void makeBid(MakeBid makeBid, StreamObserver<NodeResponse> responseObserver){
+        System.out.println("Auction " + makeBid.getAuctionId() + " has a new highest bidder, " + makeBid.getBuyerId() + " with " + makeBid.getAmount());
         NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
 
         responseObserver.onNext(replyBuilder.build());
@@ -164,6 +177,7 @@ public class NodeOperationsServer {
 
       @Override
       public void resultsAuction(ResultsAuction resultsAuction, StreamObserver<NodeResponse> responseObserver){
+        System.out.println("Auction " + resultsAuction.getAuctionId() + " has ended! The winner is " + resultsAuction.getBuyerId() + " with a bid of " + resultsAuction.getValue() +"!");
         NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
 
         responseObserver.onNext(replyBuilder.build());

@@ -1,20 +1,19 @@
 package bdcc.auction;
 
-import bdcc.kademlia.KeyNode;
-
 
 public class Auction {
     String auction_id;
     String seller_id;
     String item;
     double value;
-    Bid bid = null;
+    Bid bid;
 
-    public Auction(String a, String b, double c, String id){
+    public Auction(String a, String b, double c, String id, Bid new_bid){
         auction_id = id;
         seller_id = a;
         item = b;
         value = c; //starting value
+        bid = new_bid;
     }
 
     public String getAuctionId(){
@@ -34,10 +33,14 @@ public class Auction {
     }
     
     public double getHighestBid(){
+        if(this.bid == null) return -1;
+
         return this.bid.getInfoValue();
     }
 
-    public KeyNode getHighestBidder(){
+    public String getHighestBidder(){
+        if(this.bid == null) return null;
+
         return this.bid.getInfoBidder();
     }
 

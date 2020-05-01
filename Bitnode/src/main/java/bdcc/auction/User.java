@@ -41,16 +41,21 @@ public class User{
         return user_auction;
     }
 
+    public double getWallet(){
+        return this.wallet;
+    }
+
     public boolean setUpAuction(String b, double c){
         if(user_auction == null){
             String id = Crypto.hashString(UUID.randomUUID().toString() + this.user_id);
-            this.user_auction = new Auction(this.user_id, b, c, id);
+            this.user_auction = new Auction(this.user_id, b, c, id, null);
             return true;
         }
         return false;
     }
 
     public void concludeAuction(){
+        //do not forget to make the transefer
         this.user_auction = null;
     }
 }

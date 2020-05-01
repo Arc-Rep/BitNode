@@ -66,27 +66,27 @@ public final class NodeOperationsProto {
       "ess\030\002 \001(\t\022\022\n\nauction_id\030\003 \001(\t\022\014\n\004item\030\004 " +
       "\001(\t\022\017\n\007max_bid\030\005 \001(\001\022\031\n\021random_auction_i" +
       "d\030\006 \001(\t\022\026\n\016random_user_id\030\007 \001(\t\022\023\n\013rando" +
-      "m_item\030\010 \001(\t\022\026\n\016random_max_bid\030\t \001(\001\"d\n\013" +
+      "m_item\030\010 \001(\t\022\026\n\016random_max_bid\030\t \001(\001\"w\n\013" +
       "InfoAuction\022\021\n\tseller_id\030\001 \001(\t\022\022\n\nauctio" +
       "n_id\030\002 \001(\t\022\014\n\004item\030\003 \001(\t\022\016\n\006amount\030\004 \001(\001" +
-      "\022\020\n\010buyer_id\030\005 \001(\t\"?\n\007MakeBid\022\020\n\010buyer_i" +
-      "d\030\001 \001(\t\022\022\n\nauction_id\030\002 \001(\t\022\016\n\006amount\030\003 " +
-      "\001(\001\"E\n\016ResultsAuction\022\022\n\nauction_id\030\001 \001(" +
-      "\t\022\020\n\010buyer_id\030\002 \001(\t\022\r\n\005value\030\003 \001(\001\"\036\n\014No" +
-      "deResponse\022\016\n\006status\030\001 \001(\t2\311\003\n\016NodeOpera" +
-      "tions\022>\n\nnotifyNode\022\026.grpc.NodeNotificat" +
-      "ion\032\026.grpc.NodeNotification\"\000\022.\n\010findNod" +
-      "e\022\016.grpc.NodeInfo\032\016.grpc.NodeInfo\"\0000\001\0220\n" +
-      "\nlookupNode\022\016.grpc.NodeInfo\032\016.grpc.NodeI" +
-      "nfo\"\0000\001\022/\n\tfindValue\022\016.grpc.NodeInfo\032\016.g" +
-      "rpc.NodeInfo\"\0000\001\022>\n\017makeTransaction\022\025.gr" +
-      "pc.TransactionInfo\032\022.grpc.NodeResponse\"\000" +
-      "\0226\n\013infoAuction\022\021.grpc.InfoAuction\032\022.grp" +
-      "c.NodeResponse\"\000\022.\n\007makeBid\022\r.grpc.MakeB" +
-      "id\032\022.grpc.NodeResponse\"\000\022<\n\016resultsAucti" +
-      "on\022\024.grpc.ResultsAuction\032\022.grpc.NodeResp" +
-      "onse\"\000B\"\n\tbdcc.grpcB\023NodeOperationsProto" +
-      "P\001b\006proto3"
+      "\022\020\n\010buyer_id\030\005 \001(\t\022\021\n\tbuyer_bid\030\006 \001(\001\"?\n" +
+      "\007MakeBid\022\020\n\010buyer_id\030\001 \001(\t\022\022\n\nauction_id" +
+      "\030\002 \001(\t\022\016\n\006amount\030\003 \001(\001\"E\n\016ResultsAuction" +
+      "\022\022\n\nauction_id\030\001 \001(\t\022\020\n\010buyer_id\030\002 \001(\t\022\r" +
+      "\n\005value\030\003 \001(\001\"\036\n\014NodeResponse\022\016\n\006status\030" +
+      "\001 \001(\t2\311\003\n\016NodeOperations\022>\n\nnotifyNode\022\026" +
+      ".grpc.NodeNotification\032\026.grpc.NodeNotifi" +
+      "cation\"\000\022.\n\010findNode\022\016.grpc.NodeInfo\032\016.g" +
+      "rpc.NodeInfo\"\0000\001\0220\n\nlookupNode\022\016.grpc.No" +
+      "deInfo\032\016.grpc.NodeInfo\"\0000\001\022/\n\tfindValue\022" +
+      "\016.grpc.NodeInfo\032\016.grpc.NodeInfo\"\0000\001\022>\n\017m" +
+      "akeTransaction\022\025.grpc.TransactionInfo\032\022." +
+      "grpc.NodeResponse\"\000\0226\n\013infoAuction\022\021.grp" +
+      "c.InfoAuction\032\022.grpc.NodeResponse\"\000\022.\n\007m" +
+      "akeBid\022\r.grpc.MakeBid\032\022.grpc.NodeRespons" +
+      "e\"\000\022<\n\016resultsAuction\022\024.grpc.ResultsAuct" +
+      "ion\032\022.grpc.NodeResponse\"\000B\"\n\tbdcc.grpcB\023" +
+      "NodeOperationsProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -115,7 +115,7 @@ public final class NodeOperationsProto {
     internal_static_grpc_InfoAuction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_InfoAuction_descriptor,
-        new java.lang.String[] { "SellerId", "AuctionId", "Item", "Amount", "BuyerId", });
+        new java.lang.String[] { "SellerId", "AuctionId", "Item", "Amount", "BuyerId", "BuyerBid", });
     internal_static_grpc_MakeBid_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_grpc_MakeBid_fieldAccessorTable = new
