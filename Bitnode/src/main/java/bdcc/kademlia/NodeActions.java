@@ -47,14 +47,14 @@ public class NodeActions {
         if(!notification.getAuctionId().equals(""))
         {
             Auction sender_auction = new Auction(notification.getUserId(), notification.getItem(), 
-                notification.getMaxBid(),notification.getAuctionId())
+                notification.getMaxBid(),notification.getAuctionId());
             auctions.addToAuctionList(sender_auction);
         }   
         
         if(!notification.getRandomAuctionId().equals("") && !notification.getRandomUserId().equals(current_user.getUserId()))
         {
             Auction random_auction = new Auction(notification.getRandomUserId(), notification.getRandomItem(),
-                                                    notification.getRandomMaxBid(), notification.getRandomAuctionId())
+                                                    notification.getRandomMaxBid(), notification.getRandomAuctionId());
             auctions.addToAuctionList(random_auction);
         }
         userBucket.addNode(notification.getUserId(), notification.getUserAddress());
