@@ -16,6 +16,13 @@ public class Auction {
         bid = new_bid;
     }
 
+    public Auction(String a, String b, double c, String id){
+        auction_id = id;
+        seller_id = a;
+        item = b;
+        value = c; //starting value
+    }
+
     public String getAuctionId(){
         return this.auction_id;
     }
