@@ -33,9 +33,9 @@ public class NodeActions {
             if(response.getAuctionId()!= "") auctions.addToAuctionList(new Auction(node.getKey(), response.getItem(), 
                                                                             response.getMaxBid(),response.getAuctionId()));
 
-            if(response.getRandomAuctionId() != "") auctions.addToAuctionList(new Auction(response.getRandomUserId(), response.getRandomItem(),
-                                                                                response.getRandomMaxBid(), response.getRandomAuctionId()));
-            auctions.getLiveAuctions();
+            if(response.getRandomAuctionId() != "" && response.getRandomUserId() != current_user.getUserId()) 
+                auctions.addToAuctionList(new Auction(response.getRandomUserId(), response.getRandomItem(),
+                                                            response.getRandomMaxBid(), response.getRandomAuctionId()));
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
