@@ -34,6 +34,12 @@ public class NodeActions {
             //if node not found it is removed from the KBucket
             userBucket.removeNode(node);
         }
+
+        try{
+            initial_requester.shutdown();
+        } catch(Exception e){
+            System.out.println("Unable to shutdown client");
+        }
     }
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
@@ -98,6 +104,13 @@ public class NodeActions {
         
                         numb_nodes_found++;
                     }
+
+                    try{
+                        initial_requester.shutdown();
+                    } catch(Exception e){
+                        System.out.println("Unable to shutdown client");
+                    }
+
                     node_list.remove(0);
                 }
                 catch(UnknownHostException e){
@@ -106,8 +119,9 @@ public class NodeActions {
                     node_list.remove(0);
                 }
             }
+
         }
-    
+        
         return closest_node;
     }
 
@@ -117,6 +131,11 @@ public class NodeActions {
         NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
         Auction temp = list.getAuctionById(id);
         if(temp == null){
+            try{
+                initial_requester.shutdown();
+            } catch(Exception e){
+                System.out.println("Unable to shutdown client");
+            }
             return 3;
         }
 
@@ -125,9 +144,18 @@ public class NodeActions {
         if(temp.updateBid(bid)){
             initial_requester.makeBid(bidder, id, value);
             list.updateList(temp,1);
+            try{
+                initial_requester.shutdown();
+            } catch(Exception e){
+                System.out.println("Unable to shutdown client");
+            }
             return 1;
         }
-
+        try{
+            initial_requester.shutdown();
+        } catch(Exception e){
+            System.out.println("Unable to shutdown client");
+        }
         return 2;
     }
 
@@ -137,5 +165,10 @@ public class NodeActions {
         current_user.concludeAuction();
         list.updateList(temp, 2);
         initial_requester.resultsAuction(temp.getAuctionId(), temp.getHighestBidder(), temp.getHighestBid());
+        try{
+            initial_requester.shutdown();
+        } catch(Exception e){
+            System.out.println("Unable to shutdown client");
+        }
     }
 }

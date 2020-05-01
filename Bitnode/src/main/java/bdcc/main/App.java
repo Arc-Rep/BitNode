@@ -261,7 +261,6 @@ public class App {
             } catch (Exception e){}
             
             printStartMenu();
-            scanner.skip("\\R");
             option = scanner.nextLine();
 
             switch(option){
