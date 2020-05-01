@@ -246,7 +246,7 @@ public class App {
         System.out.println("5 => View my auction status");
         System.out.println("6 => Conclude my auction");
         System.out.println("0 => Exit");
-        System.out.println("Option: ");
+        System.out.print("Option: ");
     }
 
     private static void menusCLI(String address) throws UnknownHostException {
