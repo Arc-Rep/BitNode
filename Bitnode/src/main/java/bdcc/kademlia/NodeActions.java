@@ -29,11 +29,11 @@ public class NodeActions {
                 (random_auction == null) ? 0 : random_auction.getHighestBid()
             );
             userBucket.addNode(response.getUserId(), response.getUserAddress());
-            System.out.println("Entered");
-            if(response.getAuctionId()!= "") auctions.addToAuctionList(new Auction(node.getKey(), response.getItem(), 
+
+            if(!response.getAuctionId().equals("")) auctions.addToAuctionList(new Auction(node.getKey(), response.getItem(), 
                                                                             response.getMaxBid(),response.getAuctionId()));
 
-            if(response.getRandomAuctionId() != "" && response.getRandomUserId() != current_user.getUserId()) 
+            if(!response.getRandomAuctionId().equals("") && !response.getRandomUserId().equals(current_user.getUserId())) 
                 auctions.addToAuctionList(new Auction(response.getRandomUserId(), response.getRandomItem(),
                                                             response.getRandomMaxBid(), response.getRandomAuctionId()));
         }
