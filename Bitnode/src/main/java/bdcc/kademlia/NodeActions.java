@@ -28,7 +28,6 @@ public class NodeActions {
                 (random_auction == null) ? "" : random_auction.getItem(),
                 (random_auction == null) ? 0 : random_auction.getHighestBid()
             );
-            System.out.println("User " + Crypto.toHex(response.getUserId())  + " found with address " + response.getUserAddress());
             userBucket.addNode(response.getUserId(), response.getUserAddress());
         }
         catch(UnknownHostException e){
