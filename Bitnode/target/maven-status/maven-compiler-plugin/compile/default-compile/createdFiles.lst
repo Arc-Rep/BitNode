@@ -22,7 +22,6 @@ bdcc\grpc\NodeOperationsGrpc$NodeOperationsImplBase.class
 bdcc\grpc\NodeInfoOrBuilder.class
 bdcc\grpc\InfoAuction$Builder.class
 bdcc\grpc\MakeBid$Builder.class
-bdcc\grpc\NodeResponse.class
 bdcc\grpc\TransactionInfoOrBuilder.class
 bdcc\grpc\InfoAuction$1.class
 bdcc\grpc\NodeResponseOrBuilder.class
