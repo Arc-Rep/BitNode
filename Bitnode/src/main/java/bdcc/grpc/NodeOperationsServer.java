@@ -120,6 +120,7 @@ public class NodeOperationsServer {
             .setUserAddress(server_address)
             .build();
         responseObserver.onNext(reply);
+        //System.out.println("User " + Crypto.toHex(node_id.getUserId()) + " from " + node_id.getUserAddress() + " connected");
         if(node_list != null)           // if there are no other nodes
         {
           for(KeyNode node: node_list)
