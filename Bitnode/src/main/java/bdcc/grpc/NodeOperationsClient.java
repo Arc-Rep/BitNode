@@ -137,25 +137,5 @@ public class NodeOperationsClient {
       }
     }
    
-    /*
-    public void listFiles(List<String> command_comp){
-      if(command_comp.size() != 2)
-        logger.info("Error: No arguments should be present for command.");
-    }
-
-    public void getFileInfo(List<String> command_comp){
-      int n_videos_to_find = command_comp.size() - 2;
-      // mesma coisa que o anterior
-      if(command_comp.size() == 2)
-        logger.info("Error: Please specify the name(s) of the video(s) you want to get information of.");
-      else{
-        for(int video = 0; video < n_videos_to_find; video++)
-        {
-          // search video
-        }
-      }
-      
-    }
-    */
 }
   
