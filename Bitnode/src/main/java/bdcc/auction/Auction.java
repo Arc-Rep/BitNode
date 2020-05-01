@@ -8,18 +8,18 @@ public class Auction {
     double value;
     Bid bid;
 
-    public Auction(String a, String b, double c, String id, Bid new_bid){
+    public Auction(String seller, String item_name, double c, String id, Bid new_bid){
         auction_id = id;
-        seller_id = a;
-        item = b;
+        seller_id = seller;
+        item = item_name;
         value = c; //starting value
         bid = new_bid;
     }
 
-    public Auction(String a, String b, double c, String id){
+    public Auction(String seller, String item_name, double c, String id){
         auction_id = id;
-        seller_id = a;
-        item = b;
+        seller_id = seller;
+        item = item_name;
         value = c; //starting value
     }
 

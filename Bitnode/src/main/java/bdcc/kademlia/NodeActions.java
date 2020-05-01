@@ -28,14 +28,7 @@ public class NodeActions {
                 (random_auction == null) ? "" : random_auction.getItem(),
                 (random_auction == null) ? 0 : random_auction.getValue()
             );
-            userBucket.addNode(response.getUserId(), response.getUserAddress());
-
-            if(!response.getAuctionId().equals("")) auctions.addToAuctionList(new Auction(node.getKey(), response.getItem(), 
-                                                                            response.getMaxBid(),response.getAuctionId()));
-
-            if(!response.getRandomAuctionId().equals("") && !response.getRandomUserId().equals(current_user.getUserId())) 
-                auctions.addToAuctionList(new Auction(response.getRandomUserId(), response.getRandomItem(),
-                                                            response.getRandomMaxBid(), response.getRandomAuctionId()));
+            proccessPingNode(response, userBucket, current_user, auctions);
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
@@ -51,17 +44,17 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-        if(notification.getAuctionId() != "")
+        if(!notification.getAuctionId().equals(""))
         {
-            Auction sender_auction = new Auction(notification.getAuctionId(), "",
-                                                notification.getMaxBid(), notification.getItem(), null);
+            Auction sender_auction = new Auction(notification.getUserId(), notification.getItem(), 
+                notification.getMaxBid(),notification.getAuctionId())
             auctions.addToAuctionList(sender_auction);
         }   
         
-        if(notification.getRandomAuctionId() != "")
+        if(!notification.getRandomAuctionId().equals("") && !notification.getRandomUserId().equals(current_user.getUserId()))
         {
-            Auction random_auction = new Auction(notification.getRandomAuctionId(), "",
-                                                notification.getRandomMaxBid(), notification.getRandomItem(), null);
+            Auction random_auction = new Auction(notification.getRandomUserId(), notification.getRandomItem(),
+                                                    notification.getRandomMaxBid(), notification.getRandomAuctionId())
             auctions.addToAuctionList(random_auction);
         }
         userBucket.addNode(notification.getUserId(), notification.getUserAddress());

@@ -78,7 +78,7 @@ public class NodeOperationsServer {
                             setRandomAuctionId((random_auction == null) ? "" : random_auction.getAuctionId()).
                             setRandomUserId((random_auction == null) ? "" : random_auction.getSeller()).
                             setRandomItem((random_auction == null) ? "" : random_auction.getItem()).
-                            setRandomMaxBid((random_auction == null) ? 0 : random_auction.getHighestBid()).build();
+                            setRandomMaxBid((random_auction == null) ? 0 : random_auction.getValue()).build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
         
