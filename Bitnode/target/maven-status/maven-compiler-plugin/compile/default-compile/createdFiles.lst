@@ -29,7 +29,6 @@ bdcc\grpc\MakeBid.class
 bdcc\grpc\MakeBid$1.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsBlockingStub.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsStub.class
-bdcc\grpc\NodeNotification.class
 bdcc\grpc\NodeNotification$Builder.class
 bdcc\grpc\ResultsAuctionOrBuilder.class
 bdcc\grpc\NodeOperationsGrpc$3.class

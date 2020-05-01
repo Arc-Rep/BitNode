@@ -68,10 +68,12 @@ public class App {
             System.out.println("1 - Make a bid");         
             System.out.println("2 - Back out");
             int option = scanner.nextInt();
+            scanner.skip("\\R");
 
             if(option == 1){
                 System.out.println("How much do you want to bid? (You cannot go back on this action!)");
-                int bid_val = scanner.nextInt();
+                double bid_val = scanner.nextDouble();
+                scanner.skip("\\R");
                 if(bid_val > current_user.getWallet()){
                     System.out.println("You do not have the necessary funds to make this bid...");
                 }
@@ -127,6 +129,7 @@ public class App {
         String item = scanner.nextLine();
         System.out.println("Select the starting bid value: ");
         double startingValue = scanner.nextDouble();
+        scanner.skip("\\R");
         System.out.println("Place the item '" + item + "' for auction with starting bid value: " + startingValue + "? [y/n]");
         String conf = scanner.nextLine();
         if(conf.equals("y")){
@@ -253,6 +256,10 @@ public class App {
     
         String option = "init";
         while(option != "0"){
+            try{
+                Runtime.getRuntime().exec("clear");
+            } catch (Exception e){}
+            
             printStartMenu();
             scanner.skip("\\R");
             option = scanner.nextLine();
