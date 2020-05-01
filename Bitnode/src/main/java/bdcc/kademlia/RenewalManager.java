@@ -29,17 +29,15 @@ public class RenewalManager implements Runnable{
                 if(user_bucket.node_number > 0)
                 {
                     KeyNode randomNode = user_bucket.getRandomNode();
-                    System.out.println("requesting");
                     if(randomNode == null) throw new Exception("Could not find node");
                     else
                     {
-                        System.out.println(randomNode.Key + " " + randomNode.Value);
                         NodeActions.pingNode(randomNode,server_port,user_bucket, current_user, auction_list);
                     }
                 }
             }
             catch(Exception e){
-                System.out.println("Error within thread");
+
             }
         }
     }

@@ -74,7 +74,7 @@ public class NodeOperationsServer {
                             .setUserId(userBucket.getUserId()).setUserAddress(server_address).
                             setAuctionId((user_auction == null) ? "" : user_auction.getAuctionId()).
                             setItem((user_auction == null) ? "" : user_auction.getItem()).
-                            setMaxBid((user_auction == null) ? 0 : user_auction.getHighestBid()).
+                            setMaxBid((user_auction == null) ? 0 : user_auction.getValue()).
                             setRandomAuctionId((random_auction == null) ? "" : random_auction.getAuctionId()).
                             setRandomUserId((random_auction == null) ? "" : random_auction.getSeller()).
                             setRandomItem((random_auction == null) ? "" : random_auction.getItem()).
