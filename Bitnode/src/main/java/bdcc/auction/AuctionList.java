@@ -1,6 +1,9 @@
 package bdcc.auction;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import bdcc.chain.Crypto;
+
 import java.util.Random;
 
 public class AuctionList {
@@ -34,7 +37,7 @@ public class AuctionList {
     public synchronized void getLiveAuctions(){
         for (Auction au : live_list) {
             System.out.println("=============================================");
-            System.out.println("Auction ID: " + au.getAuctionId());
+            System.out.println("Auction ID: " + Crypto.toHex(au.getAuctionId()));
             System.out.println("    - Item: " + au.getItem());
             if(au.getHighestBid() == -1){
                 System.out.println("    - Value: " + au.getValue());
