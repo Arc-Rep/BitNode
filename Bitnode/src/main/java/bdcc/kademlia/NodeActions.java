@@ -22,11 +22,11 @@ public class NodeActions {
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 (user_auction == null) ? "" : user_auction.getAuctionId(),
                 (user_auction == null) ? "" : user_auction.getItem(),
-                (user_auction == null) ? 0 : user_auction.getHighestBid(),
+                (user_auction == null) ? 0 : user_auction.getValue(),
                 (random_auction == null) ? "" : random_auction.getAuctionId(),
                 (random_auction == null) ? "" : random_auction.getSeller(),
                 (random_auction == null) ? "" : random_auction.getItem(),
-                (random_auction == null) ? 0 : random_auction.getHighestBid()
+                (random_auction == null) ? 0 : random_auction.getValue()
             );
             userBucket.addNode(response.getUserId(), response.getUserAddress());
 
