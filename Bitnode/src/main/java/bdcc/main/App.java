@@ -301,7 +301,6 @@ public class App {
             while(response.hasNext())
             {   
                 NodeInfo info = response.next();
-                System.out.println("Info sent is " + current_user.getUserId());
                 
                 if(numb_nodes_found == 0)       //first node is always server
                 {
@@ -310,7 +309,6 @@ public class App {
                 }
                 else
                 {
-                    System.out.println("User " + Crypto.toHex(info.getUserId())  + " delivered with address " + info.getUserAddress());
                     NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user,auction_list);
                 }
 
