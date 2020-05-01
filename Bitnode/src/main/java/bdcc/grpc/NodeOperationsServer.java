@@ -70,7 +70,6 @@ public class NodeOperationsServer {
       public void notifyNode(NodeNotification notification, StreamObserver<NodeNotification> responseObserver) {
         Auction random_auction = auction_list.getRandomAuction(), user_auction = user.getUserAuction();
         NodeActions.proccessPingNode(notification, userBucket, user, auction_list);
-        System.out.println("User " + Crypto.toHex(notification.getUserId())  + " from " + notification.getUserAddress() + " connected");
         NodeNotification reply = NodeNotification.newBuilder()
                             .setUserId(userBucket.getUserId()).setUserAddress(server_address).
                             setAuctionId((user_auction == null) ? "" : user_auction.getAuctionId()).
