@@ -63,6 +63,12 @@ public class NodeOperationsServer {
       }
     }
 
+    public void doShutdown() throws InterruptedException {
+      if (server != null) {
+        server.shutdown();
+      }
+    }
+
     private class NodeOperationsService extends NodeOperationsGrpc.NodeOperationsImplBase {
       
       

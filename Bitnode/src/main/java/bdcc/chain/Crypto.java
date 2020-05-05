@@ -9,6 +9,8 @@ import java.security.MessageDigest;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.security.Key;
+import java.security.PublicKey;
+import java.security.PrivateKey;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.SecureRandom;
@@ -57,7 +59,8 @@ public class Crypto {
        return new String(Hex.encode(str_bytes));
    }
 
-   public static void generateRSAKeys(Key pubKey, Key privKey){
+   public static KeyPair generateRSAKeys(){
+        KeyPair pair = null;
         try {
  
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
@@ -68,12 +71,12 @@ public class Crypto {
             random.setSeed(new Date().getTime());
             generator.initialize(1024, random);
 
-            KeyPair pair = generator.generateKeyPair();
-            pubKey = pair.getPublic();
-            privKey = pair.getPrivate();
+            pair = generator.generateKeyPair();
+
         }
         catch (Exception e) {
             System.out.println(e);
         }
+        return pair;
     }
 }

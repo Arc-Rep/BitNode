@@ -5,8 +5,11 @@ import java.util.Iterator;
 
 import io.grpc.stub.StreamObserver;
 import org.apache.log4j.PropertyConfigurator;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.net.ServerSocket;
 
 import bdcc.auction.Auction;
 import bdcc.auction.AuctionList;
@@ -27,13 +30,9 @@ public class App {
     private static Scanner scanner;
     private static AuctionList auction_list;
     private static Thread thread_renewal;
+    private static ServerSocket server_socket;
     public  static KBucket userBucket;
 
-    private static User register() {
-        System.out.println("Please choose an username");
-        String username = scanner.nextLine();
-        return new User(username);
-    }
 
     private static void auctionMenu(String auctionID, String address) {
         Auction auction = auction_list.getAuctionById(auctionID);
@@ -256,7 +255,7 @@ public class App {
     private static void menusCLI(String address) throws UnknownHostException {
     
         String option = "init";
-        while(option != "0"){
+        while(!option.equals("0")){
             try{
                 Runtime.getRuntime().exec("clear");
             } catch (Exception e){}
@@ -341,10 +340,18 @@ public class App {
             System.out.println("Please specify initial bitnode server address");
             return;
         }
+        try
+        {
+            server_socket = new ServerSocket(4445);
+        }
+        catch(IOException e){
+            System.out.println("Only one instance of bitnode is permited");
+            return;
+        }
         server_port = 4444;
         scanner = new Scanner(System.in);
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
-        current_user = register();
+        current_user = new User();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
         auction_list = new AuctionList();
         renew_manager = new RenewalManager(userBucket, auction_list, current_user, server_port);
@@ -375,7 +382,8 @@ public class App {
     private static void shutdownSystem(RenewalManager renew_manager) throws Exception {
         scanner.close();
         renew_manager.terminate();
-        user_server.blockUntilShutdown();
         thread_renewal.join();
+        user_server.doShutdown();
+        server_socket.close();
     }
 }

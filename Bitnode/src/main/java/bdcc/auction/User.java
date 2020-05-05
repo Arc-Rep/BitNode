@@ -2,6 +2,9 @@ package bdcc.auction;
 
 import bdcc.chain.Crypto;
 import java.security.Key;
+import java.security.KeyPair;
+import java.security.PublicKey;
+import java.security.PrivateKey;
 import java.util.UUID;
 
 
@@ -9,20 +12,20 @@ public class User{
     
     //make an item inventory?
     private String user_id;
-    private String user_name;
     private double wallet;
-    private Key privKey;
+    private PrivateKey privKey;
     private Auction user_auction;
-    Key pubKey;
+    PublicKey pubKey;
 
     //BASE64Encoder b64 = new BASE64Encoder();
 
-    public User(String username){
-        user_name =     username;
-        user_id =       Crypto.hashString(user_name);
+    public User(){
+        KeyPair pair = Crypto.generateRSAKeys();
+        privKey = pair.getPrivate();
+        pubKey = pair.getPublic();
+        user_id =       Crypto.hashString(pubKey.toString());
         wallet =        0;
-        user_auction = null;
-        Crypto.generateRSAKeys(pubKey, privKey);
+        user_auction = null;        
     }
 
     private void add_amount(double amount_to_add){
@@ -31,10 +34,6 @@ public class User{
 
     public String getUserId(){
         return user_id;
-    }
-
-    public String getUserName(){
-        return user_name;
     }
 
     public Auction getUserAuction(){

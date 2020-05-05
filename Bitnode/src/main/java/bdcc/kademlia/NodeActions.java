@@ -61,64 +61,75 @@ public class NodeActions {
     }
 
     public static KeyNode findNode(String Key, int server_port, KBucket userBucket, User current_user){
-        int max_iterations = 5, alpha = userBucket.getAlpha(), numb_nodes_found;
+        int alpha = userBucket.getAlpha(), numb_nodes_found, max_iterations = 3;
         double closest_distance = 0;
         NodeOperationsClient initial_requester;
         LinkedList<KeyNode> node_list = userBucket.findNearestNodes(Key, true);
         LinkedList<String> visited_nodes = new LinkedList<String>();
         Iterator<NodeInfo> response;
         KeyNode closest_node = null;
-        for(int i=0; i < max_iterations; i++)
+        for(KeyNode kn: node_list){
+            if(kn.getKey().equals(Key)){
+                return kn;
+            }
+        }
+
+        for(int i=0; i < Math.pow(alpha,max_iterations) && node_list.size() > 0; i++)
         {
             numb_nodes_found = 0;
-            while(node_list.size() > 0)
-            {
+
                 initial_requester = new NodeOperationsClient(node_list.get(0).getValue(), server_port);
                 try
                 {
-                    response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
-                    if(response == null) throw new UnknownHostException("Could not find node");
-                    while(response.hasNext())
-                    {   
-                        NodeInfo info = response.next();
-                        KeyNode current_node = new KeyNode(info.getUserId(), info.getUserAddress());
-                        visited_nodes.add(current_node.getKey());
-                        double current_distance = current_node.compareKeyNodeID(Key);
-                        if(closest_node == null || current_distance < closest_distance){
-                            closest_node = current_node;
-                            closest_distance = current_distance;
-                        }
-                        if(numb_nodes_found == 0)       //first node is always the own server
+                response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+                if(response == null) throw new UnknownHostException("Could not find node");
+                while(response.hasNext())
+                {   
+                    NodeInfo info = response.next();
+                    KeyNode current_node = new KeyNode(info.getUserId(), info.getUserAddress());
+                    visited_nodes.add(current_node.getKey());
+                    double current_distance = current_node.compareKeyNodeID(Key);
+                    if(closest_node == null || current_distance < closest_distance){
+                        closest_node = current_node;
+                        closest_distance = current_distance;
+                    }
+                    if(numb_nodes_found == 0)       //first node is always the own server
+                    {
+                        userBucket.addNode(info.getUserId(), info.getUserAddress());       //update server
+                        System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
+                    }
+                    else
+                    {
+                        if(Key.equals(info.getUserId()))        //found the exact match
                         {
-                            userBucket.addNode(info.getUserId(), info.getUserAddress());       //update server
-                            System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
+                            try{
+                                initial_requester.shutdown();
+                            } catch(Exception e){
+                                System.out.println("Unable to shutdown client");
+                            }
+                            return current_node;
                         }
-                        else
-                        {
-                            if(Key.equals(info.getUserId()))        //found the exact match
-                                return current_node;
-                            else if(!visited_nodes.contains(info.getUserId()))
-                                node_list.add(current_node);
+                        else if(!visited_nodes.contains(info.getUserId()))
+                            node_list.add(current_node);
                             
-                        }
+                    }
         
-                        numb_nodes_found++;
-                    }
-
-                    try{
-                        initial_requester.shutdown();
-                    } catch(Exception e){
-                        System.out.println("Unable to shutdown client");
-                    }
-
-                    node_list.remove(0);
+                    numb_nodes_found++;
                 }
-                catch(UnknownHostException e){
-                    //if node not found it is removed from the KBucket
-                    userBucket.removeNode(node_list.get(0));
-                    node_list.remove(0);
+
+                try{
+                    initial_requester.shutdown();
+                } catch(Exception e){
+                    System.out.println("Unable to shutdown client");
                 }
+                node_list.remove(0);
             }
+            catch(UnknownHostException e){
+                //if node not found it is removed from the KBucket
+                userBucket.removeNode(node_list.get(0));
+                node_list.remove(0);
+            }
+            
 
         }
         
