@@ -220,7 +220,7 @@ public class App {
 
         if(au != null){
             System.out.println("=============================================");
-            System.out.println("Auction ID: " + au.getAuctionId());
+            System.out.println("Auction ID: " + Crypto.toHex(au.getAuctionId()));
             System.out.println("    - Item: " + au.getItem());
             if(au.getHighestBid() == -1){
                 System.out.println("    - Value: " + au.getValue());
