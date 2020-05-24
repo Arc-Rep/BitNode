@@ -19,6 +19,8 @@ public class NodeActions {
         NodeNotification response = null;
         try
         {   //cipher with node public key
+            System.out.println("Node public key is");
+            System.out.println(Crypto.convertBytesToString(node.getPubKey()));
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
@@ -31,7 +33,7 @@ public class NodeActions {
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getAuctionId()))),
                 (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getSeller()))),
-                (random_auction == null) ? "" : 
+                (random_auction == null) ? Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(new String("This is an item")))) : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getItem()))),
                 (random_auction == null) ? 0 : random_auction.getValue()
             );
