@@ -42,7 +42,7 @@ public class NodeActions {
             userBucket.removeNode(node);
         }
         catch(Exception e){
-
+            System.out.println(e);
         }
 
         try{
