@@ -312,12 +312,12 @@ public class App {
                 
                 if(numb_nodes_found == 0)       //first node is always server
                 {
-                     userBucket.addNode(info.getUserId(), info.getUserAddress(), info.getPublicKey().getBytes());
+                     userBucket.addNode(info.getUserId(), info.getUserAddress(),Crypto.convertStringToBytes(info.getPublicKey()));
                      System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                 }
                 else
                 {
-                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress(), info.getPublicKey().getBytes()), server_port,userBucket, current_user,auction_list);
+                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey())), server_port,userBucket, current_user,auction_list);
                 }
 
                 numb_nodes_found++;
