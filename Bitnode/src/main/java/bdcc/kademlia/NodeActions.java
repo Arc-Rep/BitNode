@@ -55,11 +55,11 @@ public class NodeActions {
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
         try { 
-            String auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
-            item_name = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
-            random_auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomAuctionId()))),
-            random_item_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
-            random_user = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
+            String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
+            item_name = notification.getItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
+            random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomAuctionId()))),
+            random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
+            random_user = notification.getRandomUserId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
             
             //System.out.println("Non encrypted random id is " + notification.getRandomItem());
             System.out.println("Random item id is " + random_item_id);
