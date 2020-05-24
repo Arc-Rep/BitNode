@@ -57,7 +57,7 @@ public class NodeOperationsClient {
           build();
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
-        System.out.println("RPC Error: Failed to establish communication with server");
+        System.out.println("RPC Error: Failed to establish communication with server on notify");
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
@@ -72,20 +72,21 @@ public class NodeOperationsClient {
           .setUserAddress(user_address).setPublicKey(user_public_key).build();
         response = blockingStub.findNode(inforequest); 
       } catch (RuntimeException e) {
-        System.out.println("RPC Error: Failed to establish communication with server");
+        System.out.println("RPC Error: Failed to establish communication with server on findNode");
       }
       return response;
     }
 
     public Iterator<NodeSecInfo> lookupNode(String user_id, String user_address, String pub_key){
       Iterator<NodeSecInfo> response = null;
+      System.out.println("Lookup sending " + pub_key);
       try
       {
         NodeSecInfo inforequest = NodeSecInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).
                                 setPublicKey(pub_key).build();
         response = blockingStub.lookupNode(inforequest); 
       } catch (RuntimeException e) {
-        System.out.println("RPC Error: Failed to establish communication with server");
+        System.out.println("RPC Error: Failed to establish communication with server on lookup");
       }
       return response;
     }  

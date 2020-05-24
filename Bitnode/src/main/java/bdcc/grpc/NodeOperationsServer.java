@@ -128,6 +128,7 @@ public class NodeOperationsServer {
       public void lookupNode(NodeSecInfo node_id, StreamObserver<NodeSecInfo> responseObserver) {
 
         LinkedList<KeyNode> node_list = userBucket.lookupNode(node_id.getUserId());
+        System.out.println("Received " + node_id.getPublicKey() + " and sending " + new String(user.getPubKey()));
         NodeSecInfo reply =                      // send current node
           NodeSecInfo.newBuilder()
             .setUserId(server_id)
