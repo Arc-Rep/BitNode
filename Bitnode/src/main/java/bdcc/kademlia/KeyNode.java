@@ -5,11 +5,12 @@ import java.nio.charset.StandardCharsets;
 public class KeyNode{
     public String Key;
     public String Value;
-    public byte[] node_pub_key;
+    public byte[] NodePublicKey;
     
     public KeyNode(String new_key, String new_value, byte[] node_pub_key){
         Key = new_key;
         Value = new_value;
+        NodePublicKey = node_pub_key;
     }
 
     public String getKey(){
@@ -21,7 +22,7 @@ public class KeyNode{
     }
 
     public byte[] getPubKey(){
-        return node_pub_key;
+        return NodePublicKey;
     }
 
     public double compareKeyNodeID(String to_compare){
