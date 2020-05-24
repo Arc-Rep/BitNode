@@ -54,6 +54,7 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
+        System.out.println("Entered");
         try { 
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
             item_name = notification.getItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
