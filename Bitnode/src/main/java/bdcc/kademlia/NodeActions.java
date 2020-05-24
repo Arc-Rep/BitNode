@@ -31,7 +31,7 @@ public class NodeActions {
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getAuctionId()))),
                 (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getSeller()))),
-                (random_auction == null) ? Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes("This is an item"))) : 
+                (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getItem()))),
                 (random_auction == null) ? 0 : random_auction.getValue()
             );
