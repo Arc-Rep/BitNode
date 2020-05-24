@@ -58,6 +58,7 @@ public class NodeOperationsClient {
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server on notify");
+        System.out.println(e.getMessage());
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
@@ -79,8 +80,7 @@ public class NodeOperationsClient {
 
     public Iterator<NodeSecInfo> lookupNode(String user_id, String user_address, String pub_key){
       Iterator<NodeSecInfo> response = null;
-      System.out.println("Lookup sending");
-      System.out.println(pub_key);
+
       try
       {
         NodeSecInfo inforequest = NodeSecInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).
