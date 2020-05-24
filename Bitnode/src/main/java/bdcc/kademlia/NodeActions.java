@@ -21,7 +21,7 @@ public class NodeActions {
         {   //cipher with node public key
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
-                new String(current_user.getPubKey()),
+                Crypto.convertBytesToString(current_user.getPubKey()),
                 (user_auction == null) ? "" : user_auction.getAuctionId(),
                 (user_auction == null) ? "" : user_auction.getItem(),
                 (user_auction == null) ? 0 : user_auction.getValue(),
@@ -48,11 +48,11 @@ public class NodeActions {
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
         try { 
-            String auction_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getAuctionId().getBytes())),
-            item_name = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getItem().getBytes())),
-            random_auction_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomAuctionId().getBytes())),
-            random_item_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomItem().getBytes())),
-            random_user = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomUserId().getBytes()));
+            String auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
+            item_name = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
+            random_auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomAuctionId()))),
+            random_item_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
+            random_user = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
             
             System.out.println("Non encrypted random id is " + notification.getRandomItem());
             System.out.println("Random item id is " + random_item_id);
@@ -70,7 +70,7 @@ public class NodeActions {
                                                         notification.getRandomMaxBid(), random_auction_id);
                 auctions.addToAuctionList(random_auction);
             }
-            userBucket.addNode(notification.getUserId(), notification.getUserAddress(), notification.getPublicKey().getBytes());
+            userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

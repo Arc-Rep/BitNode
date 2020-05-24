@@ -304,7 +304,7 @@ public class App {
         Iterator<NodeSecInfo> response;
         try{  
             response = initial_requester.lookupNode(current_user.getUserId(), 
-                InetAddress.getLocalHost().getHostAddress(), new String(current_user.getPubKey()));
+                InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
             if(response == null) throw new Exception("Error receiving response from Server");
             while(response.hasNext())
             {   

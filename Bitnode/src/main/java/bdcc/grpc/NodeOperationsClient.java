@@ -47,12 +47,12 @@ public class NodeOperationsClient {
       {
         NodeNotification inforequest = 
           NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).setPublicKey(user_public_key).
-          setAuctionId(new String(Crypto.encrypt(target_public_key, auction_id.getBytes()))).
-          setItem(new String(Crypto.encrypt(target_public_key, item.getBytes()))).
+          setAuctionId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(auction_id)))).
+          setItem(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(item)))).
           setMaxBid(max_bid).
-          setRandomAuctionId(new String(Crypto.encrypt(target_public_key, random_auction_id.getBytes()))).
-          setRandomUserId(new String(Crypto.encrypt(target_public_key, random_user_id.getBytes()))).
-          setRandomItem(new String(Crypto.encrypt(target_public_key, /*random_item*/"This is an item".getBytes()))).
+          setRandomAuctionId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(random_auction_id)))).
+          setRandomUserId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(random_user_id)))).
+          setRandomItem(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(/*random_item*/"This is an item")))).
           setRandomMaxBid(random_max_bid).
           build();
         response = blockingStub.notifyNode(inforequest); 
