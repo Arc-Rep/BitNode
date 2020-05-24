@@ -40,26 +40,18 @@ public class NodeOperationsClient {
 
     public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
                                        String auction_id, String item, double max_bid, String random_auction_id,
-                                       String random_user_id, String random_item, double random_max_bid, 
-                                       byte[] target_public_key){
+                                       String random_user_id, String random_item, double random_max_bid){
       NodeNotification response = null;
       try
       {
-        System.out.println("random item");
-        System.out.println(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(/*random_item*/"This is an item"))));
-        System.out.println("other info");
-        System.out.println(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(auction_id))));
-        
+
         NodeNotification inforequest = 
-          NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).setPublicKey(user_public_key).
-          setAuctionId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(auction_id)))).
-          setItem(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(item)))).
-          setMaxBid(max_bid).
-          setRandomAuctionId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(random_auction_id)))).
-          setRandomUserId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(random_user_id)))).
-          setRandomItem(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(/*random_item*/"This is an item")))).
-          setRandomMaxBid(random_max_bid).
+          NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).
+          setPublicKey(user_public_key).setAuctionId(auction_id).setItem(item).setMaxBid(max_bid).
+          setRandomAuctionId(random_auction_id).setRandomUserId(random_user_id).
+          setRandomItem(random_item).setRandomMaxBid(random_max_bid).
           build();
+          
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server on notify");

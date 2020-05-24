@@ -22,20 +22,27 @@ public class NodeActions {
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
-                (user_auction == null) ? "" : user_auction.getAuctionId(),
-                (user_auction == null) ? "" : user_auction.getItem(),
+                (user_auction == null) ? "" : 
+                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getAuctionId()))),
+                (user_auction == null) ? "" : 
+                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getItem()))),
                 (user_auction == null) ? 0 : user_auction.getValue(),
-                (random_auction == null) ? "" : random_auction.getAuctionId(),
-                (random_auction == null) ? "" : random_auction.getSeller(),
-                (random_auction == null) ? "" : random_auction.getItem(),
-                (random_auction == null) ? 0 : random_auction.getValue(),
-                node.getPubKey()
+                (random_auction == null) ? "" : 
+                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getAuctionId()))),
+                (random_auction == null) ? "" : 
+                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getSeller()))),
+                (random_auction == null) ? "" : 
+                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(/*random_auction.getItem()*/"This is an item"))),
+                (random_auction == null) ? 0 : random_auction.getValue()
             );
             proccessPingNode(response, userBucket, current_user, auctions);
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
             userBucket.removeNode(node);
+        }
+        catch(Exception e){
+
         }
 
         try{
@@ -54,7 +61,7 @@ public class NodeActions {
             random_item_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
             random_user = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
             
-            System.out.println("Non encrypted random id is " + notification.getRandomItem());
+            //System.out.println("Non encrypted random id is " + notification.getRandomItem());
             System.out.println("Random item id is " + random_item_id);
             if(!auction_id.equals(""))
             {
