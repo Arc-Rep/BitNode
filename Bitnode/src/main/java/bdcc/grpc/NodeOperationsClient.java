@@ -45,6 +45,11 @@ public class NodeOperationsClient {
       NodeNotification response = null;
       try
       {
+        System.out.println("random item");
+        System.out.println(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(/*random_item*/"This is an item"))));
+        System.out.println("other info");
+        System.out.println(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(auction_id))));
+        
         NodeNotification inforequest = 
           NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).setPublicKey(user_public_key).
           setAuctionId(Crypto.convertBytesToString(Crypto.encrypt(target_public_key, Crypto.convertStringToBytes(auction_id)))).
@@ -58,9 +63,8 @@ public class NodeOperationsClient {
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server on notify");
-        System.out.println(e.getMessage());
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+
       }
       return response;
     }
