@@ -62,7 +62,8 @@ public class NodeActions {
             random_user = notification.getRandomUserId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
             
             //System.out.println("Non encrypted random id is " + notification.getRandomItem());
-            System.out.println("Random item id is " + random_item_id);
+            System.out.println("Random item id is ");
+            System.out.println(random_item_id);
             if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
