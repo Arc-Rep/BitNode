@@ -132,7 +132,7 @@ public class NodeOperationsServer {
           NodeSecInfo.newBuilder()
             .setUserId(server_id)
             .setUserAddress(server_address)
-            .setPublicKey(Crypto.convertBytesToString(user.getPubKey()))
+            .setPublicKey(new String(user.getPubKey()))
             .build();
         responseObserver.onNext(reply);
         //System.out.println("User " + Crypto.toHex(node_id.getUserId()) + " from " + node_id.getUserAddress() + " connected");
@@ -144,13 +144,13 @@ public class NodeOperationsServer {
               NodeSecInfo.newBuilder()
                 .setUserId(node.getKey())
                 .setUserAddress(node.getValue())
-                .setPublicKey(Crypto.convertBytesToString(node.getPubKey()))
+                .setPublicKey(new String(node.getPubKey()))
                 .build();
             responseObserver.onNext(reply);
           }
         }
         responseObserver.onCompleted();
-        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress(), Crypto.convertStringToBytes(node_id.getPublicKey()));
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress(), node_id.getPublicKey().getBytes());
       }
 
       @Override

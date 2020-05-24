@@ -304,7 +304,7 @@ public class App {
         Iterator<NodeSecInfo> response;
         try{  
             response = initial_requester.lookupNode(current_user.getUserId(), 
-                InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
+                InetAddress.getLocalHost().getHostAddress(), new String(current_user.getPubKey()));
             if(response == null) throw new Exception();
             while(response.hasNext())
             {   
@@ -312,12 +312,12 @@ public class App {
                 
                 if(numb_nodes_found == 0)       //first node is always server
                 {
-                     userBucket.addNode(info.getUserId(), info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey()));
+                     userBucket.addNode(info.getUserId(), info.getUserAddress(), info.getPublicKey().getBytes());
                      System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                 }
                 else
                 {
-                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey())), server_port,userBucket, current_user,auction_list);
+                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress(), info.getPublicKey().getBytes()), server_port,userBucket, current_user,auction_list);
                 }
 
                 numb_nodes_found++;
