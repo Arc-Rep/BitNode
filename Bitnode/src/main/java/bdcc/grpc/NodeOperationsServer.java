@@ -129,8 +129,10 @@ public class NodeOperationsServer {
       public void lookupNode(NodeSecInfo node_id, StreamObserver<NodeSecInfo> responseObserver) {
 
         LinkedList<KeyNode> node_list = userBucket.lookupNode(node_id.getUserId());
-        System.out.println("Received " + node_id.getPublicKey() + " and sending " + Crypto.convertBytesToString(user.getPubKey()));
-        System.out.println("Passed CHeckpoint");
+        System.out.println("Received");
+        System.out.println(node_id.getPublicKey()); 
+        System.out.println("Sending"); 
+        System.out.println(Crypto.convertBytesToString(user.getPubKey()));
         NodeSecInfo reply =                      // send current node
           NodeSecInfo.newBuilder()
             .setUserId(server_id)
