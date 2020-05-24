@@ -32,73 +32,85 @@ public interface NodeNotificationOrBuilder extends
       getUserAddressBytes();
 
   /**
-   * <code>string auction_id = 3;</code>
+   * <code>string public_key = 3;</code>
+   * @return The publicKey.
+   */
+  java.lang.String getPublicKey();
+  /**
+   * <code>string public_key = 3;</code>
+   * @return The bytes for publicKey.
+   */
+  com.google.protobuf.ByteString
+      getPublicKeyBytes();
+
+  /**
+   * <code>string auction_id = 4;</code>
    * @return The auctionId.
    */
   java.lang.String getAuctionId();
   /**
-   * <code>string auction_id = 3;</code>
+   * <code>string auction_id = 4;</code>
    * @return The bytes for auctionId.
    */
   com.google.protobuf.ByteString
       getAuctionIdBytes();
 
   /**
-   * <code>string item = 4;</code>
+   * <code>string item = 5;</code>
    * @return The item.
    */
   java.lang.String getItem();
   /**
-   * <code>string item = 4;</code>
+   * <code>string item = 5;</code>
    * @return The bytes for item.
    */
   com.google.protobuf.ByteString
       getItemBytes();
 
   /**
-   * <code>double max_bid = 5;</code>
+   * <code>double max_bid = 6;</code>
    * @return The maxBid.
    */
   double getMaxBid();
 
   /**
-   * <code>string random_auction_id = 6;</code>
+   * <code>string random_auction_id = 7;</code>
    * @return The randomAuctionId.
    */
   java.lang.String getRandomAuctionId();
   /**
-   * <code>string random_auction_id = 6;</code>
+   * <code>string random_auction_id = 7;</code>
    * @return The bytes for randomAuctionId.
    */
   com.google.protobuf.ByteString
       getRandomAuctionIdBytes();
 
   /**
-   * <code>string random_user_id = 7;</code>
+   * <code>string random_user_id = 8;</code>
    * @return The randomUserId.
    */
   java.lang.String getRandomUserId();
   /**
-   * <code>string random_user_id = 7;</code>
+   * <code>string random_user_id = 8;</code>
    * @return The bytes for randomUserId.
    */
   com.google.protobuf.ByteString
       getRandomUserIdBytes();
 
   /**
-   * <code>string random_item = 8;</code>
+   * <code>string random_item = 9;</code>
    * @return The randomItem.
    */
   java.lang.String getRandomItem();
   /**
-   * <code>string random_item = 8;</code>
+   * <code>string random_item = 9;</code>
    * @return The bytes for randomItem.
    */
   com.google.protobuf.ByteString
       getRandomItemBytes();
 
   /**
-   * <code>double random_max_bid = 9;</code>
+   * <code>double random_max_bid = 10;</code>
    * @return The randomMaxBid.
    */
   double getRandomMaxBid();

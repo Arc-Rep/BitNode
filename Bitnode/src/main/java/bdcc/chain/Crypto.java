@@ -12,10 +12,15 @@ import java.security.Key;
 import java.security.PublicKey;
 import java.security.PrivateKey;
 import java.security.KeyPair;
+import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.SecureRandom;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Date;
 import java.security.Security;
+
+import javax.crypto.Cipher;
 
 public class Crypto {
 
@@ -78,5 +83,58 @@ public class Crypto {
             System.out.println(e);
         }
         return pair;
+    }
+
+
+
+    public static byte[] encrypt(byte[] publicKey, byte[] inputData)
+            throws Exception {
+
+
+        PublicKey key = KeyFactory.getInstance("RSA", "BC")
+            .generatePublic(new X509EncodedKeySpec(publicKey));
+
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        byte[] encryptedBytes = cipher.doFinal(inputData);
+
+        return encryptedBytes;
+    }
+
+    public static byte[] decrypt(byte[] privateKey, byte[] inputData)
+            throws Exception {
+
+        PrivateKey key = KeyFactory.getInstance("RSA", "BC")
+                .generatePrivate(new PKCS8EncodedKeySpec(privateKey));
+
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+
+        byte[] decryptedBytes = cipher.doFinal(inputData);
+
+        return decryptedBytes;
+    }
+
+    public static byte[] convertStringToBytes(String str){
+        byte[] encoded_str = null;
+        try{
+            encoded_str = str.getBytes("ISO-8859-1");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return encoded_str;
+    }
+
+    public static String convertBytesToString(byte[] encodedbytes){
+        String decoded_str = null;
+        try{
+            decoded_str = new String(encodedbytes, "ISO-8859-1");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return decoded_str;
     }
 }

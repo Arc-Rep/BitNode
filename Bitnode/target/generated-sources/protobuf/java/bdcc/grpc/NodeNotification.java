@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private NodeNotification() {
     userId_ = "";
     userAddress_ = "";
+    publicKey_ = "";
     auctionId_ = "";
     item_ = "";
     randomAuctionId_ = "";
@@ -70,39 +71,45 @@ private static final long serialVersionUID = 0L;
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            auctionId_ = s;
+            publicKey_ = s;
             break;
           }
           case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
+            auctionId_ = s;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
             item_ = s;
             break;
           }
-          case 41: {
+          case 49: {
 
             maxBid_ = input.readDouble();
-            break;
-          }
-          case 50: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            randomAuctionId_ = s;
             break;
           }
           case 58: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            randomUserId_ = s;
+            randomAuctionId_ = s;
             break;
           }
           case 66: {
             java.lang.String s = input.readStringRequireUtf8();
 
+            randomUserId_ = s;
+            break;
+          }
+          case 74: {
+            java.lang.String s = input.readStringRequireUtf8();
+
             randomItem_ = s;
             break;
           }
-          case 73: {
+          case 81: {
 
             randomMaxBid_ = input.readDouble();
             break;
@@ -211,10 +218,46 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int AUCTION_ID_FIELD_NUMBER = 3;
+  public static final int PUBLIC_KEY_FIELD_NUMBER = 3;
+  private volatile java.lang.Object publicKey_;
+  /**
+   * <code>string public_key = 3;</code>
+   * @return The publicKey.
+   */
+  public java.lang.String getPublicKey() {
+    java.lang.Object ref = publicKey_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      publicKey_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string public_key = 3;</code>
+   * @return The bytes for publicKey.
+   */
+  public com.google.protobuf.ByteString
+      getPublicKeyBytes() {
+    java.lang.Object ref = publicKey_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      publicKey_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int AUCTION_ID_FIELD_NUMBER = 4;
   private volatile java.lang.Object auctionId_;
   /**
-   * <code>string auction_id = 3;</code>
+   * <code>string auction_id = 4;</code>
    * @return The auctionId.
    */
   public java.lang.String getAuctionId() {
@@ -230,7 +273,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string auction_id = 3;</code>
+   * <code>string auction_id = 4;</code>
    * @return The bytes for auctionId.
    */
   public com.google.protobuf.ByteString
@@ -247,10 +290,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int ITEM_FIELD_NUMBER = 4;
+  public static final int ITEM_FIELD_NUMBER = 5;
   private volatile java.lang.Object item_;
   /**
-   * <code>string item = 4;</code>
+   * <code>string item = 5;</code>
    * @return The item.
    */
   public java.lang.String getItem() {
@@ -266,7 +309,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string item = 4;</code>
+   * <code>string item = 5;</code>
    * @return The bytes for item.
    */
   public com.google.protobuf.ByteString
@@ -283,20 +326,20 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int MAX_BID_FIELD_NUMBER = 5;
+  public static final int MAX_BID_FIELD_NUMBER = 6;
   private double maxBid_;
   /**
-   * <code>double max_bid = 5;</code>
+   * <code>double max_bid = 6;</code>
    * @return The maxBid.
    */
   public double getMaxBid() {
     return maxBid_;
   }
 
-  public static final int RANDOM_AUCTION_ID_FIELD_NUMBER = 6;
+  public static final int RANDOM_AUCTION_ID_FIELD_NUMBER = 7;
   private volatile java.lang.Object randomAuctionId_;
   /**
-   * <code>string random_auction_id = 6;</code>
+   * <code>string random_auction_id = 7;</code>
    * @return The randomAuctionId.
    */
   public java.lang.String getRandomAuctionId() {
@@ -312,7 +355,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string random_auction_id = 6;</code>
+   * <code>string random_auction_id = 7;</code>
    * @return The bytes for randomAuctionId.
    */
   public com.google.protobuf.ByteString
@@ -329,10 +372,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RANDOM_USER_ID_FIELD_NUMBER = 7;
+  public static final int RANDOM_USER_ID_FIELD_NUMBER = 8;
   private volatile java.lang.Object randomUserId_;
   /**
-   * <code>string random_user_id = 7;</code>
+   * <code>string random_user_id = 8;</code>
    * @return The randomUserId.
    */
   public java.lang.String getRandomUserId() {
@@ -348,7 +391,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string random_user_id = 7;</code>
+   * <code>string random_user_id = 8;</code>
    * @return The bytes for randomUserId.
    */
   public com.google.protobuf.ByteString
@@ -365,10 +408,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RANDOM_ITEM_FIELD_NUMBER = 8;
+  public static final int RANDOM_ITEM_FIELD_NUMBER = 9;
   private volatile java.lang.Object randomItem_;
   /**
-   * <code>string random_item = 8;</code>
+   * <code>string random_item = 9;</code>
    * @return The randomItem.
    */
   public java.lang.String getRandomItem() {
@@ -384,7 +427,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string random_item = 8;</code>
+   * <code>string random_item = 9;</code>
    * @return The bytes for randomItem.
    */
   public com.google.protobuf.ByteString
@@ -401,10 +444,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RANDOM_MAX_BID_FIELD_NUMBER = 9;
+  public static final int RANDOM_MAX_BID_FIELD_NUMBER = 10;
   private double randomMaxBid_;
   /**
-   * <code>double random_max_bid = 9;</code>
+   * <code>double random_max_bid = 10;</code>
    * @return The randomMaxBid.
    */
   public double getRandomMaxBid() {
@@ -431,26 +474,29 @@ private static final long serialVersionUID = 0L;
     if (!getUserAddressBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userAddress_);
     }
+    if (!getPublicKeyBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, publicKey_);
+    }
     if (!getAuctionIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, auctionId_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, auctionId_);
     }
     if (!getItemBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, item_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, item_);
     }
     if (maxBid_ != 0D) {
-      output.writeDouble(5, maxBid_);
+      output.writeDouble(6, maxBid_);
     }
     if (!getRandomAuctionIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, randomAuctionId_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, randomAuctionId_);
     }
     if (!getRandomUserIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, randomUserId_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, randomUserId_);
     }
     if (!getRandomItemBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, randomItem_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 9, randomItem_);
     }
     if (randomMaxBid_ != 0D) {
-      output.writeDouble(9, randomMaxBid_);
+      output.writeDouble(10, randomMaxBid_);
     }
     unknownFields.writeTo(output);
   }
@@ -467,28 +513,31 @@ private static final long serialVersionUID = 0L;
     if (!getUserAddressBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userAddress_);
     }
+    if (!getPublicKeyBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, publicKey_);
+    }
     if (!getAuctionIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, auctionId_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, auctionId_);
     }
     if (!getItemBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, item_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, item_);
     }
     if (maxBid_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(5, maxBid_);
+        .computeDoubleSize(6, maxBid_);
     }
     if (!getRandomAuctionIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, randomAuctionId_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, randomAuctionId_);
     }
     if (!getRandomUserIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, randomUserId_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, randomUserId_);
     }
     if (!getRandomItemBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, randomItem_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, randomItem_);
     }
     if (randomMaxBid_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(9, randomMaxBid_);
+        .computeDoubleSize(10, randomMaxBid_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -509,6 +558,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getUserId())) return false;
     if (!getUserAddress()
         .equals(other.getUserAddress())) return false;
+    if (!getPublicKey()
+        .equals(other.getPublicKey())) return false;
     if (!getAuctionId()
         .equals(other.getAuctionId())) return false;
     if (!getItem()
@@ -540,6 +591,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getUserId().hashCode();
     hash = (37 * hash) + USER_ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getUserAddress().hashCode();
+    hash = (37 * hash) + PUBLIC_KEY_FIELD_NUMBER;
+    hash = (53 * hash) + getPublicKey().hashCode();
     hash = (37 * hash) + AUCTION_ID_FIELD_NUMBER;
     hash = (53 * hash) + getAuctionId().hashCode();
     hash = (37 * hash) + ITEM_FIELD_NUMBER;
@@ -693,6 +746,8 @@ private static final long serialVersionUID = 0L;
 
       userAddress_ = "";
 
+      publicKey_ = "";
+
       auctionId_ = "";
 
       item_ = "";
@@ -735,6 +790,7 @@ private static final long serialVersionUID = 0L;
       bdcc.grpc.NodeNotification result = new bdcc.grpc.NodeNotification(this);
       result.userId_ = userId_;
       result.userAddress_ = userAddress_;
+      result.publicKey_ = publicKey_;
       result.auctionId_ = auctionId_;
       result.item_ = item_;
       result.maxBid_ = maxBid_;
@@ -796,6 +852,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getUserAddress().isEmpty()) {
         userAddress_ = other.userAddress_;
+        onChanged();
+      }
+      if (!other.getPublicKey().isEmpty()) {
+        publicKey_ = other.publicKey_;
         onChanged();
       }
       if (!other.getAuctionId().isEmpty()) {
@@ -1005,9 +1065,85 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object publicKey_ = "";
+    /**
+     * <code>string public_key = 3;</code>
+     * @return The publicKey.
+     */
+    public java.lang.String getPublicKey() {
+      java.lang.Object ref = publicKey_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        publicKey_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string public_key = 3;</code>
+     * @return The bytes for publicKey.
+     */
+    public com.google.protobuf.ByteString
+        getPublicKeyBytes() {
+      java.lang.Object ref = publicKey_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        publicKey_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string public_key = 3;</code>
+     * @param value The publicKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPublicKey(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      publicKey_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string public_key = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPublicKey() {
+      
+      publicKey_ = getDefaultInstance().getPublicKey();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string public_key = 3;</code>
+     * @param value The bytes for publicKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPublicKeyBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      publicKey_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object auctionId_ = "";
     /**
-     * <code>string auction_id = 3;</code>
+     * <code>string auction_id = 4;</code>
      * @return The auctionId.
      */
     public java.lang.String getAuctionId() {
@@ -1023,7 +1159,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string auction_id = 3;</code>
+     * <code>string auction_id = 4;</code>
      * @return The bytes for auctionId.
      */
     public com.google.protobuf.ByteString
@@ -1040,7 +1176,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string auction_id = 3;</code>
+     * <code>string auction_id = 4;</code>
      * @param value The auctionId to set.
      * @return This builder for chaining.
      */
@@ -1055,7 +1191,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string auction_id = 3;</code>
+     * <code>string auction_id = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearAuctionId() {
@@ -1065,7 +1201,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string auction_id = 3;</code>
+     * <code>string auction_id = 4;</code>
      * @param value The bytes for auctionId to set.
      * @return This builder for chaining.
      */
@@ -1083,7 +1219,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object item_ = "";
     /**
-     * <code>string item = 4;</code>
+     * <code>string item = 5;</code>
      * @return The item.
      */
     public java.lang.String getItem() {
@@ -1099,7 +1235,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string item = 4;</code>
+     * <code>string item = 5;</code>
      * @return The bytes for item.
      */
     public com.google.protobuf.ByteString
@@ -1116,7 +1252,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string item = 4;</code>
+     * <code>string item = 5;</code>
      * @param value The item to set.
      * @return This builder for chaining.
      */
@@ -1131,7 +1267,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string item = 4;</code>
+     * <code>string item = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearItem() {
@@ -1141,7 +1277,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string item = 4;</code>
+     * <code>string item = 5;</code>
      * @param value The bytes for item to set.
      * @return This builder for chaining.
      */
@@ -1159,14 +1295,14 @@ private static final long serialVersionUID = 0L;
 
     private double maxBid_ ;
     /**
-     * <code>double max_bid = 5;</code>
+     * <code>double max_bid = 6;</code>
      * @return The maxBid.
      */
     public double getMaxBid() {
       return maxBid_;
     }
     /**
-     * <code>double max_bid = 5;</code>
+     * <code>double max_bid = 6;</code>
      * @param value The maxBid to set.
      * @return This builder for chaining.
      */
@@ -1177,7 +1313,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double max_bid = 5;</code>
+     * <code>double max_bid = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearMaxBid() {
@@ -1189,7 +1325,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object randomAuctionId_ = "";
     /**
-     * <code>string random_auction_id = 6;</code>
+     * <code>string random_auction_id = 7;</code>
      * @return The randomAuctionId.
      */
     public java.lang.String getRandomAuctionId() {
@@ -1205,7 +1341,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_auction_id = 6;</code>
+     * <code>string random_auction_id = 7;</code>
      * @return The bytes for randomAuctionId.
      */
     public com.google.protobuf.ByteString
@@ -1222,7 +1358,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_auction_id = 6;</code>
+     * <code>string random_auction_id = 7;</code>
      * @param value The randomAuctionId to set.
      * @return This builder for chaining.
      */
@@ -1237,7 +1373,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_auction_id = 6;</code>
+     * <code>string random_auction_id = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomAuctionId() {
@@ -1247,7 +1383,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_auction_id = 6;</code>
+     * <code>string random_auction_id = 7;</code>
      * @param value The bytes for randomAuctionId to set.
      * @return This builder for chaining.
      */
@@ -1265,7 +1401,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object randomUserId_ = "";
     /**
-     * <code>string random_user_id = 7;</code>
+     * <code>string random_user_id = 8;</code>
      * @return The randomUserId.
      */
     public java.lang.String getRandomUserId() {
@@ -1281,7 +1417,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_user_id = 7;</code>
+     * <code>string random_user_id = 8;</code>
      * @return The bytes for randomUserId.
      */
     public com.google.protobuf.ByteString
@@ -1298,7 +1434,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_user_id = 7;</code>
+     * <code>string random_user_id = 8;</code>
      * @param value The randomUserId to set.
      * @return This builder for chaining.
      */
@@ -1313,7 +1449,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_user_id = 7;</code>
+     * <code>string random_user_id = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomUserId() {
@@ -1323,7 +1459,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_user_id = 7;</code>
+     * <code>string random_user_id = 8;</code>
      * @param value The bytes for randomUserId to set.
      * @return This builder for chaining.
      */
@@ -1341,7 +1477,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object randomItem_ = "";
     /**
-     * <code>string random_item = 8;</code>
+     * <code>string random_item = 9;</code>
      * @return The randomItem.
      */
     public java.lang.String getRandomItem() {
@@ -1357,7 +1493,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_item = 8;</code>
+     * <code>string random_item = 9;</code>
      * @return The bytes for randomItem.
      */
     public com.google.protobuf.ByteString
@@ -1374,7 +1510,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string random_item = 8;</code>
+     * <code>string random_item = 9;</code>
      * @param value The randomItem to set.
      * @return This builder for chaining.
      */
@@ -1389,7 +1525,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_item = 8;</code>
+     * <code>string random_item = 9;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomItem() {
@@ -1399,7 +1535,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string random_item = 8;</code>
+     * <code>string random_item = 9;</code>
      * @param value The bytes for randomItem to set.
      * @return This builder for chaining.
      */
@@ -1417,14 +1553,14 @@ private static final long serialVersionUID = 0L;
 
     private double randomMaxBid_ ;
     /**
-     * <code>double random_max_bid = 9;</code>
+     * <code>double random_max_bid = 10;</code>
      * @return The randomMaxBid.
      */
     public double getRandomMaxBid() {
       return randomMaxBid_;
     }
     /**
-     * <code>double random_max_bid = 9;</code>
+     * <code>double random_max_bid = 10;</code>
      * @param value The randomMaxBid to set.
      * @return This builder for chaining.
      */
@@ -1435,7 +1571,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double random_max_bid = 9;</code>
+     * <code>double random_max_bid = 10;</code>
      * @return This builder for chaining.
      */
     public Builder clearRandomMaxBid() {

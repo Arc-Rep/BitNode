@@ -19,8 +19,8 @@ public class KBucket{
         
     }
 
-    public synchronized void addNode(String key, String value){
-        KeyNode node = new KeyNode(key,value);
+    public synchronized void addNode(String key, String value, byte[] pub_key){
+        KeyNode node = new KeyNode(key,value, pub_key);
         double distance = node.compareKeyNodeID(node_id),i;
 
         for(i=1; Math.pow(2,i) < distance; i++);

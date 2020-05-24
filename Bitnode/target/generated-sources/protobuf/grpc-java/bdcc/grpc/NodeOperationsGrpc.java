@@ -58,29 +58,29 @@ public final class NodeOperationsGrpc {
     return getNotifyNodeMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getFindNodeMethod;
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.NodeSecInfo> getFindNodeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "findNode",
-      requestType = bdcc.grpc.NodeInfo.class,
-      responseType = bdcc.grpc.NodeInfo.class,
+      requestType = bdcc.grpc.NodeSecInfo.class,
+      responseType = bdcc.grpc.NodeSecInfo.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getFindNodeMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo> getFindNodeMethod;
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.NodeSecInfo> getFindNodeMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo, bdcc.grpc.NodeSecInfo> getFindNodeMethod;
     if ((getFindNodeMethod = NodeOperationsGrpc.getFindNodeMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getFindNodeMethod = NodeOperationsGrpc.getFindNodeMethod) == null) {
           NodeOperationsGrpc.getFindNodeMethod = getFindNodeMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeSecInfo, bdcc.grpc.NodeSecInfo>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "findNode"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeSecInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeSecInfo.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("findNode"))
               .build();
         }
@@ -89,29 +89,29 @@ public final class NodeOperationsGrpc {
     return getFindNodeMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getLookupNodeMethod;
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.NodeSecInfo> getLookupNodeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "lookupNode",
-      requestType = bdcc.grpc.NodeInfo.class,
-      responseType = bdcc.grpc.NodeInfo.class,
+      requestType = bdcc.grpc.NodeSecInfo.class,
+      responseType = bdcc.grpc.NodeSecInfo.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo,
-      bdcc.grpc.NodeInfo> getLookupNodeMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo> getLookupNodeMethod;
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.NodeSecInfo> getLookupNodeMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo, bdcc.grpc.NodeSecInfo> getLookupNodeMethod;
     if ((getLookupNodeMethod = NodeOperationsGrpc.getLookupNodeMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getLookupNodeMethod = NodeOperationsGrpc.getLookupNodeMethod) == null) {
           NodeOperationsGrpc.getLookupNodeMethod = getLookupNodeMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.NodeInfo, bdcc.grpc.NodeInfo>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeSecInfo, bdcc.grpc.NodeSecInfo>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "lookupNode"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeSecInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeInfo.getDefaultInstance()))
+                  bdcc.grpc.NodeSecInfo.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("lookupNode"))
               .build();
         }
@@ -338,8 +338,8 @@ public final class NodeOperationsGrpc {
      * Find Node
      * </pre>
      */
-    public void findNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void findNode(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo> responseObserver) {
       asyncUnimplementedUnaryCall(getFindNodeMethod(), responseObserver);
     }
 
@@ -348,8 +348,8 @@ public final class NodeOperationsGrpc {
      * Initial node lookup
      * </pre>
      */
-    public void lookupNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void lookupNode(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo> responseObserver) {
       asyncUnimplementedUnaryCall(getLookupNodeMethod(), responseObserver);
     }
 
@@ -404,15 +404,15 @@ public final class NodeOperationsGrpc {
             getFindNodeMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
-                bdcc.grpc.NodeInfo,
-                bdcc.grpc.NodeInfo>(
+                bdcc.grpc.NodeSecInfo,
+                bdcc.grpc.NodeSecInfo>(
                   this, METHODID_FIND_NODE)))
           .addMethod(
             getLookupNodeMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
-                bdcc.grpc.NodeInfo,
-                bdcc.grpc.NodeInfo>(
+                bdcc.grpc.NodeSecInfo,
+                bdcc.grpc.NodeSecInfo>(
                   this, METHODID_LOOKUP_NODE)))
           .addMethod(
             getFindValueMethod(),
@@ -483,8 +483,8 @@ public final class NodeOperationsGrpc {
      * Find Node
      * </pre>
      */
-    public void findNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void findNode(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getFindNodeMethod(), getCallOptions()), request, responseObserver);
     }
@@ -494,8 +494,8 @@ public final class NodeOperationsGrpc {
      * Initial node lookup
      * </pre>
      */
-    public void lookupNode(bdcc.grpc.NodeInfo request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo> responseObserver) {
+    public void lookupNode(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getLookupNodeMethod(), getCallOptions()), request, responseObserver);
     }
@@ -573,8 +573,8 @@ public final class NodeOperationsGrpc {
      * Find Node
      * </pre>
      */
-    public java.util.Iterator<bdcc.grpc.NodeInfo> findNode(
-        bdcc.grpc.NodeInfo request) {
+    public java.util.Iterator<bdcc.grpc.NodeSecInfo> findNode(
+        bdcc.grpc.NodeSecInfo request) {
       return blockingServerStreamingCall(
           getChannel(), getFindNodeMethod(), getCallOptions(), request);
     }
@@ -584,8 +584,8 @@ public final class NodeOperationsGrpc {
      * Initial node lookup
      * </pre>
      */
-    public java.util.Iterator<bdcc.grpc.NodeInfo> lookupNode(
-        bdcc.grpc.NodeInfo request) {
+    public java.util.Iterator<bdcc.grpc.NodeSecInfo> lookupNode(
+        bdcc.grpc.NodeSecInfo request) {
       return blockingServerStreamingCall(
           getChannel(), getLookupNodeMethod(), getCallOptions(), request);
     }
@@ -719,12 +719,12 @@ public final class NodeOperationsGrpc {
               (io.grpc.stub.StreamObserver<bdcc.grpc.NodeNotification>) responseObserver);
           break;
         case METHODID_FIND_NODE:
-          serviceImpl.findNode((bdcc.grpc.NodeInfo) request,
-              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo>) responseObserver);
+          serviceImpl.findNode((bdcc.grpc.NodeSecInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo>) responseObserver);
           break;
         case METHODID_LOOKUP_NODE:
-          serviceImpl.lookupNode((bdcc.grpc.NodeInfo) request,
-              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeInfo>) responseObserver);
+          serviceImpl.lookupNode((bdcc.grpc.NodeSecInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeSecInfo>) responseObserver);
           break;
         case METHODID_FIND_VALUE:
           serviceImpl.findValue((bdcc.grpc.NodeInfo) request,

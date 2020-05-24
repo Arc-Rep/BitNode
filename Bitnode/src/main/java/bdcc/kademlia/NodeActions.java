@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import bdcc.auction.*;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
+import bdcc.grpc.NodeSecInfo;
 import bdcc.grpc.NodeNotification;
 import bdcc.grpc.NodeOperationsClient;
 
@@ -17,16 +18,18 @@ public class NodeActions {
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
         try
-        {
+        {   //cipher with node public key
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
+                new String(current_user.getPubKey()),
                 (user_auction == null) ? "" : user_auction.getAuctionId(),
                 (user_auction == null) ? "" : user_auction.getItem(),
                 (user_auction == null) ? 0 : user_auction.getValue(),
                 (random_auction == null) ? "" : random_auction.getAuctionId(),
                 (random_auction == null) ? "" : random_auction.getSeller(),
                 (random_auction == null) ? "" : random_auction.getItem(),
-                (random_auction == null) ? 0 : random_auction.getValue()
+                (random_auction == null) ? 0 : random_auction.getValue(),
+                node.getPubKey()
             );
             proccessPingNode(response, userBucket, current_user, auctions);
         }
@@ -44,20 +47,33 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-        if(!notification.getAuctionId().equals(""))
-        {
-            Auction sender_auction = new Auction(notification.getUserId(), notification.getItem(), 
-                notification.getMaxBid(),notification.getAuctionId());
-            auctions.addToAuctionList(sender_auction);
-        }   
-        
-        if(!notification.getRandomAuctionId().equals("") && !notification.getRandomUserId().equals(current_user.getUserId()))
-        {
-            Auction random_auction = new Auction(notification.getRandomUserId(), notification.getRandomItem(),
-                                                    notification.getRandomMaxBid(), notification.getRandomAuctionId());
-            auctions.addToAuctionList(random_auction);
+        try { 
+            String auction_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getAuctionId().getBytes())),
+            item_name = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getItem().getBytes())),
+            random_auction_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomAuctionId().getBytes())),
+            random_item_id = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomItem().getBytes())),
+            random_user = new String(Crypto.decrypt(current_user.getPrivateKey(), notification.getRandomUserId().getBytes()));
+            
+
+            System.out.println(random_item_id);
+            if(!auction_id.equals(""))
+            {
+                Auction sender_auction = new Auction(notification.getUserId(),
+                    item_name, notification.getMaxBid(), random_auction_id);
+                auctions.addToAuctionList(sender_auction);
+            
+            }   
+            
+            if(!random_auction_id.equals("") && !random_user.equals(current_user.getUserId()))
+            {
+                Auction random_auction = new Auction(random_user, random_item_id,
+                                                        notification.getRandomMaxBid(), random_auction_id);
+                auctions.addToAuctionList(random_auction);
+            }
+            userBucket.addNode(notification.getUserId(), notification.getUserAddress(), notification.getPublicKey().getBytes());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        userBucket.addNode(notification.getUserId(), notification.getUserAddress());
     }
 
     public static KeyNode findNode(String Key, int server_port, KBucket userBucket, User current_user){
@@ -66,7 +82,7 @@ public class NodeActions {
         NodeOperationsClient initial_requester;
         LinkedList<KeyNode> node_list = userBucket.findNearestNodes(Key, true);
         LinkedList<String> visited_nodes = new LinkedList<String>();
-        Iterator<NodeInfo> response;
+        Iterator<NodeSecInfo> response;
         KeyNode closest_node = null;
         for(KeyNode kn: node_list){
             if(kn.getKey().equals(Key)){
@@ -81,12 +97,16 @@ public class NodeActions {
                 initial_requester = new NodeOperationsClient(node_list.get(0).getValue(), server_port);
                 try
                 {
-                response = initial_requester.findNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+                response = initial_requester.findNode(current_user.getUserId(), 
+                                                        InetAddress.getLocalHost().getHostAddress(),
+                                                        Crypto.convertBytesToString(current_user.getPubKey())
+                                                    );
                 if(response == null) throw new UnknownHostException("Could not find node");
                 while(response.hasNext())
                 {   
-                    NodeInfo info = response.next();
-                    KeyNode current_node = new KeyNode(info.getUserId(), info.getUserAddress());
+                    NodeSecInfo info = response.next();
+                    KeyNode current_node = new KeyNode(info.getUserId(), info.getUserAddress(), 
+                        Crypto.convertStringToBytes(info.getPublicKey()));
                     visited_nodes.add(current_node.getKey());
                     double current_distance = current_node.compareKeyNodeID(Key);
                     if(closest_node == null || current_distance < closest_distance){
@@ -95,7 +115,7 @@ public class NodeActions {
                     }
                     if(numb_nodes_found == 0)       //first node is always the own server
                     {
-                        userBucket.addNode(info.getUserId(), info.getUserAddress());       //update server
+                        userBucket.addNode(info.getUserId(), info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey()));       //update server
                         System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                     }
                     else

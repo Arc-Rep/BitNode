@@ -10,9 +10,9 @@ service NodeOperations {
     // Notify node with node info + random auction info
     rpc notifyNode (NodeNotification) returns (NodeNotification) {}
     // Find Node
-    rpc findNode(NodeInfo) returns (stream NodeInfo) {}
+    rpc findNode(NodeSecInfo) returns (stream NodeSecInfo) {}
     // Initial node lookup
-    rpc lookupNode(NodeInfo) returns (stream NodeInfo) {}
+    rpc lookupNode(NodeSecInfo) returns (stream NodeSecInfo) {}
     // Find if node has value
     rpc findValue(NodeInfo) returns (stream NodeInfo) {}
 
@@ -23,6 +23,7 @@ service NodeOperations {
     rpc makeBid(MakeBid) returns (NodeResponse) {}
 
     rpc resultsAuction(ResultsAuction) returns (NodeResponse) {}
+
 }
   
 
@@ -30,6 +31,12 @@ service NodeOperations {
 message NodeInfo {
   string user_id = 1;
   string user_address = 2;
+}
+
+message NodeSecInfo {
+  string user_id = 1;
+  string user_address = 2;
+  string public_key = 3;
 }
 
 
@@ -42,13 +49,14 @@ message TransactionInfo {
 message NodeNotification {
   string user_id = 1;
   string user_address = 2;
-  string auction_id = 3;
-  string item = 4;
-  double max_bid = 5;
-  string random_auction_id = 6;
-  string random_user_id = 7;
-  string random_item = 8;
-  double random_max_bid = 9; 
+  string public_key = 3;
+  string auction_id = 4;
+  string item = 5;
+  double max_bid = 6;
+  string random_auction_id = 7;
+  string random_user_id = 8;
+  string random_item = 9;
+  double random_max_bid = 10;
 }
 
 

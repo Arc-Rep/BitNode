@@ -18,6 +18,7 @@ import bdcc.auction.User;
 import bdcc.chain.*;
 import bdcc.grpc.NodeNotification;
 import bdcc.grpc.NodeInfo;
+import bdcc.grpc.NodeSecInfo;
 import bdcc.grpc.NodeOperationsClient;
 import bdcc.grpc.NodeOperationsServer;
 import bdcc.kademlia.*;
@@ -300,22 +301,23 @@ public class App {
         int numb_nodes_found = 0;
         System.out.println("Initializing connection to bitnode system...");
         NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
-        Iterator<NodeInfo> response;
+        Iterator<NodeSecInfo> response;
         try{  
-            response = initial_requester.lookupNode(current_user.getUserId(), InetAddress.getLocalHost().getHostAddress());
+            response = initial_requester.lookupNode(current_user.getUserId(), 
+                InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
             if(response == null) throw new Exception();
             while(response.hasNext())
             {   
-                NodeInfo info = response.next();
+                NodeSecInfo info = response.next();
                 
                 if(numb_nodes_found == 0)       //first node is always server
                 {
-                     userBucket.addNode(info.getUserId(), info.getUserAddress());
+                     userBucket.addNode(info.getUserId(), info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey()));
                      System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                 }
                 else
                 {
-                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress()), server_port,userBucket, current_user,auction_list);
+                    NodeActions.pingNode(new KeyNode(info.getUserId(),info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey())), server_port,userBucket, current_user,auction_list);
                 }
 
                 numb_nodes_found++;
@@ -363,6 +365,10 @@ public class App {
 
         try
         {
+            /*byte[] modified_public_key = Crypto.convertStringToBytes(Crypto.convertBytesToString(current_user.getPubKey()));
+            byte[] modified_private_key = Crypto.convertStringToBytes(Crypto.convertBytesToString(current_user.getPrivateKey()));
+            System.out.println("Result is " + new String(Crypto.decrypt(modified_private_key, Crypto.convertStringToBytes(
+                    Crypto.convertBytesToString(Crypto.encrypt(modified_public_key, Crypto.convertStringToBytes("This is a string")))))));*/
             block_chain = NodeBlockChain.getChainManager();
             user_server = new NodeOperationsServer(server_port, current_user.getUserId(),
                             InetAddress.getLocalHost().getHostAddress(), userBucket, current_user, auction_list);
@@ -370,6 +376,7 @@ public class App {
             thread_renewal = new Thread(renew_manager);
             thread_renewal.start();
             //inicio de CLI
+            
             menusCLI(args[0]);
             shutdownSystem(renew_manager);
         }

@@ -76,28 +76,35 @@ public class NodeOperationsServer {
       public void notifyNode(NodeNotification notification, StreamObserver<NodeNotification> responseObserver) {
         Auction random_auction = auction_list.getRandomAuction(), user_auction = user.getUserAuction();
         NodeActions.proccessPingNode(notification, userBucket, user, auction_list);
-        NodeNotification reply = NodeNotification.newBuilder()
-                            .setUserId(userBucket.getUserId()).setUserAddress(server_address).
-                            setAuctionId((user_auction == null) ? "" : user_auction.getAuctionId()).
-                            setItem((user_auction == null) ? "" : user_auction.getItem()).
-                            setMaxBid((user_auction == null) ? 0 : user_auction.getValue()).
-                            setRandomAuctionId((random_auction == null) ? "" : random_auction.getAuctionId()).
-                            setRandomUserId((random_auction == null) ? "" : random_auction.getSeller()).
-                            setRandomItem((random_auction == null) ? "" : random_auction.getItem()).
-                            setRandomMaxBid((random_auction == null) ? 0 : random_auction.getValue()).build();
-        responseObserver.onNext(reply);
+        byte[] node_public_key = notification.getPublicKey().getBytes();
+        try {
+          NodeNotification reply = NodeNotification.newBuilder()
+                              .setUserId(userBucket.getUserId()).setUserAddress(server_address).
+                              setPublicKey(new String(user.getPubKey())).
+                              setAuctionId((user_auction == null) ? "" : new String(Crypto.encrypt(node_public_key, user_auction.getAuctionId().getBytes()))).
+                              setItem((user_auction == null) ? "" : new String(Crypto.encrypt(node_public_key, user_auction.getItem().getBytes()))).
+                              setMaxBid((user_auction == null) ? 0 : user_auction.getValue()).
+                              setRandomAuctionId((random_auction == null) ? "" : new String(Crypto.encrypt(node_public_key, random_auction.getAuctionId().getBytes()))).
+                              setRandomUserId((random_auction == null) ? "" : new String(Crypto.encrypt(node_public_key, random_auction.getSeller().getBytes()))).
+                              setRandomItem((random_auction == null) ? "" : new String(Crypto.encrypt(node_public_key, random_auction.getItem().getBytes()))).
+                              setRandomMaxBid((random_auction == null) ? 0 : random_auction.getValue()).build();
+          responseObserver.onNext(reply);
+        } catch(Exception e) {
+          System.out.println(e.getMessage());
+        }
         responseObserver.onCompleted();
         
       }
 
       @Override
-      public void findNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
+      public void findNode(NodeSecInfo node_id, StreamObserver<NodeSecInfo> responseObserver) {
 
         LinkedList<KeyNode> node_list = userBucket.findNode(node_id.getUserId());
-        NodeInfo reply =                      // send current node
-          NodeInfo.newBuilder()
+        NodeSecInfo reply =                      // send current node
+          NodeSecInfo.newBuilder()
             .setUserId(server_id)
             .setUserAddress(server_address)
+            .setPublicKey(Crypto.convertBytesToString(user.getPubKey()))
             .build();
         responseObserver.onNext(reply);
         if(node_list != null)           // if there are no other nodes
@@ -105,25 +112,27 @@ public class NodeOperationsServer {
           for(KeyNode node: node_list)
           {
             reply = 
-              NodeInfo.newBuilder()
+              NodeSecInfo.newBuilder()
                 .setUserId(node.getKey())
                 .setUserAddress(node.getValue())
+                .setPublicKey(new String(node.getPubKey()))
                 .build();
             responseObserver.onNext(reply);
           }
         }
         responseObserver.onCompleted();
-        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress(), Crypto.convertStringToBytes(node_id.getPublicKey()));
       }
 
       @Override
-      public void lookupNode(NodeInfo node_id, StreamObserver<NodeInfo> responseObserver) {
+      public void lookupNode(NodeSecInfo node_id, StreamObserver<NodeSecInfo> responseObserver) {
 
         LinkedList<KeyNode> node_list = userBucket.lookupNode(node_id.getUserId());
-        NodeInfo reply =                      // send current node
-          NodeInfo.newBuilder()
+        NodeSecInfo reply =                      // send current node
+          NodeSecInfo.newBuilder()
             .setUserId(server_id)
             .setUserAddress(server_address)
+            .setPublicKey(Crypto.convertBytesToString(user.getPubKey()))
             .build();
         responseObserver.onNext(reply);
         //System.out.println("User " + Crypto.toHex(node_id.getUserId()) + " from " + node_id.getUserAddress() + " connected");
@@ -132,15 +141,16 @@ public class NodeOperationsServer {
           for(KeyNode node: node_list)
           {
             reply = 
-              NodeInfo.newBuilder()
+              NodeSecInfo.newBuilder()
                 .setUserId(node.getKey())
                 .setUserAddress(node.getValue())
+                .setPublicKey(Crypto.convertBytesToString(node.getPubKey()))
                 .build();
             responseObserver.onNext(reply);
           }
         }
         responseObserver.onCompleted();
-        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress());
+        userBucket.addNode(node_id.getUserId(), node_id.getUserAddress(), Crypto.convertStringToBytes(node_id.getPublicKey()));
       }
 
       @Override

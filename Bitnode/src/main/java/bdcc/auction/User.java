@@ -57,4 +57,13 @@ public class User{
         //do not forget to make the transefer
         this.user_auction = null;
     }
+
+    public byte[] getPubKey(){
+        return pubKey.getEncoded();
+    }
+
+    public byte[] getPrivateKey(){
+        return privKey.getEncoded();
+    }
+
 }

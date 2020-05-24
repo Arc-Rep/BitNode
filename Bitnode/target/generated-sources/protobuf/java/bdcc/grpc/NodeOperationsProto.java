@@ -20,6 +20,11 @@ public final class NodeOperationsProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_grpc_NodeInfo_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_NodeSecInfo_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_NodeSecInfo_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_grpc_TransactionInfo_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -59,34 +64,37 @@ public final class NodeOperationsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022grpc_bitnode.proto\022\004grpc\"1\n\010NodeInfo\022\017" +
-      "\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 \001(\t\"F\n" +
-      "\017TransactionInfo\022\020\n\010buyer_id\030\001 \001(\t\022\016\n\006am" +
-      "ount\030\002 \001(\001\022\021\n\tseller_id\030\003 \001(\t\"\314\001\n\020NodeNo" +
-      "tification\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_addr" +
-      "ess\030\002 \001(\t\022\022\n\nauction_id\030\003 \001(\t\022\014\n\004item\030\004 " +
-      "\001(\t\022\017\n\007max_bid\030\005 \001(\001\022\031\n\021random_auction_i" +
-      "d\030\006 \001(\t\022\026\n\016random_user_id\030\007 \001(\t\022\023\n\013rando" +
-      "m_item\030\010 \001(\t\022\026\n\016random_max_bid\030\t \001(\001\"w\n\013" +
-      "InfoAuction\022\021\n\tseller_id\030\001 \001(\t\022\022\n\nauctio" +
-      "n_id\030\002 \001(\t\022\014\n\004item\030\003 \001(\t\022\016\n\006amount\030\004 \001(\001" +
-      "\022\020\n\010buyer_id\030\005 \001(\t\022\021\n\tbuyer_bid\030\006 \001(\001\"?\n" +
-      "\007MakeBid\022\020\n\010buyer_id\030\001 \001(\t\022\022\n\nauction_id" +
-      "\030\002 \001(\t\022\016\n\006amount\030\003 \001(\001\"E\n\016ResultsAuction" +
-      "\022\022\n\nauction_id\030\001 \001(\t\022\020\n\010buyer_id\030\002 \001(\t\022\r" +
-      "\n\005value\030\003 \001(\001\"\036\n\014NodeResponse\022\016\n\006status\030" +
-      "\001 \001(\t2\311\003\n\016NodeOperations\022>\n\nnotifyNode\022\026" +
-      ".grpc.NodeNotification\032\026.grpc.NodeNotifi" +
-      "cation\"\000\022.\n\010findNode\022\016.grpc.NodeInfo\032\016.g" +
-      "rpc.NodeInfo\"\0000\001\0220\n\nlookupNode\022\016.grpc.No" +
-      "deInfo\032\016.grpc.NodeInfo\"\0000\001\022/\n\tfindValue\022" +
-      "\016.grpc.NodeInfo\032\016.grpc.NodeInfo\"\0000\001\022>\n\017m" +
-      "akeTransaction\022\025.grpc.TransactionInfo\032\022." +
-      "grpc.NodeResponse\"\000\0226\n\013infoAuction\022\021.grp" +
-      "c.InfoAuction\032\022.grpc.NodeResponse\"\000\022.\n\007m" +
-      "akeBid\022\r.grpc.MakeBid\032\022.grpc.NodeRespons" +
-      "e\"\000\022<\n\016resultsAuction\022\024.grpc.ResultsAuct" +
-      "ion\032\022.grpc.NodeResponse\"\000B\"\n\tbdcc.grpcB\023" +
-      "NodeOperationsProtoP\001b\006proto3"
+      "\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 \001(\t\"H\n" +
+      "\013NodeSecInfo\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_ad" +
+      "dress\030\002 \001(\t\022\022\n\npublic_key\030\003 \001(\t\"F\n\017Trans" +
+      "actionInfo\022\020\n\010buyer_id\030\001 \001(\t\022\016\n\006amount\030\002" +
+      " \001(\001\022\021\n\tseller_id\030\003 \001(\t\"\340\001\n\020NodeNotifica" +
+      "tion\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 " +
+      "\001(\t\022\022\n\npublic_key\030\003 \001(\t\022\022\n\nauction_id\030\004 " +
+      "\001(\t\022\014\n\004item\030\005 \001(\t\022\017\n\007max_bid\030\006 \001(\001\022\031\n\021ra" +
+      "ndom_auction_id\030\007 \001(\t\022\026\n\016random_user_id\030" +
+      "\010 \001(\t\022\023\n\013random_item\030\t \001(\t\022\026\n\016random_max" +
+      "_bid\030\n \001(\001\"w\n\013InfoAuction\022\021\n\tseller_id\030\001" +
+      " \001(\t\022\022\n\nauction_id\030\002 \001(\t\022\014\n\004item\030\003 \001(\t\022\016" +
+      "\n\006amount\030\004 \001(\001\022\020\n\010buyer_id\030\005 \001(\t\022\021\n\tbuye" +
+      "r_bid\030\006 \001(\001\"?\n\007MakeBid\022\020\n\010buyer_id\030\001 \001(\t" +
+      "\022\022\n\nauction_id\030\002 \001(\t\022\016\n\006amount\030\003 \001(\001\"E\n\016" +
+      "ResultsAuction\022\022\n\nauction_id\030\001 \001(\t\022\020\n\010bu" +
+      "yer_id\030\002 \001(\t\022\r\n\005value\030\003 \001(\001\"\036\n\014NodeRespo" +
+      "nse\022\016\n\006status\030\001 \001(\t2\325\003\n\016NodeOperations\022>" +
+      "\n\nnotifyNode\022\026.grpc.NodeNotification\032\026.g" +
+      "rpc.NodeNotification\"\000\0224\n\010findNode\022\021.grp" +
+      "c.NodeSecInfo\032\021.grpc.NodeSecInfo\"\0000\001\0226\n\n" +
+      "lookupNode\022\021.grpc.NodeSecInfo\032\021.grpc.Nod" +
+      "eSecInfo\"\0000\001\022/\n\tfindValue\022\016.grpc.NodeInf" +
+      "o\032\016.grpc.NodeInfo\"\0000\001\022>\n\017makeTransaction" +
+      "\022\025.grpc.TransactionInfo\032\022.grpc.NodeRespo" +
+      "nse\"\000\0226\n\013infoAuction\022\021.grpc.InfoAuction\032" +
+      "\022.grpc.NodeResponse\"\000\022.\n\007makeBid\022\r.grpc." +
+      "MakeBid\032\022.grpc.NodeResponse\"\000\022<\n\016results" +
+      "Auction\022\024.grpc.ResultsAuction\032\022.grpc.Nod" +
+      "eResponse\"\000B\"\n\tbdcc.grpcB\023NodeOperations" +
+      "ProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -98,38 +106,44 @@ public final class NodeOperationsProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_NodeInfo_descriptor,
         new java.lang.String[] { "UserId", "UserAddress", });
-    internal_static_grpc_TransactionInfo_descriptor =
+    internal_static_grpc_NodeSecInfo_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_grpc_NodeSecInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_NodeSecInfo_descriptor,
+        new java.lang.String[] { "UserId", "UserAddress", "PublicKey", });
+    internal_static_grpc_TransactionInfo_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_grpc_TransactionInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_TransactionInfo_descriptor,
         new java.lang.String[] { "BuyerId", "Amount", "SellerId", });
     internal_static_grpc_NodeNotification_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_grpc_NodeNotification_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_NodeNotification_descriptor,
-        new java.lang.String[] { "UserId", "UserAddress", "AuctionId", "Item", "MaxBid", "RandomAuctionId", "RandomUserId", "RandomItem", "RandomMaxBid", });
+        new java.lang.String[] { "UserId", "UserAddress", "PublicKey", "AuctionId", "Item", "MaxBid", "RandomAuctionId", "RandomUserId", "RandomItem", "RandomMaxBid", });
     internal_static_grpc_InfoAuction_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_grpc_InfoAuction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_InfoAuction_descriptor,
         new java.lang.String[] { "SellerId", "AuctionId", "Item", "Amount", "BuyerId", "BuyerBid", });
     internal_static_grpc_MakeBid_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_grpc_MakeBid_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_MakeBid_descriptor,
         new java.lang.String[] { "BuyerId", "AuctionId", "Amount", });
     internal_static_grpc_ResultsAuction_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_grpc_ResultsAuction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_ResultsAuction_descriptor,
         new java.lang.String[] { "AuctionId", "BuyerId", "Value", });
     internal_static_grpc_NodeResponse_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_grpc_NodeResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_NodeResponse_descriptor,

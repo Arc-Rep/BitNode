@@ -6,6 +6,9 @@ import io.grpc.ManagedChannelBuilder;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import bdcc.chain.Crypto;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,29 +38,38 @@ public class NodeOperationsClient {
       channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public NodeNotification notifyNode(String user_id, String user_address, String auction_id,
-                                       String item, double max_bid, String random_auction_id,
-                                       String random_user_id, String random_item, double random_max_bid){
+    public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
+                                       String auction_id, String item, double max_bid, String random_auction_id,
+                                       String random_user_id, String random_item, double random_max_bid, 
+                                       byte[] target_public_key){
       NodeNotification response = null;
       try
       {
         NodeNotification inforequest = 
-          NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).
-          setAuctionId(auction_id).setItem(item).setMaxBid(max_bid).
-          setRandomAuctionId(random_auction_id).setRandomUserId(random_user_id).
-          setRandomItem(random_item).setRandomMaxBid(random_max_bid).build();
+          NodeNotification.newBuilder().setUserId(user_id).setUserAddress(user_address).setPublicKey(user_public_key).
+          setAuctionId(new String(Crypto.encrypt(target_public_key, auction_id.getBytes()))).
+          setItem(new String(Crypto.encrypt(target_public_key, item.getBytes()))).
+          setMaxBid(max_bid).
+          setRandomAuctionId(new String(Crypto.encrypt(target_public_key, random_auction_id.getBytes()))).
+          setRandomUserId(new String(Crypto.encrypt(target_public_key, random_user_id.getBytes()))).
+          setRandomItem(new String(Crypto.encrypt(target_public_key, /*random_item*/"This is an item".getBytes()))).
+          setRandomMaxBid(random_max_bid).
+          build();
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server");
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
       }
       return response;
     }
 
-    public Iterator<NodeInfo> findNode(String user_id, String user_address){
-      Iterator<NodeInfo> response = null;
+    public Iterator<NodeSecInfo> findNode(String user_id, String user_address, String user_public_key){
+      Iterator<NodeSecInfo> response = null;
       try
       {
-        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        NodeSecInfo inforequest = NodeSecInfo.newBuilder().setUserId(user_id)
+          .setUserAddress(user_address).setPublicKey(user_public_key).build();
         response = blockingStub.findNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server");
@@ -65,11 +77,12 @@ public class NodeOperationsClient {
       return response;
     }
 
-    public Iterator<NodeInfo> lookupNode(String user_id, String user_address){
-      Iterator<NodeInfo> response = null;
+    public Iterator<NodeSecInfo> lookupNode(String user_id, String user_address, String pub_key){
+      Iterator<NodeSecInfo> response = null;
       try
       {
-        NodeInfo inforequest = NodeInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).build();
+        NodeSecInfo inforequest = NodeSecInfo.newBuilder().setUserId(user_id).setUserAddress(user_address).
+                                setPublicKey(pub_key).build();
         response = blockingStub.lookupNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server");
