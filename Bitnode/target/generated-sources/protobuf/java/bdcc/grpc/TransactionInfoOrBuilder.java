@@ -20,10 +20,16 @@ public interface TransactionInfoOrBuilder extends
       getBuyerIdBytes();
 
   /**
-   * <code>double amount = 2;</code>
+   * <code>string amount = 2;</code>
    * @return The amount.
    */
-  double getAmount();
+  java.lang.String getAmount();
+  /**
+   * <code>string amount = 2;</code>
+   * @return The bytes for amount.
+   */
+  com.google.protobuf.ByteString
+      getAmountBytes();
 
   /**
    * <code>string seller_id = 3;</code>

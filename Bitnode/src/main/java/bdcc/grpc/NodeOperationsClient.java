@@ -39,8 +39,8 @@ public class NodeOperationsClient {
     }
 
     public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
-                                       String auction_id, String item, double max_bid, String random_auction_id,
-                                       String random_user_id, String random_item, double random_max_bid){
+                                       String auction_id, String item, String max_bid, String random_auction_id,
+                                       String random_user_id, String random_item, String random_max_bid){
       NodeNotification response = null;
       try
       {
@@ -51,7 +51,7 @@ public class NodeOperationsClient {
           setRandomAuctionId(random_auction_id).setRandomUserId(random_user_id).
           setRandomItem(random_item).setRandomMaxBid(random_max_bid).
           build();
-          
+
         response = blockingStub.notifyNode(inforequest); 
       } catch (RuntimeException e) {
         System.out.println("RPC Error: Failed to establish communication with server on notify");
@@ -93,7 +93,7 @@ public class NodeOperationsClient {
       {
         TransactionInfo inforequest = TransactionInfo.newBuilder()
           .setBuyerId(buyer_id)
-          .setAmount(amount)
+          .setAmount(Double.toString(amount))
           .setSellerId(seller_id)
           .build();
         NodeResponse response = blockingStub.makeTransaction(inforequest);
@@ -109,9 +109,9 @@ public class NodeOperationsClient {
           .setSellerId(seller_id)
           .setAuctionId(auction_id)
           .setItem(item)
-          .setAmount(amount)
+          .setAmount(Double.toString(amount))
           .setBuyerId(buyer_id)
-          .setBuyerBid(buyer_bid)
+          .setBuyerBid(Double.toString(buyer_bid))
           .build();
         NodeResponse response = blockingStub.infoAuction(infoauctionrequest);
       } catch(RuntimeException e){
@@ -120,18 +120,20 @@ public class NodeOperationsClient {
       }
     }
 
-    public void makeBid(String buyer_id, String auction_id, double amount){
+    public NodeResponse makeBid(String buyer_id, String auction_id, String amount){
+      NodeResponse response;
       try{
         MakeBid bidrequest = MakeBid.newBuilder()
           .setBuyerId(buyer_id)
           .setAuctionId(auction_id)
           .setAmount(amount)
           .build();
-        NodeResponse response = blockingStub.makeBid(bidrequest);
+        response = blockingStub.makeBid(bidrequest);
       } catch(RuntimeException e){
         logger.log(Level.WARNING, "RCP failed", e);
-        return;
+        return null;
       }
+      return response;
     }
 
     public void resultsAuction(String auction_id, String buyer_id, double value){
@@ -139,7 +141,7 @@ public class NodeOperationsClient {
         ResultsAuction resutltsauctionrequest = ResultsAuction.newBuilder()
           .setAuctionId(auction_id)
           .setBuyerId(buyer_id)
-          .setValue(value)
+          .setValue(Double.toString(value))
           .build();
         NodeResponse response = blockingStub.resultsAuction(resutltsauctionrequest);
       } catch(RuntimeException e){

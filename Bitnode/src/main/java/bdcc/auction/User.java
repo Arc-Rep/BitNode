@@ -66,4 +66,11 @@ public class User{
         return privKey.getEncoded();
     }
 
+    public boolean processBid(Bid new_bid){
+        return user_auction.updateBid(new_bid);
+    }
+
+    public boolean checkActiveAuction(String auction_id){
+        return auction_id.equals(user_auction.auction_id);
+    }
 }

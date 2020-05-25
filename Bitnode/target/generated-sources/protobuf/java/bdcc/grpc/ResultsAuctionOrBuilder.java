@@ -32,8 +32,14 @@ public interface ResultsAuctionOrBuilder extends
       getBuyerIdBytes();
 
   /**
-   * <code>double value = 3;</code>
+   * <code>string value = 3;</code>
    * @return The value.
    */
-  double getValue();
+  java.lang.String getValue();
+  /**
+   * <code>string value = 3;</code>
+   * @return The bytes for value.
+   */
+  com.google.protobuf.ByteString
+      getValueBytes();
 }

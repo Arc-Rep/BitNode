@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import bdcc.auction.*;
 import bdcc.chain.*;
 import bdcc.grpc.NodeInfo;
+import bdcc.grpc.NodeResponse;
 import bdcc.grpc.NodeSecInfo;
 import bdcc.grpc.NodeNotification;
 import bdcc.grpc.NodeOperationsClient;
@@ -19,8 +20,6 @@ public class NodeActions {
         NodeNotification response = null;
         try
         {   //cipher with node public key
-            System.out.println("Node public key is");
-            System.out.println(Crypto.convertBytesToString(node.getPubKey()));
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
@@ -28,14 +27,14 @@ public class NodeActions {
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getAuctionId()))),
                 (user_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getItem()))),
-                (user_auction == null) ? 0 : user_auction.getValue(),
+                (user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(Double.toString(user_auction.getValue())))),
                 (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getAuctionId()))),
                 (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getSeller()))),
-                (random_auction == null) ? Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(new String("This is an item")))) : 
+                (random_auction == null) ? "" : 
                                         Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getItem()))),
-                (random_auction == null) ? 0 : random_auction.getValue()
+                (random_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(Double.toString(random_auction.getValue()))))
             );
             proccessPingNode(response, userBucket, current_user, auctions);
         }
@@ -56,21 +55,20 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-        System.out.println("Entered");
         try { 
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
             item_name = notification.getItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomAuctionId()))),
             random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
             random_user = notification.getRandomUserId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
-            
+
+            Double max_bid = notification.getMaxBid().equals("") ? 0 : Double.parseDouble(Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getMaxBid())))),
+                   random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Double.parseDouble(Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getRandomMaxBid()))));
             //System.out.println("Non encrypted random id is " + notification.getRandomItem());
-            System.out.println("Random item id is ");
-            System.out.println(random_item_id);
             if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
-                    item_name, notification.getMaxBid(), random_auction_id);
+                    item_name, max_bid, random_auction_id);
                 auctions.addToAuctionList(sender_auction);
             
             }   
@@ -78,7 +76,7 @@ public class NodeActions {
             if(!random_auction_id.equals("") && !random_user.equals(current_user.getUserId()))
             {
                 Auction random_auction = new Auction(random_user, random_item_id,
-                                                        notification.getRandomMaxBid(), random_auction_id);
+                                                        random_max_bid, random_auction_id);
                 auctions.addToAuctionList(random_auction);
             }
             userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
@@ -169,43 +167,56 @@ public class NodeActions {
 
 
     //needs fine tuning
-    public static int makeBid(String id, double value, String bidder, AuctionList list, String host, int port){ // 1 - accepted, 2 - rejected, 3 - auction not live
-        NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
+    public static int makeBid(String id, KBucket bucket, double value, User user, int port, AuctionList list){ // 1 - accepted, 2 - rejected, 3 - auction not live
         Auction temp = list.getAuctionById(id);
-        if(temp == null){
-            try{
-                initial_requester.shutdown();
-            } catch(Exception e){
-                System.out.println("Unable to shutdown client");
-            }
-            return 3;
+        KeyNode nearest_node = bucket.findNode(id).get(0);
+        String node_address = null;
+        if(id.equals(nearest_node.getKey())){
+            node_address = nearest_node.getValue();
         }
-
-        Bid bid = new Bid(id, value, bidder);
-
-        if(temp.updateBid(bid)){
-            initial_requester.makeBid(bidder, id, value);
-            list.updateList(temp,1);
-            try{
-                initial_requester.shutdown();
-            } catch(Exception e){
-                System.out.println("Unable to shutdown client");
-            }
-            return 1;
+        else{
+            //find node
         }
-        try{
+        if(temp == null || node_address == null) return 3;
+
+        Bid bid = new Bid(id, value, user.getUserId());
+        if(!temp.canUpdateBid(bid)) return 2;
+
+        try 
+        {
+        NodeOperationsClient initial_requester = new NodeOperationsClient(node_address, port);
+        
+            NodeResponse response = initial_requester.makeBid(
+                Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(user.getUserId()))), 
+                Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(id))), 
+                Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(Double.toString(value))))
+            );
+            String response_status = response.getStatus();
+            if(response_status.equals("OK"))
+            {
+                temp.setAuctionBid(bid);
+                list.updateList(temp.getAuctionId(), temp,1);
+            }
+
             initial_requester.shutdown();
+
+            if(response_status.equals("ERROR"))
+                return 3;
+            else if(response_status.equals("REFUSED"))
+                return 2;
         } catch(Exception e){
-            System.out.println("Unable to shutdown client");
+                System.out.println(e.getMessage());
+                return 2;
         }
-        return 2;
+        return 1;
+        
     }
 
     public static void completeAuction(AuctionList list, User current_user, String host, int port){
         NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
         Auction temp = current_user.getUserAuction();
         current_user.concludeAuction();
-        list.updateList(temp, 2);
+        list.updateList(temp.getAuctionId(), temp, 2);
         initial_requester.resultsAuction(temp.getAuctionId(), temp.getHighestBidder(), temp.getHighestBid());
         try{
             initial_requester.shutdown();

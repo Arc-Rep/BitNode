@@ -51,21 +51,27 @@ public class Auction {
         return this.bid.getInfoBidder();
     }
 
-    public boolean updateBid(Bid b){
-        if(!(b.getInfoId() == this.auction_id)){
+    public boolean canUpdateBid(Bid b){
+        if(!(b.getInfoId().equals(this.auction_id))){
             return false;
         }
 
         if((this.bid != null) && (b.getInfoValue() > this.bid.getInfoValue()) ){
-            this.bid = b;
             return true;
         }
 
         else if(b.getInfoValue() > this.value){
-            this.bid = b;
             return true;
         }
 
+        return false;
+    }
+
+    public boolean updateBid(Bid b){
+        if(canUpdateBid(b)){
+            this.bid = b;
+            return true;
+        }
         return false;
     }
 
@@ -76,4 +82,7 @@ public class Auction {
         return false;
     }
 
+    public void setAuctionBid(Bid new_bid){
+        this.bid = new_bid;
+    }
 }

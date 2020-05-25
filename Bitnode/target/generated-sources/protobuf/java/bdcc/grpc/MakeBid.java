@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private MakeBid() {
     buyerId_ = "";
     auctionId_ = "";
+    amount_ = "";
   }
 
   @java.lang.Override
@@ -62,9 +63,10 @@ private static final long serialVersionUID = 0L;
             auctionId_ = s;
             break;
           }
-          case 25: {
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            amount_ = input.readDouble();
+            amount_ = s;
             break;
           }
           default: {
@@ -172,13 +174,39 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int AMOUNT_FIELD_NUMBER = 3;
-  private double amount_;
+  private volatile java.lang.Object amount_;
   /**
-   * <code>double amount = 3;</code>
+   * <code>string amount = 3;</code>
    * @return The amount.
    */
-  public double getAmount() {
-    return amount_;
+  public java.lang.String getAmount() {
+    java.lang.Object ref = amount_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      amount_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string amount = 3;</code>
+   * @return The bytes for amount.
+   */
+  public com.google.protobuf.ByteString
+      getAmountBytes() {
+    java.lang.Object ref = amount_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      amount_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -201,8 +229,8 @@ private static final long serialVersionUID = 0L;
     if (!getAuctionIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, auctionId_);
     }
-    if (amount_ != 0D) {
-      output.writeDouble(3, amount_);
+    if (!getAmountBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, amount_);
     }
     unknownFields.writeTo(output);
   }
@@ -219,9 +247,8 @@ private static final long serialVersionUID = 0L;
     if (!getAuctionIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, auctionId_);
     }
-    if (amount_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(3, amount_);
+    if (!getAmountBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, amount_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -242,9 +269,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getBuyerId())) return false;
     if (!getAuctionId()
         .equals(other.getAuctionId())) return false;
-    if (java.lang.Double.doubleToLongBits(getAmount())
-        != java.lang.Double.doubleToLongBits(
-            other.getAmount())) return false;
+    if (!getAmount()
+        .equals(other.getAmount())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -261,8 +287,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + AUCTION_ID_FIELD_NUMBER;
     hash = (53 * hash) + getAuctionId().hashCode();
     hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getAmount()));
+    hash = (53 * hash) + getAmount().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -400,7 +425,7 @@ private static final long serialVersionUID = 0L;
 
       auctionId_ = "";
 
-      amount_ = 0D;
+      amount_ = "";
 
       return this;
     }
@@ -487,8 +512,9 @@ private static final long serialVersionUID = 0L;
         auctionId_ = other.auctionId_;
         onChanged();
       }
-      if (other.getAmount() != 0D) {
-        setAmount(other.getAmount());
+      if (!other.getAmount().isEmpty()) {
+        amount_ = other.amount_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -671,32 +697,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double amount_ ;
+    private java.lang.Object amount_ = "";
     /**
-     * <code>double amount = 3;</code>
+     * <code>string amount = 3;</code>
      * @return The amount.
      */
-    public double getAmount() {
-      return amount_;
+    public java.lang.String getAmount() {
+      java.lang.Object ref = amount_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        amount_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>double amount = 3;</code>
+     * <code>string amount = 3;</code>
+     * @return The bytes for amount.
+     */
+    public com.google.protobuf.ByteString
+        getAmountBytes() {
+      java.lang.Object ref = amount_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        amount_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string amount = 3;</code>
      * @param value The amount to set.
      * @return This builder for chaining.
      */
-    public Builder setAmount(double value) {
-      
+    public Builder setAmount(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
       amount_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>double amount = 3;</code>
+     * <code>string amount = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearAmount() {
       
-      amount_ = 0D;
+      amount_ = getDefaultInstance().getAmount();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string amount = 3;</code>
+     * @param value The bytes for amount to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAmountBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      amount_ = value;
       onChanged();
       return this;
     }

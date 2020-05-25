@@ -78,7 +78,7 @@ public class App {
                     System.out.println("You do not have the necessary funds to make this bid...");
                 }
                 else{
-                    int result = NodeActions.makeBid(auctionID, bid_val, current_user.getUserId(), auction_list, address, server_port);
+                    int result = NodeActions.makeBid(auctionID, userBucket, bid_val, current_user, server_port, auction_list);
                     switch (result) {
                         case 1:
                             System.out.println("The bid attempt was accepted!");

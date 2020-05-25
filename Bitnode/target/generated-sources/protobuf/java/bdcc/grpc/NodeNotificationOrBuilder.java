@@ -68,10 +68,16 @@ public interface NodeNotificationOrBuilder extends
       getItemBytes();
 
   /**
-   * <code>double max_bid = 6;</code>
+   * <code>string max_bid = 6;</code>
    * @return The maxBid.
    */
-  double getMaxBid();
+  java.lang.String getMaxBid();
+  /**
+   * <code>string max_bid = 6;</code>
+   * @return The bytes for maxBid.
+   */
+  com.google.protobuf.ByteString
+      getMaxBidBytes();
 
   /**
    * <code>string random_auction_id = 7;</code>
@@ -110,8 +116,14 @@ public interface NodeNotificationOrBuilder extends
       getRandomItemBytes();
 
   /**
-   * <code>double random_max_bid = 10;</code>
+   * <code>string random_max_bid = 10;</code>
    * @return The randomMaxBid.
    */
-  double getRandomMaxBid();
+  java.lang.String getRandomMaxBid();
+  /**
+   * <code>string random_max_bid = 10;</code>
+   * @return The bytes for randomMaxBid.
+   */
+  com.google.protobuf.ByteString
+      getRandomMaxBidBytes();
 }

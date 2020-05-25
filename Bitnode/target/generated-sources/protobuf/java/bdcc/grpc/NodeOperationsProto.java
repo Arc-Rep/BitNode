@@ -68,19 +68,19 @@ public final class NodeOperationsProto {
       "\013NodeSecInfo\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_ad" +
       "dress\030\002 \001(\t\022\022\n\npublic_key\030\003 \001(\t\"F\n\017Trans" +
       "actionInfo\022\020\n\010buyer_id\030\001 \001(\t\022\016\n\006amount\030\002" +
-      " \001(\001\022\021\n\tseller_id\030\003 \001(\t\"\340\001\n\020NodeNotifica" +
+      " \001(\t\022\021\n\tseller_id\030\003 \001(\t\"\340\001\n\020NodeNotifica" +
       "tion\022\017\n\007user_id\030\001 \001(\t\022\024\n\014user_address\030\002 " +
       "\001(\t\022\022\n\npublic_key\030\003 \001(\t\022\022\n\nauction_id\030\004 " +
-      "\001(\t\022\014\n\004item\030\005 \001(\t\022\017\n\007max_bid\030\006 \001(\001\022\031\n\021ra" +
+      "\001(\t\022\014\n\004item\030\005 \001(\t\022\017\n\007max_bid\030\006 \001(\t\022\031\n\021ra" +
       "ndom_auction_id\030\007 \001(\t\022\026\n\016random_user_id\030" +
       "\010 \001(\t\022\023\n\013random_item\030\t \001(\t\022\026\n\016random_max" +
-      "_bid\030\n \001(\001\"w\n\013InfoAuction\022\021\n\tseller_id\030\001" +
+      "_bid\030\n \001(\t\"w\n\013InfoAuction\022\021\n\tseller_id\030\001" +
       " \001(\t\022\022\n\nauction_id\030\002 \001(\t\022\014\n\004item\030\003 \001(\t\022\016" +
-      "\n\006amount\030\004 \001(\001\022\020\n\010buyer_id\030\005 \001(\t\022\021\n\tbuye" +
-      "r_bid\030\006 \001(\001\"?\n\007MakeBid\022\020\n\010buyer_id\030\001 \001(\t" +
-      "\022\022\n\nauction_id\030\002 \001(\t\022\016\n\006amount\030\003 \001(\001\"E\n\016" +
+      "\n\006amount\030\004 \001(\t\022\020\n\010buyer_id\030\005 \001(\t\022\021\n\tbuye" +
+      "r_bid\030\006 \001(\t\"?\n\007MakeBid\022\020\n\010buyer_id\030\001 \001(\t" +
+      "\022\022\n\nauction_id\030\002 \001(\t\022\016\n\006amount\030\003 \001(\t\"E\n\016" +
       "ResultsAuction\022\022\n\nauction_id\030\001 \001(\t\022\020\n\010bu" +
-      "yer_id\030\002 \001(\t\022\r\n\005value\030\003 \001(\001\"\036\n\014NodeRespo" +
+      "yer_id\030\002 \001(\t\022\r\n\005value\030\003 \001(\t\"\036\n\014NodeRespo" +
       "nse\022\016\n\006status\030\001 \001(\t2\325\003\n\016NodeOperations\022>" +
       "\n\nnotifyNode\022\026.grpc.NodeNotification\032\026.g" +
       "rpc.NodeNotification\"\000\0224\n\010findNode\022\021.grp" +

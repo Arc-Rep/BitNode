@@ -42,7 +42,7 @@ message NodeSecInfo {
 
 message TransactionInfo {
   string buyer_id = 1;
-  double amount = 2;
+  string amount = 2;
   string seller_id = 3;
 }
 
@@ -52,11 +52,11 @@ message NodeNotification {
   string public_key = 3;
   string auction_id = 4;
   string item = 5;
-  double max_bid = 6;
+  string max_bid = 6;
   string random_auction_id = 7;
   string random_user_id = 8;
   string random_item = 9;
-  double random_max_bid = 10;
+  string random_max_bid = 10;
 }
 
 
@@ -64,23 +64,23 @@ message InfoAuction {
   string seller_id = 1;
   string auction_id = 2;
   string item = 3;
-  double amount = 4;
+  string amount = 4;
   string buyer_id = 5;
-  double buyer_bid = 6;
+  string buyer_bid = 6;
 }
 
 
 message MakeBid {
   string buyer_id = 1;
   string auction_id = 2;
-  double amount = 3;
+  string amount = 3;
 }
 
 
 message ResultsAuction{
   string auction_id = 1;
   string buyer_id = 2;
-  double value = 3;
+  string value = 3;
 }
 
 

@@ -32,8 +32,14 @@ public interface MakeBidOrBuilder extends
       getAuctionIdBytes();
 
   /**
-   * <code>double amount = 3;</code>
+   * <code>string amount = 3;</code>
    * @return The amount.
    */
-  double getAmount();
+  java.lang.String getAmount();
+  /**
+   * <code>string amount = 3;</code>
+   * @return The bytes for amount.
+   */
+  com.google.protobuf.ByteString
+      getAmountBytes();
 }

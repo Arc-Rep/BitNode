@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private ResultsAuction() {
     auctionId_ = "";
     buyerId_ = "";
+    value_ = "";
   }
 
   @java.lang.Override
@@ -62,9 +63,10 @@ private static final long serialVersionUID = 0L;
             buyerId_ = s;
             break;
           }
-          case 25: {
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            value_ = input.readDouble();
+            value_ = s;
             break;
           }
           default: {
@@ -172,13 +174,39 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int VALUE_FIELD_NUMBER = 3;
-  private double value_;
+  private volatile java.lang.Object value_;
   /**
-   * <code>double value = 3;</code>
+   * <code>string value = 3;</code>
    * @return The value.
    */
-  public double getValue() {
-    return value_;
+  public java.lang.String getValue() {
+    java.lang.Object ref = value_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      value_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string value = 3;</code>
+   * @return The bytes for value.
+   */
+  public com.google.protobuf.ByteString
+      getValueBytes() {
+    java.lang.Object ref = value_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      value_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -201,8 +229,8 @@ private static final long serialVersionUID = 0L;
     if (!getBuyerIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, buyerId_);
     }
-    if (value_ != 0D) {
-      output.writeDouble(3, value_);
+    if (!getValueBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, value_);
     }
     unknownFields.writeTo(output);
   }
@@ -219,9 +247,8 @@ private static final long serialVersionUID = 0L;
     if (!getBuyerIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, buyerId_);
     }
-    if (value_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(3, value_);
+    if (!getValueBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, value_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -242,9 +269,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getAuctionId())) return false;
     if (!getBuyerId()
         .equals(other.getBuyerId())) return false;
-    if (java.lang.Double.doubleToLongBits(getValue())
-        != java.lang.Double.doubleToLongBits(
-            other.getValue())) return false;
+    if (!getValue()
+        .equals(other.getValue())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -261,8 +287,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + BUYER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getBuyerId().hashCode();
     hash = (37 * hash) + VALUE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getValue()));
+    hash = (53 * hash) + getValue().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -400,7 +425,7 @@ private static final long serialVersionUID = 0L;
 
       buyerId_ = "";
 
-      value_ = 0D;
+      value_ = "";
 
       return this;
     }
@@ -487,8 +512,9 @@ private static final long serialVersionUID = 0L;
         buyerId_ = other.buyerId_;
         onChanged();
       }
-      if (other.getValue() != 0D) {
-        setValue(other.getValue());
+      if (!other.getValue().isEmpty()) {
+        value_ = other.value_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -671,32 +697,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double value_ ;
+    private java.lang.Object value_ = "";
     /**
-     * <code>double value = 3;</code>
+     * <code>string value = 3;</code>
      * @return The value.
      */
-    public double getValue() {
-      return value_;
+    public java.lang.String getValue() {
+      java.lang.Object ref = value_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        value_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>double value = 3;</code>
+     * <code>string value = 3;</code>
+     * @return The bytes for value.
+     */
+    public com.google.protobuf.ByteString
+        getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string value = 3;</code>
      * @param value The value to set.
      * @return This builder for chaining.
      */
-    public Builder setValue(double value) {
-      
+    public Builder setValue(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
       value_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>double value = 3;</code>
+     * <code>string value = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearValue() {
       
-      value_ = 0D;
+      value_ = getDefaultInstance().getValue();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string value = 3;</code>
+     * @param value The bytes for value to set.
+     * @return This builder for chaining.
+     */
+    public Builder setValueBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      value_ = value;
       onChanged();
       return this;
     }

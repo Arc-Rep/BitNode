@@ -44,10 +44,16 @@ public interface InfoAuctionOrBuilder extends
       getItemBytes();
 
   /**
-   * <code>double amount = 4;</code>
+   * <code>string amount = 4;</code>
    * @return The amount.
    */
-  double getAmount();
+  java.lang.String getAmount();
+  /**
+   * <code>string amount = 4;</code>
+   * @return The bytes for amount.
+   */
+  com.google.protobuf.ByteString
+      getAmountBytes();
 
   /**
    * <code>string buyer_id = 5;</code>
@@ -62,8 +68,14 @@ public interface InfoAuctionOrBuilder extends
       getBuyerIdBytes();
 
   /**
-   * <code>double buyer_bid = 6;</code>
+   * <code>string buyer_bid = 6;</code>
    * @return The buyerBid.
    */
-  double getBuyerBid();
+  java.lang.String getBuyerBid();
+  /**
+   * <code>string buyer_bid = 6;</code>
+   * @return The bytes for buyerBid.
+   */
+  com.google.protobuf.ByteString
+      getBuyerBidBytes();
 }
