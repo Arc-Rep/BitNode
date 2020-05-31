@@ -81,7 +81,7 @@ public final class NodeOperationsProto {
       "\022\022\n\nauction_id\030\002 \001(\t\022\016\n\006amount\030\003 \001(\t\"E\n\016" +
       "ResultsAuction\022\022\n\nauction_id\030\001 \001(\t\022\020\n\010bu" +
       "yer_id\030\002 \001(\t\022\r\n\005value\030\003 \001(\t\"\036\n\014NodeRespo" +
-      "nse\022\016\n\006status\030\001 \001(\t2\325\003\n\016NodeOperations\022>" +
+      "nse\022\016\n\006status\030\001 \001(\t2\324\003\n\016NodeOperations\022>" +
       "\n\nnotifyNode\022\026.grpc.NodeNotification\032\026.g" +
       "rpc.NodeNotification\"\000\0224\n\010findNode\022\021.grp" +
       "c.NodeSecInfo\032\021.grpc.NodeSecInfo\"\0000\001\0226\n\n" +
@@ -89,12 +89,12 @@ public final class NodeOperationsProto {
       "eSecInfo\"\0000\001\022/\n\tfindValue\022\016.grpc.NodeInf" +
       "o\032\016.grpc.NodeInfo\"\0000\001\022>\n\017makeTransaction" +
       "\022\025.grpc.TransactionInfo\032\022.grpc.NodeRespo" +
-      "nse\"\000\0226\n\013infoAuction\022\021.grpc.InfoAuction\032" +
-      "\022.grpc.NodeResponse\"\000\022.\n\007makeBid\022\r.grpc." +
-      "MakeBid\032\022.grpc.NodeResponse\"\000\022<\n\016results" +
-      "Auction\022\024.grpc.ResultsAuction\032\022.grpc.Nod" +
-      "eResponse\"\000B\"\n\tbdcc.grpcB\023NodeOperations" +
-      "ProtoP\001b\006proto3"
+      "nse\"\000\0225\n\013infoAuction\022\021.grpc.NodeSecInfo\032" +
+      "\021.grpc.InfoAuction\"\000\022.\n\007makeBid\022\r.grpc.M" +
+      "akeBid\032\022.grpc.NodeResponse\"\000\022<\n\016resultsA" +
+      "uction\022\024.grpc.ResultsAuction\032\022.grpc.Node" +
+      "Response\"\000B\"\n\tbdcc.grpcB\023NodeOperationsP" +
+      "rotoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

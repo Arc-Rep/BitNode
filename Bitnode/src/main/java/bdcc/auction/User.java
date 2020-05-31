@@ -24,7 +24,7 @@ public class User{
         privKey = pair.getPrivate();
         pubKey = pair.getPublic();
         user_id =       Crypto.hashString(pubKey.toString());
-        wallet =        0;
+        wallet =        10;
         user_auction = null;        
     }
 
@@ -73,4 +73,5 @@ public class User{
     public boolean checkActiveAuction(String auction_id){
         return auction_id.equals(user_auction.auction_id);
     }
+
 }

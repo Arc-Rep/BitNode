@@ -46,9 +46,14 @@ public class Auction {
     }
 
     public String getHighestBidder(){
-        if(this.bid == null) return null;
+        if(this.bid == null) return "";
 
         return this.bid.getInfoBidder();
+    }
+
+    public double getCurrentHighestAmount(){
+        if(this.bid == null) return this.value;
+        return this.getHighestBid();
     }
 
     public boolean canUpdateBid(Bid b){

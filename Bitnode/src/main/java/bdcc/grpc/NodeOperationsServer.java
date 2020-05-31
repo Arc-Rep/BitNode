@@ -166,22 +166,25 @@ public class NodeOperationsServer {
       }
 
       @Override
-      public void infoAuction(InfoAuction infoAuction, StreamObserver<NodeResponse> responseObserver){
-        Auction temp;
-        if(infoAuction.getBuyerId() == ""){
-          temp = new Auction(infoAuction.getSellerId(), infoAuction.getItem(), Double.parseDouble(infoAuction.getAmount()), infoAuction.getAuctionId(), null);
+      public void infoAuction(NodeSecInfo buyer_info, StreamObserver<InfoAuction> responseObserver){
+        Auction user_auction = user.getUserAuction();
+        byte[] node_public_key = Crypto.convertStringToBytes(buyer_info.getPublicKey());
+        try {
+          InfoAuction.Builder replyBuilder = InfoAuction.newBuilder().
+          setSellerId((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key,Crypto.convertStringToBytes(user.getUserId())))).
+          setAuctionId((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key, Crypto.convertStringToBytes(user_auction.getAuctionId())))).
+          setAmount((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key, Crypto.convertStringToBytes(Double.toString(user_auction.getValue()))))).
+          setItem((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key, Crypto.convertStringToBytes(user_auction.getItem())))).
+          setBuyerId((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key, Crypto.convertStringToBytes(user_auction.getHighestBidder())))).
+          setBuyerBid((user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node_public_key, Crypto.convertStringToBytes(Double.toString(user_auction.getHighestBid())))));
+          responseObserver.onNext(replyBuilder.build());
         }
-        else{
-          Bid bid_info = new Bid(infoAuction.getAuctionId(), Double.parseDouble(infoAuction.getAmount()), infoAuction.getBuyerId());
-          temp = new Auction(infoAuction.getSellerId(), infoAuction.getItem(), Double.parseDouble(infoAuction.getAmount()), infoAuction.getAuctionId(), bid_info);
+        catch(Exception e){
+          System.out.println(e.getMessage());
         }
-        //add the announced aution to the list
-        auction_list.addToAuctionList(temp);
-
-        NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
-
-        responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
+        userBucket.addNode(buyer_info.getUserId(), buyer_info.getUserAddress(), node_public_key);
+        
       }
 
       @Override

@@ -34,9 +34,25 @@ public class AuctionList {
         return null;
     }
 
+    public Auction getAuctionByIndex(int index){
+        if(live_list.size() > index) return live_list.get(index);
+        return null;
+    }
+
+    public void removeAuction(String auction_id){
+        for (Auction auction : live_list) {
+            if(auction.getAuctionId().equals(auction_id)){
+                live_list.remove(auction);
+                return;
+            }
+        }
+    }
+
     public synchronized void getLiveAuctions(){
+        int index = 1;
         for (Auction au : live_list) {
             System.out.println("=============================================");
+            System.out.println("Auction Number " + index + ":");
             System.out.println("Auction ID: " + Crypto.toHex(au.getAuctionId()));
             System.out.println("    - Item: " + au.getItem());
             if(au.getHighestBid() == -1){
@@ -46,6 +62,7 @@ public class AuctionList {
                 System.out.println("    - Bidder: " + au.getHighestBidder());
             }
             System.out.println("=============================================");
+            index++;
         }
     }
 

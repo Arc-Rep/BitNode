@@ -11,6 +11,7 @@ import bdcc.grpc.NodeInfo;
 import bdcc.grpc.NodeResponse;
 import bdcc.grpc.NodeSecInfo;
 import bdcc.grpc.NodeNotification;
+import bdcc.grpc.InfoAuction;
 import bdcc.grpc.NodeOperationsClient;
 
 public class NodeActions {
@@ -85,7 +86,7 @@ public class NodeActions {
         }
     }
 
-    public static KeyNode findNode(String Key, int server_port, KBucket userBucket, User current_user){
+    public static KeyNode NodeCompleteSearch(String Key, int server_port, KBucket userBucket, User current_user){
         int alpha = userBucket.getAlpha(), numb_nodes_found, max_iterations = 3;
         double closest_distance = 0;
         NodeOperationsClient initial_requester;
@@ -129,6 +130,9 @@ public class NodeActions {
                     }
                     else
                     {
+                        if(!visited_nodes.contains(info.getUserId()))
+                            node_list.add(current_node);
+
                         if(Key.equals(info.getUserId()))        //found the exact match
                         {
                             try{
@@ -138,8 +142,7 @@ public class NodeActions {
                             }
                             return current_node;
                         }
-                        else if(!visited_nodes.contains(info.getUserId()))
-                            node_list.add(current_node);
+                        
                             
                     }
         
@@ -165,19 +168,51 @@ public class NodeActions {
         return closest_node;
     }
 
+    public static Auction getUpdatedAuction(KeyNode seller, Auction auction, User current_user , int port){
+        Auction updated_auction = null;
+        try 
+        {
+            NodeOperationsClient initial_requester = new NodeOperationsClient(seller.getValue(), port);
 
-    //needs fine tuning
+            InfoAuction info_auction = initial_requester.infoAuction(current_user.getUserId(), 
+                            InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
+
+            if(info_auction == null) return null;
+
+            initial_requester.shutdown();
+            if(info_auction.getAuctionId().equals(""))
+            {
+                String seller_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getSellerId()))),
+                item = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getItem()))),
+                auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getAuctionId())));
+
+                Double auction_base_amount = Double.parseDouble(Crypto.convertBytesToString(Crypto.encrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(info_auction.getAmount()))));
+                if(info_auction.getBuyerId().equals("")) updated_auction = new Auction(seller_id, item, auction_base_amount, auction_id);
+                else {
+                    updated_auction = new Auction(seller_id, item,auction_base_amount, auction_id,
+                    new Bid(auction_id, Double.parseDouble(Crypto.convertBytesToString(Crypto.encrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(info_auction.getBuyerBid())))),
+                    Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getBuyerId())))));
+
+                }
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return updated_auction;
+    }
+
+    
     public static int makeBid(String id, KBucket bucket, double value, User user, int port, AuctionList list){ // 1 - accepted, 2 - rejected, 3 - auction not live
         Auction temp = list.getAuctionById(id);
-        KeyNode nearest_node = bucket.findNode(id).get(0);
+        if(temp == null) return 3;
+
+        KeyNode nearest_node = NodeCompleteSearch(temp.getSeller(), port, bucket, user);
         String node_address = null;
-        if(id.equals(nearest_node.getKey())){
+        if(temp.getSeller().equals(nearest_node.getKey())){
             node_address = nearest_node.getValue();
         }
-        else{
-            //find node
-        }
-        if(temp == null || node_address == null) return 3;
+        else return 3;
 
         Bid bid = new Bid(id, value, user.getUserId());
         if(!temp.canUpdateBid(bid)) return 2;
@@ -212,8 +247,8 @@ public class NodeActions {
         
     }
 
-    public static void completeAuction(AuctionList list, User current_user, String host, int port){
-        NodeOperationsClient initial_requester = new NodeOperationsClient(host, port);
+    public static void completeAuction(AuctionList list, User current_user, int port){
+        NodeOperationsClient initial_requester = new NodeOperationsClient("host", port);
         Auction temp = current_user.getUserAuction();
         current_user.concludeAuction();
         list.updateList(temp.getAuctionId(), temp, 2);

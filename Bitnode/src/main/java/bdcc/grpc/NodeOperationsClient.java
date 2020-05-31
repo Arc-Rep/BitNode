@@ -103,21 +103,16 @@ public class NodeOperationsClient {
       }
     }
 
-    public void infoAuction(String seller_id, String auction_id, String item, double amount, String buyer_id, double buyer_bid){
+    public InfoAuction infoAuction(String user_id, String user_address, String user_public_key){
+      InfoAuction response = null;
       try{
-        InfoAuction infoauctionrequest = InfoAuction.newBuilder()
-          .setSellerId(seller_id)
-          .setAuctionId(auction_id)
-          .setItem(item)
-          .setAmount(Double.toString(amount))
-          .setBuyerId(buyer_id)
-          .setBuyerBid(Double.toString(buyer_bid))
-          .build();
-        NodeResponse response = blockingStub.infoAuction(infoauctionrequest);
+        NodeSecInfo infoauctionrequest = NodeSecInfo.newBuilder().setUserId(user_id)
+            .setUserAddress(user_address).setPublicKey(user_public_key).build();
+        response = blockingStub.infoAuction(infoauctionrequest);
       } catch(RuntimeException e){
         logger.log(Level.WARNING, "RPC failed", e);
-        return;
       }
+      return response;
     }
 
     public NodeResponse makeBid(String buyer_id, String auction_id, String amount){

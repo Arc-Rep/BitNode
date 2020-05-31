@@ -18,7 +18,7 @@ service NodeOperations {
 
     rpc makeTransaction(TransactionInfo) returns (NodeResponse) {}
 
-    rpc infoAuction(InfoAuction) returns (NodeResponse) {}
+    rpc infoAuction(NodeSecInfo) returns (InfoAuction) {}
 
     rpc makeBid(MakeBid) returns (NodeResponse) {}
 

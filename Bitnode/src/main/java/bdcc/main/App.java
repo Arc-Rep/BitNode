@@ -35,26 +35,29 @@ public class App {
     public  static KBucket userBucket;
 
 
-    private static void auctionMenu(String auctionID, String address) {
-        Auction auction = auction_list.getAuctionById(auctionID);
+    private static void auctionMenu(Auction auction, KeyNode seller) {
+        
 
-        if(auction == null){
-            System.out.println("Could not find an auction with id " + auctionID);
-            return;
-        }
-
-        String item = auction.getItem();
-        double highestBidVal = auction.getHighestBid();
-        String highestBidUser = auction.getHighestBidder();
-        boolean noBids = false;
-
-        if(highestBidVal == -1){
-            highestBidVal = auction.getValue();
-            noBids = true;
-        }
 
         boolean inProgress = true;
         while(inProgress){
+
+            Auction updated_auction = NodeActions.getUpdatedAuction(seller, auction, current_user ,server_port);
+
+            if(updated_auction == null){
+                System.out.println("Auction not found within node. It may already have ended. Exiting...");
+                return;
+            }
+    
+            String item = updated_auction.getItem();
+            double highestBidVal = updated_auction.getHighestBid();
+            String highestBidUser = updated_auction.getHighestBidder();
+            boolean noBids = false;
+    
+            if(highestBidVal == -1){
+                highestBidVal = updated_auction.getValue();
+                noBids = true;
+            }
 
             if(noBids){
                 System.out.println("Auctioning: " + item + " | Starting price: " + highestBidVal);       
@@ -65,8 +68,9 @@ public class App {
             }
 
             System.out.println("Actions:");         
-            System.out.println("1 - Make a bid");         
-            System.out.println("2 - Back out");
+            System.out.println("1 - Make a bid");
+            System.out.println("2 - Back out");         
+            System.out.println("Any other input will refresh the current auction");
             int option = scanner.nextInt();
             scanner.skip("\\R");
 
@@ -78,7 +82,7 @@ public class App {
                     System.out.println("You do not have the necessary funds to make this bid...");
                 }
                 else{
-                    int result = NodeActions.makeBid(auctionID, userBucket, bid_val, current_user, server_port, auction_list);
+                    int result = NodeActions.makeBid(updated_auction.getAuctionId(), userBucket, bid_val, current_user, server_port, auction_list);
                     switch (result) {
                         case 1:
                             System.out.println("The bid attempt was accepted!");
@@ -93,7 +97,7 @@ public class App {
 
                         case 3:
                             System.out.println("The auction you are trying to participate in is no longer live.");
-                            break;
+                            return;
                     
                         default:
                             System.out.println("Missing 'makeBid' return statement...");
@@ -101,12 +105,12 @@ public class App {
                     }
                 }
             }
-            else{
+            else if(option == 2){
                 //leave the auction
                 String conf = "y";
                 
                 if(auction.getHighestBidder() == current_user.getUserId()){
-                    System.out.println("You this auctions current highest bidder, are you sure you want to leave? [y/n] (This action will not invalidate your bid)");
+                    System.out.println("You are this auctions current highest bidder, are you sure you want to leave? [y/n] (This action will not invalidate your bid)");
                     conf = scanner.nextLine();
                 }
                  
@@ -115,16 +119,12 @@ public class App {
                 }
             }
 
-            //update vars
-            auction = auction_list.getAuctionById(auctionID);
-            highestBidVal = auction.getHighestBid();
-            highestBidUser = auction.getHighestBidder();
         }
 
         System.out.println("Returning to main menu... \n \n \n");
     }
 
-    private static void setUpAuctionMenu(String address) {
+    private static void setUpAuctionMenu() {
         System.out.println("Select item to sell: ");
         String item = scanner.nextLine();
         System.out.println("Select the starting bid value: ");
@@ -134,28 +134,12 @@ public class App {
         String conf = scanner.nextLine();
         if(conf.equals("y")){
             System.out.println("Setting up the auction...");
-            //setup auction
-            if(current_user.setUpAuction(item, startingValue)){
-                System.out.println("Auction successfully setup!");
-                /*
-                NodeOperationsClient initial_rquester = new NodeOperationsClient(address, server_port);
-
-                try{
-                    initial_rquester.infoAuction(current_user.getUserId(), 
-                                             current_user.getUserAuction().getAuctionId(), 
-                                             current_user.getUserAuction().getItem(), 
-                                             current_user.getUserAuction().getValue(), 
-                                             "",
-                                             0);
-                } catch(Exception e){
-                    System.out.println("Error: Initial server not found.");
-                }
-            */
-            } 
             
-            else{
-                System.out.println("Unable to setup auction! (This user might already have an auction setup)");
-            }
+            if(current_user.setUpAuction(item, startingValue))
+                System.out.println("Auction successfully setup!");
+
+            else System.out.println("Unable to setup auction! (This user might already have an auction setup)");
+            
         }
         else{
             System.out.println("Auction canceled...");
@@ -180,28 +164,44 @@ public class App {
         }
     }
 
-    private static void joinAuctionMenu(String address){
+    private static void joinAuctionMenu(){
 
         auction_list.getLiveAuctions();
 
-        System.out.println("Enter the ID of the auction you want to join: ");
-        String targetAuction = scanner.nextLine();
-        System.out.println("Join '" + targetAuction + "'? [y/n]");
-        String conf = scanner.nextLine();
-        if (conf.equals("y")){
-
-            if(!auction_list.auctionIsLive(targetAuction)){
-                System.out.println("Target auction is not live");
-            }
-            else{
-                System.out.println("Joining auction room...");
-                auctionMenu(targetAuction,address);
-            }
-            
-        }
-        else{
-            System.out.println("Action canceled");
+        System.out.println("Enter the index of the auction you want to join: ");
+        int targetAuctionIndex = scanner.nextInt();
+        Auction selected_auction = auction_list.getAuctionByIndex(targetAuctionIndex);
+        scanner.skip("\\R");
+        if(selected_auction == null)
+        {
+            System.out.println("Non existent auction");
             System.out.println("Returning to main menu... \n \n \n");
+            return;
+        }
+        System.out.println("Join '" + selected_auction.getAuctionId() + "'? [y/n]");
+        String conf = "";
+        while(!(conf.equals("y") || conf.equals("n")))
+        {
+            conf = scanner.nextLine();
+            if (conf.equals("y")){
+
+                System.out.println("Joining auction room...");
+                KeyNode seller_node = NodeActions.NodeCompleteSearch(selected_auction.getSeller(),
+                                        server_port, userBucket, current_user);
+                if(seller_node.Key.equals(selected_auction.getSeller()))
+                    auctionMenu(selected_auction, seller_node);
+                else
+                {
+                    System.out.println("Couldn't find seller. Leaving auction...");
+                    auction_list.removeAuction(selected_auction.getAuctionId());
+                }
+                
+            }
+            else if (conf.equals("n")) {
+                System.out.println("Action canceled");
+                System.out.println("Returning to main menu... \n \n \n");
+            }
+            else System.out.println("Unsupported option");
         }
     }
 
@@ -236,8 +236,8 @@ public class App {
         }
     }
 
-    public static void concludeMyAuction(String address){
-        NodeActions.completeAuction(auction_list, current_user, address, server_port);
+    public static void concludeMyAuction(){
+        NodeActions.completeAuction(auction_list, current_user, server_port);
     }
 
 
@@ -253,7 +253,7 @@ public class App {
         System.out.print("Option: ");
     }
 
-    private static void menusCLI(String address) throws UnknownHostException {
+    private static void menusCLI() throws UnknownHostException {
     
         String option = "init";
         while(!option.equals("0")){
@@ -265,7 +265,7 @@ public class App {
             option = scanner.nextLine();
 
             switch(option){
-                case "1": setUpAuctionMenu(address);
+                case "1": setUpAuctionMenu();
                         /*user_client.notifyNode(current_user.getUserId(), 
                             InetAddress.getLocalHost().getHostAddress() + port);*/
                         break;
@@ -276,13 +276,13 @@ public class App {
                 case "3": integrityCheckMenu();
                         break;
 
-                case "4": joinAuctionMenu(address);
+                case "4": joinAuctionMenu();
                         break;
 
                 case "5": myAuctionStatus();
                         break;
 
-                case "6": concludeMyAuction(address);
+                case "6": concludeMyAuction();
                         break;
 
                 case "0": 
@@ -377,7 +377,7 @@ public class App {
             thread_renewal.start();
             //inicio de CLI
             
-            menusCLI(args[0]);
+            menusCLI();
             shutdownSystem(renew_manager);
         }
         catch(Exception e) {

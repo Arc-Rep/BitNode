@@ -182,29 +182,29 @@ public final class NodeOperationsGrpc {
     return getMakeTransactionMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction,
-      bdcc.grpc.NodeResponse> getInfoAuctionMethod;
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.InfoAuction> getInfoAuctionMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "infoAuction",
-      requestType = bdcc.grpc.InfoAuction.class,
-      responseType = bdcc.grpc.NodeResponse.class,
+      requestType = bdcc.grpc.NodeSecInfo.class,
+      responseType = bdcc.grpc.InfoAuction.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction,
-      bdcc.grpc.NodeResponse> getInfoAuctionMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.InfoAuction, bdcc.grpc.NodeResponse> getInfoAuctionMethod;
+  public static io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo,
+      bdcc.grpc.InfoAuction> getInfoAuctionMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.NodeSecInfo, bdcc.grpc.InfoAuction> getInfoAuctionMethod;
     if ((getInfoAuctionMethod = NodeOperationsGrpc.getInfoAuctionMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getInfoAuctionMethod = NodeOperationsGrpc.getInfoAuctionMethod) == null) {
           NodeOperationsGrpc.getInfoAuctionMethod = getInfoAuctionMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.InfoAuction, bdcc.grpc.NodeResponse>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.NodeSecInfo, bdcc.grpc.InfoAuction>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "infoAuction"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.InfoAuction.getDefaultInstance()))
+                  bdcc.grpc.NodeSecInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+                  bdcc.grpc.InfoAuction.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("infoAuction"))
               .build();
         }
@@ -372,8 +372,8 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public void infoAuction(bdcc.grpc.InfoAuction request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+    public void infoAuction(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.InfoAuction> responseObserver) {
       asyncUnimplementedUnaryCall(getInfoAuctionMethod(), responseObserver);
     }
 
@@ -432,8 +432,8 @@ public final class NodeOperationsGrpc {
             getInfoAuctionMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                bdcc.grpc.InfoAuction,
-                bdcc.grpc.NodeResponse>(
+                bdcc.grpc.NodeSecInfo,
+                bdcc.grpc.InfoAuction>(
                   this, METHODID_INFO_AUCTION)))
           .addMethod(
             getMakeBidMethod(),
@@ -521,8 +521,8 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public void infoAuction(bdcc.grpc.InfoAuction request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+    public void infoAuction(bdcc.grpc.NodeSecInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.InfoAuction> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getInfoAuctionMethod(), getCallOptions()), request, responseObserver);
     }
@@ -610,7 +610,7 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public bdcc.grpc.NodeResponse infoAuction(bdcc.grpc.InfoAuction request) {
+    public bdcc.grpc.InfoAuction infoAuction(bdcc.grpc.NodeSecInfo request) {
       return blockingUnaryCall(
           getChannel(), getInfoAuctionMethod(), getCallOptions(), request);
     }
@@ -665,8 +665,8 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> infoAuction(
-        bdcc.grpc.InfoAuction request) {
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.InfoAuction> infoAuction(
+        bdcc.grpc.NodeSecInfo request) {
       return futureUnaryCall(
           getChannel().newCall(getInfoAuctionMethod(), getCallOptions()), request);
     }
@@ -735,8 +735,8 @@ public final class NodeOperationsGrpc {
               (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
           break;
         case METHODID_INFO_AUCTION:
-          serviceImpl.infoAuction((bdcc.grpc.InfoAuction) request,
-              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+          serviceImpl.infoAuction((bdcc.grpc.NodeSecInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.InfoAuction>) responseObserver);
           break;
         case METHODID_MAKE_BID:
           serviceImpl.makeBid((bdcc.grpc.MakeBid) request,
