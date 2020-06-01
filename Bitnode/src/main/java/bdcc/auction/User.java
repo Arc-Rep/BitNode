@@ -32,6 +32,13 @@ public class User{
         wallet+= amount_to_add;
     }
 
+    public Boolean withdraw_amount(double amount_to_withdraw){
+        if(amount_to_withdraw < wallet)
+            return false;
+        wallet-=amount_to_withdraw;
+        return true;
+    }
+
     public String getUserId(){
         return user_id;
     }
@@ -54,8 +61,17 @@ public class User{
     }
 
     public void concludeAuction(){
-        //do not forget to make the transefer
         this.user_auction = null;
+    }
+
+    public Boolean proccessAuctionConclusion(String seller, String buyer, Double amount){
+        Boolean success = false;
+        if(buyer.equals(user_auction.getHighestBidder()) && seller.equals(getUserId()) 
+            && amount == user_auction.getHighestBid()){
+            add_amount(amount);
+            success = true;
+        }
+        return success;
     }
 
     public byte[] getPubKey(){

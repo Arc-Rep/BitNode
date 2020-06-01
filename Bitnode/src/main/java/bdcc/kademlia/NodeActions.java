@@ -11,6 +11,7 @@ import bdcc.grpc.NodeInfo;
 import bdcc.grpc.NodeResponse;
 import bdcc.grpc.NodeSecInfo;
 import bdcc.grpc.NodeNotification;
+import bdcc.grpc.TransactionInfo;
 import bdcc.grpc.InfoAuction;
 import bdcc.grpc.NodeOperationsClient;
 
@@ -24,18 +25,13 @@ public class NodeActions {
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
-                (user_auction == null) ? "" : 
-                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getAuctionId()))),
-                (user_auction == null) ? "" : 
-                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(user_auction.getItem()))),
-                (user_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(Double.toString(user_auction.getValue())))),
-                (random_auction == null) ? "" : 
-                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getAuctionId()))),
-                (random_auction == null) ? "" : 
-                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getSeller()))),
-                (random_auction == null) ? "" : 
-                                        Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(random_auction.getItem()))),
-                (random_auction == null) ? "" : Crypto.convertBytesToString(Crypto.encrypt(node.getPubKey(), Crypto.convertStringToBytes(Double.toString(random_auction.getValue()))))
+                (user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getAuctionId(), node.getPubKey()),
+                (user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getItem(), node.getPubKey()),
+                (user_auction == null) ? "" : Crypto.doFullDoubleEncryption(user_auction.getValue(), node.getPubKey()),
+                (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getAuctionId(), node.getPubKey()),
+                (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getSeller(), node.getPubKey()),
+                (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getItem(), node.getPubKey()),
+                (random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getValue(), node.getPubKey())
             );
             proccessPingNode(response, userBucket, current_user, auctions);
         }
@@ -57,14 +53,14 @@ public class NodeActions {
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
         try { 
-            String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getAuctionId()))),
-            item_name = notification.getItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getItem()))),
-            random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomAuctionId()))),
-            random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomItem()))),
-            random_user = notification.getRandomUserId().equals("") ? "" : Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(notification.getRandomUserId())));
+            String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
+            item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
+            random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
+            random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomItem(), current_user.getPrivateKey()),
+            random_user = notification.getRandomUserId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomUserId(), current_user.getPrivateKey());
 
-            Double max_bid = notification.getMaxBid().equals("") ? 0 : Double.parseDouble(Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getMaxBid())))),
-                   random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Double.parseDouble(Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(notification.getRandomMaxBid()))));
+            Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
+                   random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
             //System.out.println("Non encrypted random id is " + notification.getRandomItem());
             if(!auction_id.equals(""))
             {
@@ -182,16 +178,16 @@ public class NodeActions {
             initial_requester.shutdown();
             if(info_auction.getAuctionId().equals(""))
             {
-                String seller_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getSellerId()))),
-                item = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getItem()))),
-                auction_id = Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getAuctionId())));
+                String seller_id = Crypto.doFullStringDecryption(info_auction.getSellerId(), current_user.getPrivateKey()),
+                item = Crypto.doFullStringDecryption(info_auction.getItem(), current_user.getPrivateKey()),
+                auction_id = Crypto.doFullStringDecryption(info_auction.getAuctionId(), current_user.getPrivateKey());
 
-                Double auction_base_amount = Double.parseDouble(Crypto.convertBytesToString(Crypto.encrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(info_auction.getAmount()))));
+                Double auction_base_amount = Crypto.doFullDoubleDecryption(info_auction.getAmount(), current_user.getPrivateKey());
                 if(info_auction.getBuyerId().equals("")) updated_auction = new Auction(seller_id, item, auction_base_amount, auction_id);
                 else {
                     updated_auction = new Auction(seller_id, item,auction_base_amount, auction_id,
-                    new Bid(auction_id, Double.parseDouble(Crypto.convertBytesToString(Crypto.encrypt(current_user.getPrivateKey(), Crypto.convertStringToBytes(info_auction.getBuyerBid())))),
-                    Crypto.convertBytesToString(Crypto.decrypt(current_user.getPrivateKey(),Crypto.convertStringToBytes(info_auction.getBuyerId())))));
+                    new Bid(auction_id, Crypto.doFullDoubleDecryption(info_auction.getBuyerBid(), current_user.getPrivateKey()),
+                    Crypto.doFullStringDecryption(info_auction.getBuyerId(), current_user.getPrivateKey())));
 
                 }
             }
@@ -222,7 +218,7 @@ public class NodeActions {
         NodeOperationsClient initial_requester = new NodeOperationsClient(node_address, port);
         
             NodeResponse response = initial_requester.makeBid(
-                Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(user.getUserId()))), 
+                Crypto.doFullStringEncryption(user.getUserId(), nearest_node.getPubKey()), 
                 Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(id))), 
                 Crypto.convertBytesToString(Crypto.encrypt(nearest_node.getPubKey(), Crypto.convertStringToBytes(Double.toString(value))))
             );
@@ -247,16 +243,64 @@ public class NodeActions {
         
     }
 
-    public static void completeAuction(AuctionList list, User current_user, int port){
-        NodeOperationsClient initial_requester = new NodeOperationsClient("host", port);
-        Auction temp = current_user.getUserAuction();
-        current_user.concludeAuction();
-        list.updateList(temp.getAuctionId(), temp, 2);
-        initial_requester.resultsAuction(temp.getAuctionId(), temp.getHighestBidder(), temp.getHighestBid());
-        try{
-            initial_requester.shutdown();
-        } catch(Exception e){
-            System.out.println("Unable to shutdown client");
+    public static void completeAuction(User current_user, KBucket user_bucket , int port){
+        int max_tries = 3;
+        Auction my_auction = current_user.getUserAuction();
+
+        if(my_auction.getHighestBidder().equals(""))  {
+            System.out.println("Concluding auction with no bidders.");
+            current_user.concludeAuction();
+            return;
         }
+
+        KeyNode buyer_node = NodeCompleteSearch(my_auction.getHighestBidder(), port, user_bucket, current_user);
+
+        for(int i = 0; i < max_tries && !my_auction.getHighestBidder().equals(buyer_node.getKey()); i++)
+            buyer_node = NodeCompleteSearch(my_auction.getHighestBidder(), port, user_bucket, current_user);
+
+        if(my_auction.getHighestBidder().equals(buyer_node.getKey())){
+
+            NodeOperationsClient initial_requester = new NodeOperationsClient(buyer_node.getValue(), port);
+
+            try{
+                TransactionInfo return_pay = initial_requester.resultsAuction(
+                    Crypto.doFullStringEncryption(my_auction.getAuctionId(), buyer_node.getPubKey()), 
+                    Crypto.doFullStringEncryption(my_auction.getHighestBidder(), buyer_node.getPubKey()), 
+                    Crypto.doFullDoubleEncryption(my_auction.getHighestBid(), buyer_node.getPubKey()),
+                    current_user.getUserId(),
+                    InetAddress.getLocalHost().getHostAddress(),
+                    Crypto.convertBytesToString(current_user.getPubKey()));
+
+                if(return_pay.getBuyerId().equals("") || return_pay.getSellerId().equals(""))
+                    System.out.println("Error on the buyer side");
+                else 
+                {
+                    String transaction_buyer = Crypto.doFullStringDecryption(return_pay.getBuyerId(), current_user.getPrivateKey()),
+                    transaction_seller = Crypto.doFullStringDecryption(return_pay.getSellerId(), current_user.getPrivateKey());
+                    Double transaction_amount = Crypto.doFullDoubleDecryption(return_pay.getAmount(), current_user.getPrivateKey());
+
+                    if(current_user.proccessAuctionConclusion(transaction_seller, transaction_buyer, transaction_amount)){
+                        //update blockchain
+                        System.out.println("Transaction successfull");
+                    }
+                    else {
+                        System.out.println("Wrong information came from buyer. Fraud possibility. Cancelling transaction");
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Error with buyer communication. Cancelling...");
+            }
+
+            try{
+                initial_requester.shutdown();
+            } catch(Exception e){
+                System.out.println("Unable to shutdown client");
+            }
+        }
+        else 
+            System.out.println("Could not find buyer node");
+        current_user.concludeAuction();
     }
 }
+
+    

@@ -22,7 +22,7 @@ service NodeOperations {
 
     rpc makeBid(MakeBid) returns (NodeResponse) {}
 
-    rpc resultsAuction(ResultsAuction) returns (NodeResponse) {}
+    rpc resultsAuction(ResultsAuction) returns (TransactionInfo) {}
 
 }
   
@@ -81,9 +81,13 @@ message ResultsAuction{
   string auction_id = 1;
   string buyer_id = 2;
   string value = 3;
+  string seller_id = 4;
+  string seller_address = 5;
+  string seller_public_key = 6;
 }
 
 
 message NodeResponse{
   string status = 1;
 }
+

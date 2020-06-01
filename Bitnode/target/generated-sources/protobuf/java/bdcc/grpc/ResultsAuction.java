@@ -19,6 +19,9 @@ private static final long serialVersionUID = 0L;
     auctionId_ = "";
     buyerId_ = "";
     value_ = "";
+    sellerId_ = "";
+    sellerAddress_ = "";
+    sellerPublicKey_ = "";
   }
 
   @java.lang.Override
@@ -67,6 +70,24 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             value_ = s;
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            sellerId_ = s;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            sellerAddress_ = s;
+            break;
+          }
+          case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            sellerPublicKey_ = s;
             break;
           }
           default: {
@@ -209,6 +230,114 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int SELLER_ID_FIELD_NUMBER = 4;
+  private volatile java.lang.Object sellerId_;
+  /**
+   * <code>string seller_id = 4;</code>
+   * @return The sellerId.
+   */
+  public java.lang.String getSellerId() {
+    java.lang.Object ref = sellerId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      sellerId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string seller_id = 4;</code>
+   * @return The bytes for sellerId.
+   */
+  public com.google.protobuf.ByteString
+      getSellerIdBytes() {
+    java.lang.Object ref = sellerId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      sellerId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SELLER_ADDRESS_FIELD_NUMBER = 5;
+  private volatile java.lang.Object sellerAddress_;
+  /**
+   * <code>string seller_address = 5;</code>
+   * @return The sellerAddress.
+   */
+  public java.lang.String getSellerAddress() {
+    java.lang.Object ref = sellerAddress_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      sellerAddress_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string seller_address = 5;</code>
+   * @return The bytes for sellerAddress.
+   */
+  public com.google.protobuf.ByteString
+      getSellerAddressBytes() {
+    java.lang.Object ref = sellerAddress_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      sellerAddress_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SELLER_PUBLIC_KEY_FIELD_NUMBER = 6;
+  private volatile java.lang.Object sellerPublicKey_;
+  /**
+   * <code>string seller_public_key = 6;</code>
+   * @return The sellerPublicKey.
+   */
+  public java.lang.String getSellerPublicKey() {
+    java.lang.Object ref = sellerPublicKey_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      sellerPublicKey_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string seller_public_key = 6;</code>
+   * @return The bytes for sellerPublicKey.
+   */
+  public com.google.protobuf.ByteString
+      getSellerPublicKeyBytes() {
+    java.lang.Object ref = sellerPublicKey_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      sellerPublicKey_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -232,6 +361,15 @@ private static final long serialVersionUID = 0L;
     if (!getValueBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, value_);
     }
+    if (!getSellerIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, sellerId_);
+    }
+    if (!getSellerAddressBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, sellerAddress_);
+    }
+    if (!getSellerPublicKeyBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, sellerPublicKey_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -249,6 +387,15 @@ private static final long serialVersionUID = 0L;
     }
     if (!getValueBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, value_);
+    }
+    if (!getSellerIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, sellerId_);
+    }
+    if (!getSellerAddressBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, sellerAddress_);
+    }
+    if (!getSellerPublicKeyBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, sellerPublicKey_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -271,6 +418,12 @@ private static final long serialVersionUID = 0L;
         .equals(other.getBuyerId())) return false;
     if (!getValue()
         .equals(other.getValue())) return false;
+    if (!getSellerId()
+        .equals(other.getSellerId())) return false;
+    if (!getSellerAddress()
+        .equals(other.getSellerAddress())) return false;
+    if (!getSellerPublicKey()
+        .equals(other.getSellerPublicKey())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -288,6 +441,12 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getBuyerId().hashCode();
     hash = (37 * hash) + VALUE_FIELD_NUMBER;
     hash = (53 * hash) + getValue().hashCode();
+    hash = (37 * hash) + SELLER_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getSellerId().hashCode();
+    hash = (37 * hash) + SELLER_ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getSellerAddress().hashCode();
+    hash = (37 * hash) + SELLER_PUBLIC_KEY_FIELD_NUMBER;
+    hash = (53 * hash) + getSellerPublicKey().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -427,6 +586,12 @@ private static final long serialVersionUID = 0L;
 
       value_ = "";
 
+      sellerId_ = "";
+
+      sellerAddress_ = "";
+
+      sellerPublicKey_ = "";
+
       return this;
     }
 
@@ -456,6 +621,9 @@ private static final long serialVersionUID = 0L;
       result.auctionId_ = auctionId_;
       result.buyerId_ = buyerId_;
       result.value_ = value_;
+      result.sellerId_ = sellerId_;
+      result.sellerAddress_ = sellerAddress_;
+      result.sellerPublicKey_ = sellerPublicKey_;
       onBuilt();
       return result;
     }
@@ -514,6 +682,18 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getValue().isEmpty()) {
         value_ = other.value_;
+        onChanged();
+      }
+      if (!other.getSellerId().isEmpty()) {
+        sellerId_ = other.sellerId_;
+        onChanged();
+      }
+      if (!other.getSellerAddress().isEmpty()) {
+        sellerAddress_ = other.sellerAddress_;
+        onChanged();
+      }
+      if (!other.getSellerPublicKey().isEmpty()) {
+        sellerPublicKey_ = other.sellerPublicKey_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -769,6 +949,234 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       value_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object sellerId_ = "";
+    /**
+     * <code>string seller_id = 4;</code>
+     * @return The sellerId.
+     */
+    public java.lang.String getSellerId() {
+      java.lang.Object ref = sellerId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sellerId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string seller_id = 4;</code>
+     * @return The bytes for sellerId.
+     */
+    public com.google.protobuf.ByteString
+        getSellerIdBytes() {
+      java.lang.Object ref = sellerId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sellerId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string seller_id = 4;</code>
+     * @param value The sellerId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerId(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      sellerId_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_id = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSellerId() {
+      
+      sellerId_ = getDefaultInstance().getSellerId();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_id = 4;</code>
+     * @param value The bytes for sellerId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      sellerId_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object sellerAddress_ = "";
+    /**
+     * <code>string seller_address = 5;</code>
+     * @return The sellerAddress.
+     */
+    public java.lang.String getSellerAddress() {
+      java.lang.Object ref = sellerAddress_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sellerAddress_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string seller_address = 5;</code>
+     * @return The bytes for sellerAddress.
+     */
+    public com.google.protobuf.ByteString
+        getSellerAddressBytes() {
+      java.lang.Object ref = sellerAddress_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sellerAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string seller_address = 5;</code>
+     * @param value The sellerAddress to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerAddress(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      sellerAddress_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_address = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSellerAddress() {
+      
+      sellerAddress_ = getDefaultInstance().getSellerAddress();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_address = 5;</code>
+     * @param value The bytes for sellerAddress to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerAddressBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      sellerAddress_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object sellerPublicKey_ = "";
+    /**
+     * <code>string seller_public_key = 6;</code>
+     * @return The sellerPublicKey.
+     */
+    public java.lang.String getSellerPublicKey() {
+      java.lang.Object ref = sellerPublicKey_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sellerPublicKey_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string seller_public_key = 6;</code>
+     * @return The bytes for sellerPublicKey.
+     */
+    public com.google.protobuf.ByteString
+        getSellerPublicKeyBytes() {
+      java.lang.Object ref = sellerPublicKey_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sellerPublicKey_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string seller_public_key = 6;</code>
+     * @param value The sellerPublicKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerPublicKey(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      sellerPublicKey_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_public_key = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSellerPublicKey() {
+      
+      sellerPublicKey_ = getDefaultInstance().getSellerPublicKey();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string seller_public_key = 6;</code>
+     * @param value The bytes for sellerPublicKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSellerPublicKeyBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      sellerPublicKey_ = value;
       onChanged();
       return this;
     }

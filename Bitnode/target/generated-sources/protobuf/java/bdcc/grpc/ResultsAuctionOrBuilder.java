@@ -42,4 +42,40 @@ public interface ResultsAuctionOrBuilder extends
    */
   com.google.protobuf.ByteString
       getValueBytes();
+
+  /**
+   * <code>string seller_id = 4;</code>
+   * @return The sellerId.
+   */
+  java.lang.String getSellerId();
+  /**
+   * <code>string seller_id = 4;</code>
+   * @return The bytes for sellerId.
+   */
+  com.google.protobuf.ByteString
+      getSellerIdBytes();
+
+  /**
+   * <code>string seller_address = 5;</code>
+   * @return The sellerAddress.
+   */
+  java.lang.String getSellerAddress();
+  /**
+   * <code>string seller_address = 5;</code>
+   * @return The bytes for sellerAddress.
+   */
+  com.google.protobuf.ByteString
+      getSellerAddressBytes();
+
+  /**
+   * <code>string seller_public_key = 6;</code>
+   * @return The sellerPublicKey.
+   */
+  java.lang.String getSellerPublicKey();
+  /**
+   * <code>string seller_public_key = 6;</code>
+   * @return The bytes for sellerPublicKey.
+   */
+  com.google.protobuf.ByteString
+      getSellerPublicKeyBytes();
 }

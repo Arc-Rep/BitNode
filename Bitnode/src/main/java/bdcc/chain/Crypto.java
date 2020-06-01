@@ -3,6 +3,7 @@ package bdcc.chain;
 
 import bdcc.chain.NodeBlockChain.NodeBlock;
 
+import org.bouncycastle.crypto.io.CipherIOException;
 import org.bouncycastle.util.encoders.Hex;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -136,5 +137,45 @@ public class Crypto {
             System.out.println(e.getMessage());
         }
         return decoded_str;
+    }
+
+    public static String doFullStringEncryption(String str_to_cipher, byte[] public_key) throws CipherIOException{
+        String ciphered_string = null;
+        try{
+            ciphered_string = convertBytesToString(encrypt(public_key, convertStringToBytes(str_to_cipher)));
+        } catch (Exception e) {
+            throw new CipherIOException("Encryption unsuccessful", e);
+        }
+        return ciphered_string;
+    }
+
+    public static String doFullDoubleEncryption(Double double_to_cipher, byte[] public_key) throws CipherIOException{
+        String ciphered_string = null;
+        try{
+            ciphered_string = convertBytesToString(encrypt(public_key, convertStringToBytes(Double.toString(double_to_cipher))));
+        } catch (Exception e) {
+            throw new CipherIOException("Encryption unsuccessful", e);
+        }
+        return ciphered_string;
+    }
+
+    public static String doFullStringDecryption(String string_to_decipher, byte[] private_key) throws CipherIOException{
+        String ciphered_string = null;
+        try{
+            ciphered_string = convertBytesToString(decrypt(private_key, convertStringToBytes(string_to_decipher)));
+        } catch (Exception e) {
+            throw new CipherIOException("Decryption unsuccessful", e);
+        }
+        return ciphered_string;
+    }
+
+    public static Double doFullDoubleDecryption(String double_to_decipher, byte[] private_key) throws CipherIOException{
+        Double ciphered_string = -1.0;
+        try{
+            ciphered_string = Double.parseDouble(convertBytesToString(encrypt(private_key, convertStringToBytes(double_to_decipher))));
+        } catch (Exception e) {
+            throw new CipherIOException("Decryption unsuccessful", e);
+        }
+        return ciphered_string;
     }
 }

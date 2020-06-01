@@ -131,18 +131,23 @@ public class NodeOperationsClient {
       return response;
     }
 
-    public void resultsAuction(String auction_id, String buyer_id, double value){
+    public TransactionInfo resultsAuction(String auction_id, String buyer_id, String value, String seller_id, 
+      String seller_address, String seller_public_key){
+      TransactionInfo response = null;
       try{
         ResultsAuction resutltsauctionrequest = ResultsAuction.newBuilder()
           .setAuctionId(auction_id)
           .setBuyerId(buyer_id)
-          .setValue(Double.toString(value))
+          .setValue(value)
+          .setSellerId(seller_id)
+          .setSellerAddress(seller_address)
+          .setSellerPublicKey(seller_public_key)
           .build();
-        NodeResponse response = blockingStub.resultsAuction(resutltsauctionrequest);
+        response = blockingStub.resultsAuction(resutltsauctionrequest);
       } catch(RuntimeException e){
         logger.log(Level.WARNING, "RCP failed", e);
-        return;
       }
+      return response;
     }
    
 }

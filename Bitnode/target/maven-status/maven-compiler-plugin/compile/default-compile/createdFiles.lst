@@ -2,6 +2,7 @@ bdcc\grpc\NodeOperationsGrpc$NodeOperationsFileDescriptorSupplier.class
 bdcc\grpc\NodeResponse$Builder.class
 bdcc\grpc\NodeSecInfoOrBuilder.class
 bdcc\grpc\TransactionInfo$1.class
+bdcc\grpc\NodeNotificationOrBuilder.class
 bdcc\grpc\NodeOperationsGrpc$1.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsMethodDescriptorSupplier.class
 bdcc\grpc\NodeOperationsGrpc$MethodHandlers.class

@@ -245,28 +245,28 @@ public final class NodeOperationsGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction,
-      bdcc.grpc.NodeResponse> getResultsAuctionMethod;
+      bdcc.grpc.TransactionInfo> getResultsAuctionMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "resultsAuction",
       requestType = bdcc.grpc.ResultsAuction.class,
-      responseType = bdcc.grpc.NodeResponse.class,
+      responseType = bdcc.grpc.TransactionInfo.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction,
-      bdcc.grpc.NodeResponse> getResultsAuctionMethod() {
-    io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction, bdcc.grpc.NodeResponse> getResultsAuctionMethod;
+      bdcc.grpc.TransactionInfo> getResultsAuctionMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.ResultsAuction, bdcc.grpc.TransactionInfo> getResultsAuctionMethod;
     if ((getResultsAuctionMethod = NodeOperationsGrpc.getResultsAuctionMethod) == null) {
       synchronized (NodeOperationsGrpc.class) {
         if ((getResultsAuctionMethod = NodeOperationsGrpc.getResultsAuctionMethod) == null) {
           NodeOperationsGrpc.getResultsAuctionMethod = getResultsAuctionMethod =
-              io.grpc.MethodDescriptor.<bdcc.grpc.ResultsAuction, bdcc.grpc.NodeResponse>newBuilder()
+              io.grpc.MethodDescriptor.<bdcc.grpc.ResultsAuction, bdcc.grpc.TransactionInfo>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "resultsAuction"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   bdcc.grpc.ResultsAuction.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+                  bdcc.grpc.TransactionInfo.getDefaultInstance()))
               .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("resultsAuction"))
               .build();
         }
@@ -387,7 +387,7 @@ public final class NodeOperationsGrpc {
     /**
      */
     public void resultsAuction(bdcc.grpc.ResultsAuction request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<bdcc.grpc.TransactionInfo> responseObserver) {
       asyncUnimplementedUnaryCall(getResultsAuctionMethod(), responseObserver);
     }
 
@@ -447,7 +447,7 @@ public final class NodeOperationsGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 bdcc.grpc.ResultsAuction,
-                bdcc.grpc.NodeResponse>(
+                bdcc.grpc.TransactionInfo>(
                   this, METHODID_RESULTS_AUCTION)))
           .build();
     }
@@ -538,7 +538,7 @@ public final class NodeOperationsGrpc {
     /**
      */
     public void resultsAuction(bdcc.grpc.ResultsAuction request,
-        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<bdcc.grpc.TransactionInfo> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request, responseObserver);
     }
@@ -624,7 +624,7 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public bdcc.grpc.NodeResponse resultsAuction(bdcc.grpc.ResultsAuction request) {
+    public bdcc.grpc.TransactionInfo resultsAuction(bdcc.grpc.ResultsAuction request) {
       return blockingUnaryCall(
           getChannel(), getResultsAuctionMethod(), getCallOptions(), request);
     }
@@ -681,7 +681,7 @@ public final class NodeOperationsGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> resultsAuction(
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.TransactionInfo> resultsAuction(
         bdcc.grpc.ResultsAuction request) {
       return futureUnaryCall(
           getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request);
@@ -744,7 +744,7 @@ public final class NodeOperationsGrpc {
           break;
         case METHODID_RESULTS_AUCTION:
           serviceImpl.resultsAuction((bdcc.grpc.ResultsAuction) request,
-              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<bdcc.grpc.TransactionInfo>) responseObserver);
           break;
         default:
           throw new AssertionError();

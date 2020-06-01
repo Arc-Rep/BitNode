@@ -237,7 +237,10 @@ public class App {
     }
 
     public static void concludeMyAuction(){
-        NodeActions.completeAuction(auction_list, current_user, server_port);
+        if(current_user.getUserAuction() == null)
+            System.out.println("No auction to conclude.");
+        else 
+            NodeActions.completeAuction(current_user, userBucket, server_port);
     }
 
 
