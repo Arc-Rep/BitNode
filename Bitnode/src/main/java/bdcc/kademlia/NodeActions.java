@@ -20,7 +20,8 @@ public class NodeActions {
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
-        System.out.println("Check receiving node public key:" + Crypto.convertBytesToString(node.getPubKey()));
+        System.out.println("Check receiving node public key:");
+        System.out.println(Crypto.convertBytesToString(node.getPubKey()));
         try
         {   //cipher with node public key
             response = initial_requester.notifyNode(
@@ -53,7 +54,8 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-        System.out.println("Check own public key:" + Crypto.convertBytesToString(current_user.getPubKey()));
+        System.out.println("Check own public key:");
+        System.out.println(Crypto.convertBytesToString(current_user.getPubKey()));
         try { 
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
