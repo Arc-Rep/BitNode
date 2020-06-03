@@ -163,7 +163,7 @@ public class Crypto {
         String ciphered_string = null;
         try{
             System.out.println("Decryption result:");
-            System.out.println(convertBytesToString(decrypt(private_key, convertStringToBytes(double_to_decipher))));
+            System.out.println(convertBytesToString(decrypt(private_key, convertStringToBytes(string_to_decipher))));
             ciphered_string = convertBytesToString(decrypt(private_key, convertStringToBytes(string_to_decipher)));
         } catch (Exception e) {
             throw new CipherIOException("Decryption unsuccessful", e);
