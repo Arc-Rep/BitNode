@@ -21,6 +21,8 @@ public class NodeActions {
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
 
+        if(random_auction.getSeller().equals(node.getKey())) random_auction = null;
+
         try
         {   //cipher with node public key
             response = initial_requester.notifyNode(
