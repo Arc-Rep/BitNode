@@ -20,8 +20,7 @@ public class NodeActions {
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
-        System.out.println("Check receiving node public key:");
-        System.out.println(Crypto.convertBytesToString(node.getPubKey()));
+
         try
         {   //cipher with node public key
             response = initial_requester.notifyNode(
@@ -54,15 +53,13 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-        System.out.println("Check own public key:");
-        System.out.println(Crypto.convertBytesToString(current_user.getPubKey()));
         try { 
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
             random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomItem(), current_user.getPrivateKey()),
             random_user = notification.getRandomUserId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomUserId(), current_user.getPrivateKey());
-
+            System.out.println("Passed all strings with item " + item_name);
             Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
                    random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
             System.out.println("Non encrypted bid value is " + max_bid);
