@@ -91,7 +91,7 @@ public class NodeOperationsServer {
                               build();
           responseObserver.onNext(reply);
         } catch(Exception e) {
-          System.out.println(e.getMessage());
+          System.out.println("Node notification server error: " + e.getMessage());
         }
         responseObserver.onCompleted();
         
@@ -180,7 +180,7 @@ public class NodeOperationsServer {
           responseObserver.onNext(replyBuilder.build());
         }
         catch(Exception e){
-          System.out.println(e.getMessage());
+          System.out.println("InfoAuction server error: " + e.getMessage());
         }
         responseObserver.onCompleted();
         userBucket.addNode(buyer_info.getUserId(), buyer_info.getUserAddress(), node_public_key);
@@ -241,13 +241,13 @@ public class NodeOperationsServer {
             responseObserver.onNext(replyBuilder.build());
           }
           catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("Auction results server error: " + e.getMessage());
           }
           responseObserver.onCompleted();
           userBucket.addNode(seller_id, seller_address, seller_public_key);
           auction_list.updateList(auction_id, saved_auction, 2);
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+          System.out.println("Auction results server error: " + e.getMessage());
         }
       }
     }

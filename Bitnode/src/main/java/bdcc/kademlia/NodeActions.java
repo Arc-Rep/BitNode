@@ -41,7 +41,7 @@ public class NodeActions {
             userBucket.removeNode(node);
         }
         catch(Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         try{
@@ -79,7 +79,7 @@ public class NodeActions {
             }
             userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Node notification client error: " + e.getMessage());
         }
     }
 
@@ -193,7 +193,7 @@ public class NodeActions {
                 }
             }
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Update auction client renewal error: " + e.getMessage());
         }
 
         return updated_auction;
@@ -237,7 +237,7 @@ public class NodeActions {
             else if(response_status.equals("REFUSED"))
                 return 2;
         } catch(Exception e){
-                System.out.println(e.getMessage());
+                System.out.println("Bid process client error: " + e.getMessage());
                 return 2;
         }
         return 1;
