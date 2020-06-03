@@ -73,6 +73,9 @@ public class NodeActions {
             
             if(!random_auction_id.equals("") && !random_user.equals(current_user.getUserId()))
             {
+                System.out.println("Entered an evil place");
+                System.out.println(random_user);
+                System.out.println(current_user.getUserId());
                 Auction random_auction = new Auction(random_user, random_item_id,
                                                         random_max_bid, random_auction_id);
                 auctions.addToAuctionList(random_auction);
