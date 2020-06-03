@@ -59,11 +59,11 @@ public class NodeActions {
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
             random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomItem(), current_user.getPrivateKey()),
             random_user = notification.getRandomUserId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomUserId(), current_user.getPrivateKey());
-            System.out.println("Passed all strings with item " + item_name);
+
             Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
                    random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
-            System.out.println("Non encrypted bid value is " + max_bid);
-            if(!auction_id.equals(""))
+            
+                   if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
                     item_name, max_bid, auction_id);
@@ -177,7 +177,7 @@ public class NodeActions {
             if(info_auction == null) return null;
 
             initial_requester.shutdown();
-            if(info_auction.getAuctionId().equals(""))
+            if(!info_auction.getAuctionId().equals(""))
             {
                 String seller_id = Crypto.doFullStringDecryption(info_auction.getSellerId(), current_user.getPrivateKey()),
                 item = Crypto.doFullStringDecryption(info_auction.getItem(), current_user.getPrivateKey()),

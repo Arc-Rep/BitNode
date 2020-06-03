@@ -146,7 +146,7 @@ public class App {
         }
     }
 
-    //PRECISA DE SER REESTRUTURADA, deve ser feita ao mesmo tempo que uma auction e concluida
+
     private static void makeTranseferMenu() { 
         System.out.println("Select the user that you want to transfer the money to: ");
         String targetUser = scanner.nextLine();
