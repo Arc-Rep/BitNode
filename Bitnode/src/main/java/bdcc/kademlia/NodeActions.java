@@ -66,7 +66,7 @@ public class NodeActions {
             if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
-                    item_name, max_bid, random_auction_id);
+                    item_name, max_bid, auction_id);
                 auctions.addToAuctionList(sender_auction);
             
             }   
