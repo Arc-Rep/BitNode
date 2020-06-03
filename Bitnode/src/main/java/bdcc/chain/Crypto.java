@@ -172,8 +172,7 @@ public class Crypto {
     public static Double doFullDoubleDecryption(String double_to_decipher, byte[] private_key) throws CipherIOException{
         Double ciphered_string = -1.0;
         try{
-            System.out.println(convertBytesToString(encrypt(private_key, convertStringToBytes(double_to_decipher))));
-            ciphered_string = Double.parseDouble(convertBytesToString(encrypt(private_key, convertStringToBytes(double_to_decipher))));
+            ciphered_string = Double.parseDouble(convertBytesToString(decrypt(private_key, convertStringToBytes(double_to_decipher))));
         } catch (Exception e) {
             throw new CipherIOException("Decryption unsuccessful", e);
         }
