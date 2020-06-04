@@ -22,11 +22,9 @@ public class NodeActions {
     
         
         if(random_auction != null){
-            if(random_auction.getSeller().equals(node.getKey())) {
-                System.out.println(node.getKey() + "\n\n\n\n\n\n\n\n\n");
-                System.out.println(random_auction.getSeller());
+            if(random_auction.getSeller().equals(node.getKey())) 
                 random_auction = null; 
-            }
+            
         }
 
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
@@ -34,7 +32,6 @@ public class NodeActions {
 
         try
         {   
-            System.out.println("Before receiving");
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
@@ -50,7 +47,6 @@ public class NodeActions {
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
-            System.out.println("Host" + Crypto.toHex(node.getKey()) + "couldn't be reached with address " + node.getValue());
             userBucket.removeNode(node);
         }
         catch(Exception e){
