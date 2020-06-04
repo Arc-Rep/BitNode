@@ -171,7 +171,7 @@ public class App {
             System.out.println("Auction does not exist.");
             return;
         }
-        
+
         auction_list.getLiveAuctions();
 
         System.out.println("Enter the index of the auction you want to join: ");
@@ -322,7 +322,7 @@ public class App {
                 if(numb_nodes_found == 0)       //first node is always server
                 {
                      userBucket.addNode(info.getUserId(), info.getUserAddress(),Crypto.convertStringToBytes(info.getPublicKey()));
-                     System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
+                     System.out.println("Server " + info.getUserId() + " found with address " + info.getUserAddress());
                 }
                 else
                 {
