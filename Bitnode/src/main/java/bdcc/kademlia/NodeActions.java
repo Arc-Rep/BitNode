@@ -41,6 +41,7 @@ public class NodeActions {
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
+            System.out.println("Host" + Crypto.toHex(node.getKey()) + "couldn't be reached with address " + node.getValue());
             userBucket.removeNode(node);
         }
         catch(Exception e){
@@ -56,7 +57,7 @@ public class NodeActions {
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
-         System.out.println("Information is being processed");
+        System.out.println("Information is being processed");
         try { 
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
