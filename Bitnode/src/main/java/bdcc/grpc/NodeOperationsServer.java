@@ -161,11 +161,11 @@ public class NodeOperationsServer {
       public void makeTransaction(TransactionInfo transactionInfo, StreamObserver<NodeResponse> responseObserver) {
         Boolean success = false;
         NodeResponse.Builder replyBuilder;
-
+        Double amount = -1.0;
         try{
           String payer_id =  Crypto.doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey()),
           receiver_id = Crypto.doFullStringDecryption(transactionInfo.getSellerId(), user.getPrivateKey());
-          Double amount = Crypto.doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
+          amount = Crypto.doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
           if(receiver_id.equals(user.getUserId())){
             replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
             success = true;
