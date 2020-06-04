@@ -52,7 +52,7 @@ public class Crypto {
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.ISO_8859_1));
-            hashed = new String(hash, "UTF-8");
+            hashed = new String(hash, "ISO-8859-1");
         }
         catch(Exception e){
             System.out.println("Algorithm not available");
@@ -131,7 +131,7 @@ public class Crypto {
     public static String convertBytesToString(byte[] encodedbytes){
         String decoded_str = null;
         try{
-            decoded_str = new String(encodedbytes, StandardCharsets.UTF_8);
+            decoded_str = new String(encodedbytes, "ISO-8859-1");
         }
         catch(Exception e){
             System.out.println(e.getMessage());
