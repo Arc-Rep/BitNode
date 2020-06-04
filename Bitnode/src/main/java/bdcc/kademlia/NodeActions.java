@@ -235,7 +235,6 @@ public class NodeActions {
             {
                 temp.setAuctionBid(bid);
                 list.updateList(temp.getAuctionId(), temp,1);
-                System.out.println("Bid was accepted with bidder " + Crypto.toHex(list.getAuctionById(id).getHighestBidder()));
             }
 
             initial_requester.shutdown();
