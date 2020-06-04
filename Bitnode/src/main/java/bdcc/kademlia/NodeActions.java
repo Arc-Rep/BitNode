@@ -20,9 +20,10 @@ public class NodeActions {
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
     
-        System.out.println(node.getKey());
+        
         if(random_auction != null){
             if(random_auction.getSeller().equals(node.getKey())) {
+                System.out.println(node.getKey() + "\n\n\n\n\n\n\n\n\n");
                 System.out.println(random_auction.getSeller());
                 random_auction = null; 
             }
