@@ -160,17 +160,24 @@ public class NodeOperationsServer {
       @Override
       public void makeTransaction(TransactionInfo transactionInfo, StreamObserver<NodeResponse> responseObserver) {
         Boolean success = false;
-        String payer_id = doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey()),
-        receiver_id = doFullStringDecryption(transactionInfo.getSellerId(), user.getPrivateKey());
-        Double amount = doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
-
         NodeResponse.Builder replyBuilder;
-        if(receiver_id.equals(user.getUserId())){
-          replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
-          success = true;
-          System.out.println("Received transaction from " + Crypto.toHex(payer_id) + " with value " + amount);
+
+        try{
+          String payer_id =  Crypto.doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey()),
+          receiver_id = Crypto.doFullStringDecryption(transactionInfo.getSellerId(), user.getPrivateKey());
+          Double amount = Crypto.doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
+          if(receiver_id.equals(user.getUserId())){
+            replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+            success = true;
+            System.out.println("Received transaction from " + Crypto.toHex(payer_id) + " with value " + amount);
+          }
+          else replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
+        } catch (Exception e) {
+          System.out.println(e.getMessage());
+          replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
         }
-        else replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
+        
+
 
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
@@ -243,7 +250,7 @@ public class NodeOperationsServer {
             System.out.println("Received auction has mistaken User ID");
           else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getValue() != amount))
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
-          else if(!user.withdraw_amount(amount))
+          else if(!user.withdrawAmount(amount))
             System.out.println("Auction cancelled. For some reason you have no money");
           else{
             success = true;
