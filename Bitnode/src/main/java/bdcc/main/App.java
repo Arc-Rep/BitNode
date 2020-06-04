@@ -109,7 +109,7 @@ public class App {
                 //leave the auction
                 String conf = "y";
                 
-                if(auction.getHighestBidder() == current_user.getUserId()){
+                if(auction.getHighestBidder().equals(current_user.getUserId())){
                     System.out.println("You are this auctions current highest bidder, are you sure you want to leave? [y/n] (This action will not invalidate your bid)");
                     conf = scanner.nextLine();
                 }

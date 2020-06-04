@@ -244,12 +244,20 @@ public class NodeOperationsServer {
 
           Auction saved_auction = auction_list.getAuctionById(auction_id);
 
+          
+
           if(saved_auction == null)
             System.out.println("Received result of unknown auction");
-          else if(!buyer_id.equals(user.getUserId())){
+          else if(!(saved_auction.getHighestBidder().equals(buyer_id) && buyer_id.equals(user.getUserId()))){
+            System.out.println("Information of auction: " + saved_auction.getAuctionId());
+            System.out.println("Seller " + Crypto.toHex(seller_id) + "\n" + Crypto.toHex(saved_auction.getSeller()));
+
             System.out.println("Received auction has mistaken User ID");
+            System.out.println(buyer_id + "\n\n\n\n");
+            System.out.println(saved_auction.getHighestBidder() + "\n\n\n\n");
+            System.out.println(user.getUserId() + "\n\n\n\n");
           }
-          else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getHighestBid() != amount))
+          else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getCurrentHighestAmount() != amount))
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
           else if(!user.withdrawAmount(amount))
             System.out.println("Auction cancelled. For some reason you have no money");
