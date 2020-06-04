@@ -63,6 +63,7 @@ public class NodeActions {
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
         try { 
+            System.out.println("ping " + notification.getUserId() +"\n\n\n\n");
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
@@ -190,7 +191,7 @@ public class NodeActions {
                 String seller_id = Crypto.doFullStringDecryption(info_auction.getSellerId(), current_user.getPrivateKey()),
                 item = Crypto.doFullStringDecryption(info_auction.getItem(), current_user.getPrivateKey()),
                 auction_id = Crypto.doFullStringDecryption(info_auction.getAuctionId(), current_user.getPrivateKey());
-
+                System.out.println("updated auction " + seller_id +"\n\n\n\n");
                 Double auction_base_amount = Crypto.doFullDoubleDecryption(info_auction.getAmount(), current_user.getPrivateKey());
                 if(info_auction.getBuyerId().equals("")) updated_auction = new Auction(seller_id, item, auction_base_amount, auction_id);
                 else {
