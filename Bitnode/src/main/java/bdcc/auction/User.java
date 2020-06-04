@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public class User{
     
-    //make an item inventory?
     private String user_id;
     private double wallet;
+    private double vaulted_amount;
     private PrivateKey privKey;
     private Auction user_auction;
     PublicKey pubKey;
@@ -32,13 +32,6 @@ public class User{
         wallet+= amount_to_add;
     }
 
-    public Boolean withdraw_amount(double amount_to_withdraw){
-        if(amount_to_withdraw < wallet)
-            return false;
-        wallet-=amount_to_withdraw;
-        return true;
-    }
-
     public String getUserId(){
         return user_id;
     }
@@ -49,6 +42,31 @@ public class User{
 
     public double getWallet(){
         return this.wallet;
+    }
+
+    public Boolean vaultAmount(double to_vault){
+        if(to_vault > wallet) return false;
+        wallet -= to_vault;
+        vaulted_amount += to_vault;
+        return true;
+    }
+
+    public Boolean returnMoney(double to_return){
+        if(to_return > vaulted_amount) return false;
+        wallet += to_return;
+        vaulted_amount -= to_return;
+        return true;
+    } 
+
+    public Boolean withdrawAmount(double amount_to_withdraw){
+        if(amount_to_withdraw > vaulted_amount)
+            return false;
+        vaulted_amount-=amount_to_withdraw;
+        return true;
+    }
+
+    public void receiveMoneyTransfer(double amount_to_receive){
+        wallet += amount_to_receive;
     }
 
     public boolean setUpAuction(String b, double c){

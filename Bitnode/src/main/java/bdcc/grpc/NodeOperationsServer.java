@@ -159,10 +159,27 @@ public class NodeOperationsServer {
 
       @Override
       public void makeTransaction(TransactionInfo transactionInfo, StreamObserver<NodeResponse> responseObserver) {
-        NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+        Boolean success = false;
+        String payer_id = doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey()),
+        receiver_id = doFullStringDecryption(transactionInfo.getSellerId(), user.getPrivateKey());
+        Double amount = doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
+
+        NodeResponse.Builder replyBuilder;
+        if(receiver_id.equals(user.getUserId())){
+          replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
+          success = true;
+          System.out.println("Received transaction from " + Crypto.toHex(payer_id) + " with value " + amount);
+        }
+        else replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
 
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
+
+        if(success) 
+        {
+          //por em blockchain
+          user.receiveMoneyTransfer(amount);
+        }
       }
 
       @Override
@@ -198,10 +215,11 @@ public class NodeOperationsServer {
           if(!user.checkActiveAuction(auction_id)) status = "ENDED";
           else if(!user.processBid(received_bid)) status = "REFUSED";
           else status = "OK";
+          if(status.equals("OK")) System.out.println("Accepted bid from " + Crypto.toHex(node_id) + " with value " + amount);
         } catch(Exception e){
           status = "REFUSED";
         }
-  
+        
         NodeResponse.Builder replyBuilder = NodeResponse.newBuilder().setStatus(status);
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
