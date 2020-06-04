@@ -249,7 +249,7 @@ public class NodeOperationsServer {
           else if(!buyer_id.equals(user.getUserId())){
             System.out.println("Received auction has mistaken User ID");
           }
-          else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getValue() != amount))
+          else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getHighestBid() != amount))
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
           else if(!user.withdrawAmount(amount))
             System.out.println("Auction cancelled. For some reason you have no money");
