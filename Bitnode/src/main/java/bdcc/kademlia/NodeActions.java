@@ -26,6 +26,7 @@ public class NodeActions {
 
         try
         {   
+            System.out.println("Before receiving");
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),

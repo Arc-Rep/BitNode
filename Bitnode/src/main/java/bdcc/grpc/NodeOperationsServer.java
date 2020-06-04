@@ -74,6 +74,7 @@ public class NodeOperationsServer {
       
       @Override
       public void notifyNode(NodeNotification notification, StreamObserver<NodeNotification> responseObserver) {
+        System.out.println("Received stuff");
         Auction random_auction = auction_list.getRandomAuction(), user_auction = user.getUserAuction();
         NodeActions.proccessPingNode(notification, userBucket, user, auction_list);
         byte[] node_public_key = Crypto.convertStringToBytes(notification.getPublicKey());
