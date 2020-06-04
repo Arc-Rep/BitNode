@@ -17,7 +17,7 @@ import bdcc.grpc.NodeOperationsClient;
 
 public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
-        System.out.println("Node is going to be pinged");
+        System.out.println("Node " + Crypto.toHex(node.getKey()) + " with address " + node.getValue() + " is going to be pinged");
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
