@@ -174,7 +174,7 @@ public class App {
         auction_list.getLiveAuctions();
 
         System.out.println("Enter the index of the auction you want to join: ");
-        int targetAuctionIndex = scanner.nextInt();
+        int targetAuctionIndex = scanner.nextInt() - 1;
         Auction selected_auction = auction_list.getAuctionByIndex(targetAuctionIndex);
         scanner.skip("\\R");
         if(selected_auction == null)
@@ -183,7 +183,8 @@ public class App {
             System.out.println("Returning to main menu... \n \n \n");
             return;
         }
-        System.out.println("Join '" + selected_auction.getAuctionId() + "'? [y/n]");
+        System.out.println("Join '" + Crypto.toHex(selected_auction.getAuctionId()) + "' for '" + 
+            selected_auction.getItem() + " '? [y/n]");
         String conf = "";
         while(!(conf.equals("y") || conf.equals("n")))
         {
@@ -193,7 +194,11 @@ public class App {
                 System.out.println("Joining auction room...");
                 KeyNode seller_node = NodeActions.NodeCompleteSearch(selected_auction.getSeller(),
                                         server_port, userBucket, current_user);
-                if(seller_node.Key.equals(selected_auction.getSeller()))
+                if(seller_node != null){
+                    System.out.println(seller_node.getKey() + "\n\n\n\n\n");
+                    System.out.println(selected_auction.getSeller());
+                }
+                if(seller_node.getKey().equals(selected_auction.getSeller()))
                     auctionMenu(selected_auction, seller_node);
                 else
                 {
