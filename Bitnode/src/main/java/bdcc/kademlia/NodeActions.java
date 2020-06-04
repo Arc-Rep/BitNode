@@ -65,10 +65,11 @@ public class NodeActions {
             Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
                    random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
             
-                   if(!auction_id.equals(""))
+            if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
                     item_name, max_bid, auction_id);
+                System.out.println("Auction added");
                 auctions.addToAuctionList(sender_auction);
             
             }   

@@ -97,4 +97,9 @@ public class AuctionList {
         return live_list.get(r.nextInt() % live_list.size());
     }
 
+    public Boolean checkLiveAuctionExists(){
+        if(live_list.size() == 0) return false;
+        return true;
+    }
+
 }

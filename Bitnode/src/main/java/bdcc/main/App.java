@@ -165,7 +165,13 @@ public class App {
     }
 
     private static void joinAuctionMenu(){
-
+        
+        if(!auction_list.checkLiveAuctionExists())
+        {
+            System.out.println("Auction does not exist.");
+            return;
+        }
+        
         auction_list.getLiveAuctions();
 
         System.out.println("Enter the index of the auction you want to join: ");
