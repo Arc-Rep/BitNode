@@ -35,7 +35,7 @@ public class NodeOperationsClient {
     }
     
     public void shutdown() throws InterruptedException {
-      channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+      channel.shutdown().awaitTermination(8, TimeUnit.SECONDS);
     }
 
     public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
