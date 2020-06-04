@@ -93,7 +93,9 @@ public class AuctionList {
     public synchronized Auction getRandomAuction(){
         if(live_list.size() == 0) return null;
         Random r = new Random();
-        return live_list.get(r.nextInt() % live_list.size());
+        int random_index = r.nextInt() % live_list.size();
+        if(random_index >= live_list.size()) return null;
+        return live_list.get(random_index);
     }
 
     public Boolean checkLiveAuctionExists(){
