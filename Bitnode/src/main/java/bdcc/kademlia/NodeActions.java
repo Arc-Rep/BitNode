@@ -63,7 +63,6 @@ public class NodeActions {
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
                                                     User current_user, AuctionList auctions){
         try { 
-            System.out.println("ping " + notification.getUserId() +"\n\n\n\n");
             String auction_id = notification.getAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionId(), current_user.getPrivateKey()),
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
