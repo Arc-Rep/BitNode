@@ -23,7 +23,7 @@ public class User{
         KeyPair pair = Crypto.generateRSAKeys();
         privKey = pair.getPrivate();
         pubKey = pair.getPublic();
-        user_id =       Crypto.hashString(pubKey.toString());
+        user_id =       Crypto.toHex(Crypto.hashString(pubKey.toString()));
         wallet =        10;
         user_auction = null;        
     }
