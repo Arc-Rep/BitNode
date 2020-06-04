@@ -19,9 +19,14 @@ public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
-        System.out.println(random_auction.getSeller());
+    
         System.out.println(node.getKey());
-        if(random_auction != null && random_auction.getSeller().equals(node.getKey())) random_auction = null;
+        if(random_auction != null){
+            if(random_auction.getSeller().equals(node.getKey())) {
+                System.out.println(random_auction.getSeller());
+                random_auction = null; 
+            }
+        }
 
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
         
