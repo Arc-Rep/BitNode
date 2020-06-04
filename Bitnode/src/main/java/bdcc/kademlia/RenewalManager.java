@@ -25,7 +25,7 @@ public class RenewalManager implements Runnable{
         while(!terminate)
         {
             try{
-                Thread.sleep(8000);
+                Thread.sleep(5000);
                 if(user_bucket.node_number > 0)
                 {
                     KeyNode randomNode = user_bucket.getRandomNode();
@@ -36,9 +36,10 @@ public class RenewalManager implements Runnable{
                     }
                 }
             }
-            catch(Exception e){
+            catch(InterruptedException e){
 
             }
+            catch(Exception e)
         }
     }
 
