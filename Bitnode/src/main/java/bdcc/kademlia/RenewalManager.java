@@ -36,10 +36,10 @@ public class RenewalManager implements Runnable{
                     }
                 }
             }
-            catch(InterruptedException e){
+            catch(Exception e){
 
             }
-            catch(Exception e)
+
         }
     }
 
