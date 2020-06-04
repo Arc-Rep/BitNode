@@ -68,10 +68,9 @@ public class AuctionList {
 
     public synchronized void updateList(String old_auction_id, Auction auction_to_add, int i){ //fazer verificações?
         Auction old_auction = getAuctionById(old_auction_id);
-        if(old_auction == null) return;
 
         if(i==1){ //new bid
-            live_list.remove(old_auction);
+            if(old_auction != null) live_list.remove(old_auction);
             live_list.add(auction_to_add);
         } else if(i==2){ // completed
             live_list.remove(old_auction);
