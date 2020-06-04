@@ -19,8 +19,10 @@ public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
+
+        if(random_auction.getSeller().equals(node.getKey())) random_auction = null;
+
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
-        //if(random_auction.getSeller().equals(node.getKey())) random_auction = null;
         
         System.out.println("Client created");
         try
