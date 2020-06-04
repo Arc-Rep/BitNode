@@ -131,7 +131,7 @@ public class Crypto {
     public static String convertBytesToString(byte[] encodedbytes){
         String decoded_str = null;
         try{
-            decoded_str = new String(encodedbytes, "ISO-8859-1");
+            decoded_str = new String(encodedbytes, "UTF-8");
         }
         catch(Exception e){
             System.out.println(e.getMessage());
