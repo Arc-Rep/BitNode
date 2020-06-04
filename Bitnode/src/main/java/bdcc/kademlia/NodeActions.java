@@ -19,7 +19,8 @@ public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
         NodeNotification response = null;
-
+        System.out.println(random_auction.getSeller());
+        System.out.println(node.getKey());
         if(random_auction != null && random_auction.getSeller().equals(node.getKey())) random_auction = null;
 
         NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
@@ -43,7 +44,7 @@ public class NodeActions {
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
-            System.out.println("Host" + node.getKey() + "couldn't be reached with address " + node.getValue());
+            System.out.println("Host" + Crypto.toHex(node.getKey()) + "couldn't be reached with address " + node.getValue());
             userBucket.removeNode(node);
         }
         catch(Exception e){
@@ -131,7 +132,7 @@ public class NodeActions {
                     if(numb_nodes_found == 0)       //first node is always the own server
                     {
                         userBucket.addNode(info.getUserId(), info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey()));       //update server
-                        System.out.println("Server " +info.getUserId() + " found with address " + info.getUserAddress());
+                        System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                     }
                     else
                     {
