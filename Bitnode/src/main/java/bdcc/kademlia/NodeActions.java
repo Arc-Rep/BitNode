@@ -190,7 +190,6 @@ public class NodeActions {
                 String seller_id = Crypto.doFullStringDecryption(info_auction.getSellerId(), current_user.getPrivateKey()),
                 item = Crypto.doFullStringDecryption(info_auction.getItem(), current_user.getPrivateKey()),
                 auction_id = Crypto.doFullStringDecryption(info_auction.getAuctionId(), current_user.getPrivateKey());
-                System.out.println("updated auction " + seller_id +"\n\n\n\n");
                 Double auction_base_amount = Crypto.doFullDoubleDecryption(info_auction.getAmount(), current_user.getPrivateKey());
                 if(info_auction.getBuyerId().equals("")) updated_auction = new Auction(seller_id, item, auction_base_amount, auction_id);
                 else {
@@ -234,6 +233,7 @@ public class NodeActions {
             String response_status = response.getStatus();
             if(response_status.equals("OK"))
             {
+                System.out.println("Bid was accepted");
                 temp.setAuctionBid(bid);
                 list.updateList(temp.getAuctionId(), temp,1);
             }

@@ -249,9 +249,6 @@ public class NodeOperationsServer {
           if(saved_auction == null)
             System.out.println("Received result of unknown auction");
           else if(!(saved_auction.getHighestBidder().equals(buyer_id) && buyer_id.equals(user.getUserId()))){
-            System.out.println("Information of auction: " + saved_auction.getAuctionId());
-            System.out.println("Seller " + Crypto.toHex(seller_id) + "\n" + Crypto.toHex(saved_auction.getSeller()));
-
             System.out.println("Received auction has mistaken User ID");
             System.out.println(buyer_id + "\n\n\n\n");
             System.out.println(saved_auction.getHighestBidder() + "\n\n\n\n");
