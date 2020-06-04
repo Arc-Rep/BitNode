@@ -64,7 +64,7 @@ public class NodeActions {
 
             Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
                    random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
-            
+            System.out.println("Before auction is added with id " + Crypto.toHex(auction_id));
             if(!auction_id.equals(""))
             {
                 Auction sender_auction = new Auction(notification.getUserId(),
