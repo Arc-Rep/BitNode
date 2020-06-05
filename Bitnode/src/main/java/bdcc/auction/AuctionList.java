@@ -141,7 +141,6 @@ public class AuctionList {
     }
 
     public Boolean enterAdoptedAuction(Auction auction, User user){
-        System.out.println("Entered with value " + auction.getCurrentHighestAmount());
         if(user.getWallet() < auction.getCurrentHighestAmount()){ 
             System.out.println("It was false");
             return false;

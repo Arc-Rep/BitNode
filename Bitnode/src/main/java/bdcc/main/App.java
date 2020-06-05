@@ -86,7 +86,8 @@ public class App {
                     switch (result) {
                         case 1:
                             System.out.println("The bid attempt was accepted!");
-                            auction_list.enterAdoptedAuction(updated_auction, current_user);
+                            //updated_auction.setAuctionBid(new Bid(updated_auction.getAuctionId(), bid_val, ));
+                            //auction_list.enterAdoptedAuction(updated_auction, current_user);
                             if(noBids){
                                 noBids = false;
                             }

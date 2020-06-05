@@ -255,7 +255,7 @@ public class NodeActions {
             if(response_status.equals("OK"))
             {
                 temp.setAuctionBid(bid);
-                list.addToAuctionList(temp);
+                list.enterAdoptedAuction(temp, user);
             }
 
             initial_requester.shutdown();
