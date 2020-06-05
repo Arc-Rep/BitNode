@@ -136,8 +136,8 @@ public class AuctionList {
     }
 
     public Boolean enterAdoptedAuction(Auction auction, User user){
-        if(user.getWallet() < auction.getHighestBid()) return false;
-        user.vaultAmount(auction.getHighestBid());
+        if(user.getWallet() < auction.getCurrentHighestAmount()) return false;
+        user.vaultAmount(auction.getCurrentHighestAmount());
         live_list.add(auction);
         adopted_list.add(auction);
         return true;
