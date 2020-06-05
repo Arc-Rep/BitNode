@@ -47,6 +47,7 @@ public class NodeOperationsClient {
         NodeInfo response = blockingStub.registerNode(address);
 
         id = response.getUserId();
+        System.out.println(id);
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
