@@ -344,7 +344,7 @@ public class NodeActions {
     public static void addAuction(AuctionList list, User user, Auction auction){
 
         if(list.getAdoptedAuctionById(auction.getAuctionId()) != null){
-            if(!auction.getAuctionId().equals(user.getUserId()))
+            if(!auction.getHighestBidder().equals(user.getUserId()))
                 user.returnMoney(list.removeAdoptedAuction(auction.getAuctionId()).getCurrentHighestAmount());           
         }
 
