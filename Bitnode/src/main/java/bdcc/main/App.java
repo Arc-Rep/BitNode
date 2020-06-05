@@ -348,6 +348,8 @@ public class App {
             return false;
         }
 
+        userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
+
         try{
             NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
             response = initial_requester.lookupNode(current_user.getUserId(), 
@@ -410,7 +412,6 @@ public class App {
         }
 
         //current_user = new User();
-        userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
         auction_list = new AuctionList();
         renew_manager = new RenewalManager(userBucket, auction_list, current_user, server_port);
 
