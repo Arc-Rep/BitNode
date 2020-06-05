@@ -343,6 +343,7 @@ public class App {
             if(node_id.equals("")) throw new Exception("Error receiving response from Server");
 
             current_user = new User(node_id);
+            initial_requester.shutdown();
         } catch (Exception e) {
             System.out.println("Error fetching ID from server");
             return false;

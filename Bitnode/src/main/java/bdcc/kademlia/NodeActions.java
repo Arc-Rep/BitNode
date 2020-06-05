@@ -353,6 +353,8 @@ public class NodeActions {
                     Crypto.doFullStringEncryption(current_user.getUserId(), target_node.getPubKey()),
                     Crypto.doFullDoubleEncryption(amount, target_node.getPubKey()), 
                     Crypto.doFullStringEncryption(target_node.getKey(), target_node.getPubKey()));
+            transaction_requester.shutdown();
+            
             if(response == null){
                 System.out.println("Error during transaction. Cancelling...");
                 return;
