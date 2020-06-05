@@ -48,6 +48,8 @@ public class App {
                 System.out.println("Auction not found within node. It may already have ended. Exiting...");
                 return;
             }
+
+            auction_list.addToAuctionList(updated_auction);
     
             String item = updated_auction.getItem();
             double highestBidVal = updated_auction.getHighestBid();
