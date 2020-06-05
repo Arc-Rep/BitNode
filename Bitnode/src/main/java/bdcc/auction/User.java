@@ -44,6 +44,10 @@ public class User{
         return this.wallet;
     }
 
+    public double getVaulted(){
+        return this.vaulted_amount;
+    }
+
     public Boolean vaultAmount(double to_vault){
         if(to_vault > wallet) return false;
         wallet -= to_vault;
