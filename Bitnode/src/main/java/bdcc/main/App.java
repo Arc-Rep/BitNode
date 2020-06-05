@@ -399,6 +399,9 @@ public class App {
         {
             if(!initialSetup(args[0]))  return;
         }
+        else{
+            current_user = new User("Server");
+        }
 
         //current_user = new User();
         userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
