@@ -53,7 +53,7 @@ public class Auction {
 
     public double getCurrentHighestAmount(){
         if(this.bid == null) return this.value;
-        return this.getHighestBid();
+        return this.bid.getInfoValue();
     }
 
     public boolean canUpdateBid(Bid b){
