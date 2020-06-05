@@ -87,6 +87,7 @@ public class App {
                     switch (result) {
                         case 1:
                             System.out.println("The bid attempt was accepted!");
+                            auction_list.enterAdoptedAuction(updated_auction, current_user);
                             if(noBids){
                                 noBids = false;
                             }
@@ -98,6 +99,9 @@ public class App {
 
                         case 3:
                             System.out.println("The auction you are trying to participate in is no longer live.");
+                            if(auction_list.removeAdoptedAuction(updated_auction.getAuctionId()) != null) 
+                                current_user.returnMoney(updated_auction.getHighestBid());
+                            auction_list.removeAuction(updated_auction.getAuctionId());
                             return;
                     
                         default:
@@ -204,7 +208,7 @@ public class App {
                 else
                 {
                     System.out.println("Couldn't find seller. Leaving auction...");
-                    auction_list.removeAuction(selected_auction.getAuctionId());
+                    NodeActions.terminateAuction(auction_list, current_user, selected_auction.getAuctionId());
                 }
                 
             }

@@ -90,7 +90,7 @@ public class NodeActions {
                     sender_auction = new Auction(notification.getUserId(), item_name, max_bid, auction_id, 
                         new Bid(auction_id, max_bid, auction_buyer));
 
-                auctions.addToAuctionList(sender_auction);
+                addAuction(auctions, current_user, sender_auction);
             
             }   
             
@@ -104,7 +104,7 @@ public class NodeActions {
                     random_auction = new Auction(random_user, random_item_id, random_max_bid, random_auction_id, 
                         new Bid(random_auction_id, random_max_bid, random_auction_buyer));
 
-                auctions.addToAuctionList(random_auction);
+                addAuction(auctions, current_user, random_auction);
             }
             userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
         } catch (Exception e) {
@@ -255,7 +255,7 @@ public class NodeActions {
             if(response_status.equals("OK"))
             {
                 temp.setAuctionBid(bid);
-                list.addToAuctionList(temp);
+                addAuction(list, user, temp);
             }
 
             initial_requester.shutdown();
@@ -329,6 +329,26 @@ public class NodeActions {
         else 
             System.out.println("Could not find buyer node");
         current_user.concludeAuction();
+    }
+
+    public static void terminateAuction(AuctionList auction_list, User user, String auction_id){
+        Auction auction = auction_list.removeAdoptedAuction(auction_id);
+        auction_list.removeAuction(auction_id);
+
+        if(auction != null){
+            user.returnMoney(auction.getCurrentHighestAmount());
+        }
+        
+    }
+
+    public static void addAuction(AuctionList list, User user, Auction auction){
+
+        if(list.getAdoptedAuctionById(auction.getAuctionId()) != null){
+            if(!auction.getAuctionId().equals(user.getUserId()))
+                user.returnMoney(list.removeAdoptedAuction(auction.getAuctionId()).getCurrentHighestAmount());           
+        }
+
+        list.addToAuctionList(auction);
     }
 }
 
