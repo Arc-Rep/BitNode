@@ -409,6 +409,7 @@ public class App {
         }
         else{
             current_user = new User("Server");
+            userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
         }
 
         //current_user = new User();
