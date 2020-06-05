@@ -90,7 +90,7 @@ public class NodeActions {
                     sender_auction = new Auction(notification.getUserId(), item_name, max_bid, auction_id, 
                         new Bid(auction_id, max_bid, auction_buyer));
 
-                addAuction(auctions, current_user, sender_auction);
+                auctions.addToAuctionList(sender_auction);
             
             }   
             
@@ -341,18 +341,6 @@ public class NodeActions {
         
     }
 
-    public static void addAuction(AuctionList list, User user, Auction auction){
-
-        if(list.getAdoptedAuctionById(auction.getAuctionId()) != null){
-            if(!auction.getHighestBidder().equals(user.getUserId())){
-                System.out.println(auction.getHighestBidder() + "\n\n\n\n");
-                System.out.println(user.getUserId() + "\n\n\n\n");
-                user.returnMoney(list.removeAdoptedAuction(auction.getAuctionId()).getCurrentHighestAmount());  
-            }         
-        }
-
-        list.addToAuctionList(auction);
-    }
 }
 
     
