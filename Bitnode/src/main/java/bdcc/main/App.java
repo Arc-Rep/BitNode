@@ -49,7 +49,6 @@ public class App {
                 return;
             }
 
-            auction_list.addToAuctionList(updated_auction);
     
             String item = updated_auction.getItem();
             double highestBidVal = updated_auction.getHighestBid();

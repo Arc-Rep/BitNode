@@ -37,11 +37,11 @@ public class NodeActions {
                 Crypto.convertBytesToString(current_user.getPubKey()),
                 (user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getAuctionId(), node.getPubKey()),
                 (user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getItem(), node.getPubKey()),
-                (user_auction == null) ? "" : Crypto.doFullDoubleEncryption(user_auction.getValue(), node.getPubKey()),
+                (user_auction == null) ? "" : Crypto.doFullDoubleEncryption(user_auction.getCurrentHighestAmount(), node.getPubKey()),
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getAuctionId(), node.getPubKey()),
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getSeller(), node.getPubKey()),
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getItem(), node.getPubKey()),
-                (random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getValue(), node.getPubKey())
+                (random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getCurrentHighestAmount(), node.getPubKey())
             );
             proccessPingNode(response, userBucket, current_user, auctions);
         }
