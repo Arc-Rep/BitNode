@@ -249,7 +249,13 @@ public class KBucket{
         {
             for(KeyNode node: sub_list)
             {
-                nodes_list.add(node);
+                int found_similar_node = 0;
+                for(KeyNode temp_node: nodes_list){
+                    if(temp_node.getKey().equals(node.getKey()))
+                        found_similar_node = 1;
+                }
+                if(found_similar_node == 0)
+                    nodes_list.add(node);
             }
         }
         return nodes_list;
