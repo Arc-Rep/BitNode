@@ -123,11 +123,16 @@ public class AuctionList {
     }
 
     public synchronized Auction getRandomAuction(){
+        Auction random_auction;
         if(live_list.size() == 0) return null;
         Random r = new Random();
         int random_index = r.nextInt() % live_list.size();
-        if(random_index >= live_list.size()) return null;
-        return live_list.get(random_index);
+        try {
+            random_auction = live_list.get(random_index);
+        } catch (Exception e) {
+            random_auction = null;
+        }
+        return random_auction;
     }
 
     public Boolean checkLiveAuctionExists(){
