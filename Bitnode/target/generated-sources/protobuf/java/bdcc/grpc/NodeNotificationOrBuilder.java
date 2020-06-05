@@ -126,4 +126,28 @@ public interface NodeNotificationOrBuilder extends
    */
   com.google.protobuf.ByteString
       getRandomMaxBidBytes();
+
+  /**
+   * <code>string auction_buyer = 11;</code>
+   * @return The auctionBuyer.
+   */
+  java.lang.String getAuctionBuyer();
+  /**
+   * <code>string auction_buyer = 11;</code>
+   * @return The bytes for auctionBuyer.
+   */
+  com.google.protobuf.ByteString
+      getAuctionBuyerBytes();
+
+  /**
+   * <code>string random_auction_buyer = 12;</code>
+   * @return The randomAuctionBuyer.
+   */
+  java.lang.String getRandomAuctionBuyer();
+  /**
+   * <code>string random_auction_buyer = 12;</code>
+   * @return The bytes for randomAuctionBuyer.
+   */
+  com.google.protobuf.ByteString
+      getRandomAuctionBuyerBytes();
 }

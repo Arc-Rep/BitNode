@@ -77,17 +77,29 @@ public class NodeOperationsServer {
         Auction random_auction = auction_list.getRandomAuction(), user_auction = user.getUserAuction();
         NodeActions.proccessPingNode(notification, userBucket, user, auction_list);
         byte[] node_public_key = Crypto.convertStringToBytes(notification.getPublicKey());
+        String auction_buyer = "", random_auction_buyer = "";
+
         try {
+
+          if(user_auction != null)
+            if(user_auction.getHighestBidder() != "")
+              auction_buyer = Crypto.doFullStringEncryption(user_auction.getHighestBidder(), node_public_key);
+
+          if(random_auction != null)
+            if(random_auction.getHighestBidder() != "")
+              random_auction_buyer = Crypto.doFullStringEncryption(random_auction.getHighestBidder(), node_public_key);
+
           NodeNotification reply = NodeNotification.newBuilder()
                               .setUserId(userBucket.getUserId()).setUserAddress(server_address).
                               setPublicKey(Crypto.convertBytesToString(user.getPubKey())).
                               setAuctionId((user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getAuctionId(), node_public_key)).
                               setItem((user_auction == null) ? "" : Crypto.doFullStringEncryption(user_auction.getItem(), node_public_key)).
-                              setMaxBid((user_auction == null) ? "" : Crypto.doFullDoubleEncryption(user_auction.getValue(), node_public_key)).
+                              setMaxBid((user_auction == null) ? "" : Crypto.doFullDoubleEncryption(user_auction.getCurrentHighestAmount(), node_public_key)).
                               setRandomAuctionId((random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getAuctionId(), node_public_key)).
                               setRandomUserId((random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getSeller(), node_public_key)).
                               setRandomItem((random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getItem(), node_public_key)).
-                              setRandomMaxBid((random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getValue(), node_public_key)).
+                              setRandomMaxBid((random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getCurrentHighestAmount(), node_public_key)).
+                              setAuctionBuyer(auction_buyer).setRandomAuctionBuyer(random_auction_buyer).
                               build();
           responseObserver.onNext(reply);
         } catch(Exception e) {

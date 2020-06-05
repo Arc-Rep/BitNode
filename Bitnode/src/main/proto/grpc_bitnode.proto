@@ -57,6 +57,8 @@ message NodeNotification {
   string random_user_id = 8;
   string random_item = 9;
   string random_max_bid = 10;
+  string auction_buyer = 11;
+  string random_auction_buyer = 12;
 }
 
 

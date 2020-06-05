@@ -18,6 +18,7 @@ import bdcc.grpc.NodeOperationsClient;
 public class NodeActions {
     public static void pingNode(KeyNode node, int server_port,KBucket userBucket, User current_user, AuctionList auctions){
         Auction random_auction = auctions.getRandomAuction(), user_auction = current_user.getUserAuction();
+        String auction_buyer = "", random_auction_buyer = "";
         NodeNotification response = null;
     
         
@@ -26,12 +27,19 @@ public class NodeActions {
                 random_auction = null; 
             
         }
-
-        NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
-        
-
         try
         {   
+
+            if(user_auction != null)
+                if(user_auction.getHighestBidder() != "")
+                    auction_buyer = Crypto.doFullStringEncryption(user_auction.getHighestBidder(), node.getPubKey());
+
+            if(random_auction != null)
+                if(random_auction.getHighestBidder() != "")
+                    random_auction_buyer = Crypto.doFullStringEncryption(random_auction.getHighestBidder(), node.getPubKey());
+
+            NodeOperationsClient initial_requester = new NodeOperationsClient(node.getValue(), server_port);
+        
             response = initial_requester.notifyNode(
                 current_user.getUserId(), InetAddress.getLocalHost().getHostAddress(),
                 Crypto.convertBytesToString(current_user.getPubKey()),
@@ -41,9 +49,12 @@ public class NodeActions {
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getAuctionId(), node.getPubKey()),
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getSeller(), node.getPubKey()),
                 (random_auction == null) ? "" : Crypto.doFullStringEncryption(random_auction.getItem(), node.getPubKey()),
-                (random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getCurrentHighestAmount(), node.getPubKey())
+                (random_auction == null) ? "" : Crypto.doFullDoubleEncryption(random_auction.getCurrentHighestAmount(), node.getPubKey()),
+                auction_buyer, random_auction_buyer
             );
             proccessPingNode(response, userBucket, current_user, auctions);
+
+            initial_requester.shutdown();
         }
         catch(UnknownHostException e){
             //if node not found it is removed from the KBucket
@@ -53,11 +64,6 @@ public class NodeActions {
             System.out.println(e.getMessage());
         }
 
-        try{
-            initial_requester.shutdown();
-        } catch(Exception e){
-            System.out.println("Unable to shutdown client");
-        }
     }
 
     public static void proccessPingNode(NodeNotification notification, KBucket userBucket, 
@@ -67,22 +73,37 @@ public class NodeActions {
             item_name = notification.getItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getItem(), current_user.getPrivateKey()),
             random_auction_id = notification.getRandomAuctionId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionId(), current_user.getPrivateKey()),
             random_item_id = notification.getRandomItem().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomItem(), current_user.getPrivateKey()),
-            random_user = notification.getRandomUserId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomUserId(), current_user.getPrivateKey());
+            random_user = notification.getRandomUserId().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomUserId(), current_user.getPrivateKey()),
+            auction_buyer = notification.getAuctionBuyer().equals("") ? "" : Crypto.doFullStringDecryption(notification.getAuctionBuyer(), current_user.getPrivateKey()),
+            random_auction_buyer = notification.getRandomAuctionBuyer().equals("") ? "" : Crypto.doFullStringDecryption(notification.getRandomAuctionBuyer(), current_user.getPrivateKey());
+
 
             Double max_bid = notification.getMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getMaxBid(), current_user.getPrivateKey()),
                    random_max_bid = notification.getRandomMaxBid().equals("") ? 0 : Crypto.doFullDoubleDecryption(notification.getRandomMaxBid(), current_user.getPrivateKey());
             if(!auction_id.equals(""))
             {
-                Auction sender_auction = new Auction(notification.getUserId(),
-                    item_name, max_bid, auction_id);
+                Auction sender_auction;
+
+                if(auction_buyer.equals("")) 
+                    sender_auction = new Auction(notification.getUserId(), item_name, max_bid, auction_id);
+                else
+                    sender_auction = new Auction(notification.getUserId(), item_name, max_bid, auction_id, 
+                        new Bid(auction_id, max_bid, auction_buyer));
+
                 auctions.addToAuctionList(sender_auction);
             
             }   
             
             if(!random_auction_id.equals(""))
             {
-                Auction random_auction = new Auction(random_user, random_item_id,
-                                                        random_max_bid, random_auction_id);
+                Auction random_auction;
+
+                if(random_auction_buyer.equals("")) 
+                    random_auction = new Auction(random_user, random_item_id, random_max_bid, random_auction_id);
+                else
+                    random_auction = new Auction(random_user, random_item_id, random_max_bid, random_auction_id, 
+                        new Bid(random_auction_id, random_max_bid, random_auction_buyer));
+
                 auctions.addToAuctionList(random_auction);
             }
             userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
@@ -234,7 +255,7 @@ public class NodeActions {
             if(response_status.equals("OK"))
             {
                 temp.setAuctionBid(bid);
-                list.updateList(temp.getAuctionId(), temp,1);
+                list.addToAuctionList(temp);
             }
 
             initial_requester.shutdown();

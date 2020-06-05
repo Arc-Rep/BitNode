@@ -40,7 +40,8 @@ public class NodeOperationsClient {
 
     public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
                                        String auction_id, String item, String max_bid, String random_auction_id,
-                                       String random_user_id, String random_item, String random_max_bid){
+                                       String random_user_id, String random_item, String random_max_bid,
+                                       String auction_buyer, String random_auction_buyer){
       NodeNotification response = null;
       try
       {
@@ -50,6 +51,7 @@ public class NodeOperationsClient {
           setPublicKey(user_public_key).setAuctionId(auction_id).setItem(item).setMaxBid(max_bid).
           setRandomAuctionId(random_auction_id).setRandomUserId(random_user_id).
           setRandomItem(random_item).setRandomMaxBid(random_max_bid).
+          setAuctionBuyer(auction_buyer).setRandomAuctionBuyer(random_auction_buyer).
           build();
 
         response = blockingStub.notifyNode(inforequest); 
