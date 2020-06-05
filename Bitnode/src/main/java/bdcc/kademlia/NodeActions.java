@@ -336,7 +336,6 @@ public class NodeActions {
         auction_list.removeAuction(auction_id);
 
         if(auction != null){
-            System.out.println("Entered another weird place");
             user.returnMoney(auction.getCurrentHighestAmount());
         }
         
@@ -346,7 +345,8 @@ public class NodeActions {
 
         if(list.getAdoptedAuctionById(auction.getAuctionId()) != null){
             if(!auction.getHighestBidder().equals(user.getUserId())){
-                System.out.println("Entered weird place");
+                System.out.println(auction.getHighestBidder() + "\n\n\n\n");
+                System.out.println(user.getUserId() + "\n\n\n\n");
                 user.returnMoney(list.removeAdoptedAuction(auction.getAuctionId()).getCurrentHighestAmount());  
             }         
         }
