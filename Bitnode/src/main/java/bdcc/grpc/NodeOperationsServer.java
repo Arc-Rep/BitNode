@@ -19,9 +19,9 @@ public class NodeOperationsServer {
     /* The port on which the server should run */
 
     private Server server;
-    private static KBucket userBucket;
-    private static User user;
-    private static AuctionList auction_list;
+    private KBucket userBucket;
+    private User user;
+    private AuctionList auction_list;
     private String server_address;
     private String server_id;
 
