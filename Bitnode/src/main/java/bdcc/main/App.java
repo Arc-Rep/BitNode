@@ -336,8 +336,14 @@ public class App {
         int numb_nodes_found = 0;
         System.out.println("Initializing connection to bitnode system...");
         NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
+        String node_id;
         Iterator<NodeSecInfo> response;
         try{  
+            node_id = initial_requester.registerNode(InetAddress.getLocalHost().getHostAddress());
+            if(node_id.equals("")) throw new Exception("Error receiving response from Server");
+
+            current_user = new User(node_id);
+
             response = initial_requester.lookupNode(current_user.getUserId(), 
                 InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
             if(response == null) throw new Exception("Error receiving response from Server");
@@ -388,15 +394,16 @@ public class App {
         server_port = 4444;
         scanner = new Scanner(System.in);
         PropertyConfigurator.configure("log4j.properties"); // configure log4js
-        current_user = new User();
-        userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
-        auction_list = new AuctionList();
-        renew_manager = new RenewalManager(userBucket, auction_list, current_user, server_port);
 
         if(!args[0].equals("Server"))
         {
             if(!initialSetup(args[0]))  return;
         }
+
+        //current_user = new User();
+        userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
+        auction_list = new AuctionList();
+        renew_manager = new RenewalManager(userBucket, auction_list, current_user, server_port);
 
         try
         {

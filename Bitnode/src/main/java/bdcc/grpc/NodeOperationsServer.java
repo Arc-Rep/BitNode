@@ -71,6 +71,19 @@ public class NodeOperationsServer {
 
     private class NodeOperationsService extends NodeOperationsGrpc.NodeOperationsImplBase {
       
+      @Override
+      public void registerNode(NodeAddress node_address, StreamObserver<NodeInfo> responseObserver){
+        String address = node_address.getNodeAddress(), node_id = "";
+
+        if(address != ""){
+          node_id = Crypto.hashString(user.getPubKey().toString() + address + user.getPrivateKey().toString());
+        }
+
+        NodeInfo reply = NodeInfo.newBuilder().setUserId(node_id).setUserAddress(address).build();
+
+        responseObserver.onNext(reply);
+        responseObserver.onCompleted();
+      }
       
       @Override
       public void notifyNode(NodeNotification notification, StreamObserver<NodeNotification> responseObserver) {

@@ -17,15 +17,13 @@ public class User{
     private Auction user_auction;
     PublicKey pubKey;
 
-    //BASE64Encoder b64 = new BASE64Encoder();
-
-    public User(){
+    public User(String id){
         KeyPair pair = Crypto.generateRSAKeys();
         privKey = pair.getPrivate();
         pubKey = pair.getPublic();
-        user_id =       Crypto.hashString(pubKey.toString());
+        user_id =       id;
         wallet =        10;
-        user_auction = null;        
+        user_auction = null;  
     }
 
     private void add_amount(double amount_to_add){

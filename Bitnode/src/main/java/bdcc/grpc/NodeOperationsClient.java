@@ -38,6 +38,22 @@ public class NodeOperationsClient {
       channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
+    public String registerNode(String node_address){ //returns node id
+      String id = "";
+      try
+      {
+        NodeAddress address = NodeAddress.newBuilder().setNodeAddress(node_address).build();
+
+        NodeInfo response = blockingStub.registerNode(address);
+
+        id = response.getUserId();
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
+      }
+
+      return id;
+    }
+
     public NodeNotification notifyNode(String user_id, String user_address, String user_public_key,
                                        String auction_id, String item, String max_bid, String random_auction_id,
                                        String random_user_id, String random_item, String random_max_bid,

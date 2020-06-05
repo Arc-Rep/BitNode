@@ -7,6 +7,7 @@ option java_package = "bdcc.grpc";
 option java_outer_classname = "NodeOperationsProto";
 
 service NodeOperations {
+    rpc registerNode (NodeAddress) returns (NodeInfo) {}
     // Notify node with node info + random auction info
     rpc notifyNode (NodeNotification) returns (NodeNotification) {}
     // Find Node
@@ -25,7 +26,10 @@ service NodeOperations {
     rpc resultsAuction(ResultsAuction) returns (TransactionInfo) {}
 
 }
-  
+
+message NodeAddress {
+  string node_address = 1;
+}
 
  // Return with addresses and node info
 message NodeInfo {
