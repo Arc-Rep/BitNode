@@ -72,10 +72,9 @@ public class App {
             System.out.println("1 - Make a bid");
             System.out.println("2 - Back out");         
             System.out.println("Any other input will refresh the current auction");
-            int option = scanner.nextInt();
-            scanner.skip("\\R");
+            String option = scanner.nextLine();
 
-            if(option == 1){
+            if(option.equals("1")){
                 System.out.println("How much do you want to bid? (You cannot go back on this action!)");
                 double bid_val = scanner.nextDouble();
                 scanner.skip("\\R");
@@ -110,7 +109,7 @@ public class App {
                     }
                 }
             }
-            else if(option == 2){
+            else if(option.equals("2")){
                 //leave the auction
                 String conf = "y";
                 

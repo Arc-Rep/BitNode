@@ -56,6 +56,7 @@ public class User{
     }
 
     public Boolean returnMoney(double to_return){
+        System.out.println("Returning money");
         if(to_return > vaulted_amount) return false;
         wallet += to_return;
         vaulted_amount -= to_return;
