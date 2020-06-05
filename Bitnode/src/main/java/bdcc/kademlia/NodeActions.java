@@ -104,7 +104,7 @@ public class NodeActions {
                     random_auction = new Auction(random_user, random_item_id, random_max_bid, random_auction_id, 
                         new Bid(random_auction_id, random_max_bid, random_auction_buyer));
 
-                addAuction(auctions, current_user, random_auction);
+                auctions.addToAuctionList(random_auction);
             }
             userBucket.addNode(notification.getUserId(), notification.getUserAddress(),Crypto.convertStringToBytes(notification.getPublicKey()));
         } catch (Exception e) {
