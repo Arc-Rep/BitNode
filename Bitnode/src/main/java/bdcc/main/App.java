@@ -345,6 +345,7 @@ public class App {
             current_user = new User(node_id);
         } catch (Exception e) {
             System.out.println("Error fetching ID from server");
+            return false;
         }
 
         try{
