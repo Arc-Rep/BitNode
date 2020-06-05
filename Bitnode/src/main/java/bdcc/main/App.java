@@ -335,15 +335,20 @@ public class App {
     private static boolean initialSetup(String address){
         int numb_nodes_found = 0;
         System.out.println("Initializing connection to bitnode system...");
-        NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
         String node_id;
         Iterator<NodeSecInfo> response;
         try{  
+            NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
             node_id = initial_requester.registerNode(InetAddress.getLocalHost().getHostAddress());
             if(node_id.equals("")) throw new Exception("Error receiving response from Server");
 
             current_user = new User(node_id);
+        } catch (Exception e) {
+            System.out.println("Error fetching ID from server");
+        }
 
+        try{
+            NodeOperationsClient initial_requester = new NodeOperationsClient(address, server_port);
             response = initial_requester.lookupNode(current_user.getUserId(), 
                 InetAddress.getLocalHost().getHostAddress(), Crypto.convertBytesToString(current_user.getPubKey()));
             if(response == null) throw new Exception("Error receiving response from Server");
