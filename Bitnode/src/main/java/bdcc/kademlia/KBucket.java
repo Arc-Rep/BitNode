@@ -2,7 +2,12 @@ package bdcc.kademlia;
 
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import bdcc.chain.Crypto;
+
 import java.util.Random;
+
+
 
 public class KBucket{
     LinkedList<CopyOnWriteArrayList<KeyNode>> kbucket = new LinkedList<CopyOnWriteArrayList<KeyNode>>();
@@ -238,4 +243,27 @@ public class KBucket{
         return alpha;
     }
 
+    public LinkedList<KeyNode> getNodesList(){
+        LinkedList<KeyNode> nodes_list = new LinkedList<KeyNode>();
+        for(CopyOnWriteArrayList<KeyNode> sub_list: kbucket)
+        {
+            for(KeyNode node: sub_list)
+            {
+                nodes_list.add(node);
+            }
+        }
+        return nodes_list;
+    }
+
+    public void printNodes(LinkedList<KeyNode> nodes_list){
+        int index = 1;
+        for(KeyNode node: nodes_list)
+        {
+            System.out.println("=============================================");
+            System.out.println("Node Index " + index + ":");
+            System.out.println("User ID: " + Crypto.toHex(node.getKey()));
+            System.out.println("=============================================");
+            index++;
+        }
+    }
 }

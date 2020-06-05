@@ -341,6 +341,37 @@ public class NodeActions {
         
     }
 
+    public static void performTransaction(KeyNode target_node, User current_user, double amount, int port){
+
+
+        try{
+            NodeOperationsClient transaction_requester = new NodeOperationsClient(
+                target_node.getValue(), port);
+            
+            NodeResponse response =
+                transaction_requester.makeTransaction(
+                    Crypto.doFullStringEncryption(current_user.getUserId(), target_node.getPubKey()),
+                    Crypto.doFullDoubleEncryption(amount, target_node.getPubKey()), 
+                    Crypto.doFullStringEncryption(target_node.getKey(), target_node.getPubKey()));
+            if(response == null){
+                System.out.println("Error during transaction. Cancelling...");
+                return;
+            }
+
+            if(!response.getStatus().equals("Ok")){
+                System.out.println("Error on receiving side. Cancelling...");
+                return;
+            }
+
+            current_user.directPayment(amount);
+            System.out.println("User " + Crypto.toHex(target_node.getKey()) + "received your payment");
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Error during connection to user. Cancelling...");
+        }
+    }
+
 }
+
 
     

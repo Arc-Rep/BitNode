@@ -2,6 +2,7 @@ package bdcc.main;
 
 import java.util.Scanner;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import io.grpc.stub.StreamObserver;
 import org.apache.log4j.PropertyConfigurator;
@@ -153,15 +154,34 @@ public class App {
 
 
     private static void makeTranseferMenu() { 
-        System.out.println("Select the user that you want to transfer the money to: ");
-        String targetUser = scanner.nextLine();
+        LinkedList<KeyNode> nodes_list = userBucket.getNodesList();
+        if(nodes_list.size() == 0)
+        {
+            System.out.println("No connected nodes. You should restart your client.");
+            return;
+        }
+        userBucket.printNodes(nodes_list);
+        System.out.println("Select the node that you want to transfer the money to: ");
+        int targetUser = scanner.nextInt() - 1;
+        scanner.skip("\\R");
+        if(targetUser >= nodes_list.size())
+        {
+            System.out.println("Nonexistant node. Returning...");
+            return;
+        }
+        KeyNode selected_node = nodes_list.get(targetUser);
         System.out.println("Select the amount you want to transfer: ");
-        int amount = scanner.nextInt();
-        System.out.println("Transfer " + amount + " to "+ targetUser + "? [y/n]");
+        double amount = scanner.nextDouble();
+        if(amount > current_user.getWallet()){
+            System.out.println("Not enough money");
+            return;
+        }
+        scanner.skip("\\R");
+        System.out.println("Transfer " + amount + " to "+ Crypto.toHex(selected_node.getKey()) + "? [y/n]");
         String conf = scanner.nextLine();
         if(conf.equals("y")){
             System.out.println("Processing transfer...");
-            //process transfer
+            NodeActions.performTransaction(selected_node, current_user, amount, server_port);
         }
         else{
             System.out.println("Transfer canceled");
@@ -199,10 +219,7 @@ public class App {
                 System.out.println("Joining auction room...");
                 KeyNode seller_node = NodeActions.NodeCompleteSearch(selected_auction.getSeller(),
                                         server_port, userBucket, current_user);
-                if(seller_node != null){
-                    System.out.println(seller_node.getKey() + "\n\n\n\n\n");
-                    System.out.println(selected_auction.getSeller());
-                }
+
                 if(seller_node.getKey().equals(selected_auction.getSeller()))
                     auctionMenu(selected_auction, seller_node);
                 else

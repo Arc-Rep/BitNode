@@ -55,8 +55,14 @@ public class User{
         return true;
     }
 
+    public Boolean directPayment(double to_pay){
+        if(to_pay > wallet) return false;
+        wallet -= to_pay;
+        return true;
+    }
+    
+
     public Boolean returnMoney(double to_return){
-        System.out.println("Returning money");
         if(to_return > vaulted_amount) return false;
         wallet += to_return;
         vaulted_amount -= to_return;

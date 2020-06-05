@@ -90,19 +90,20 @@ public class NodeOperationsClient {
       return response;
     }  
 
-    public void makeTransaction(String buyer_id, double amount, String seller_id){
+    public NodeResponse makeTransaction(String buyer_id, String amount, String seller_id){
+      NodeResponse response = null;
       try
       {
         TransactionInfo inforequest = TransactionInfo.newBuilder()
           .setBuyerId(buyer_id)
-          .setAmount(Double.toString(amount))
+          .setAmount(amount)
           .setSellerId(seller_id)
           .build();
-        NodeResponse response = blockingStub.makeTransaction(inforequest);
+        response = blockingStub.makeTransaction(inforequest);
       } catch (RuntimeException e) {
         logger.log(Level.WARNING, "RPC failed", e);
-        return;
       }
+      return response;
     }
 
     public InfoAuction infoAuction(String user_id, String user_address, String user_public_key){

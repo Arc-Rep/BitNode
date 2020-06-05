@@ -142,7 +142,6 @@ public class AuctionList {
 
     public Boolean enterAdoptedAuction(Auction auction, User user){
         if(user.getWallet() < auction.getCurrentHighestAmount()){ 
-            System.out.println("It was false");
             return false;
         }
         user.vaultAmount(auction.getCurrentHighestAmount());
