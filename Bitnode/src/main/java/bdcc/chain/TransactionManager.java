@@ -7,7 +7,7 @@ public class TransactionManager {
     
     public TransactionManager(){
 
-        halted_transaction = new LinkedList<TransactionRegistry>();
+        halted_transactions = new LinkedList<TransactionRegistry>();
 
     }
     public Transaction addOrCheckTransaction(Transaction transaction, String submitter){    //returns completed transactions
