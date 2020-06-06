@@ -7,11 +7,12 @@ public class TransactionManager {
     
     public TransactionManager(){
 
-        new LinkedList<TransactionRegistry>();
+        halted_transaction = new LinkedList<TransactionRegistry>();
 
     }
     public Transaction addOrCheckTransaction(Transaction transaction, String submitter){    //returns completed transactions
         //first verify transactionexists
+
         for(TransactionRegistry temp: halted_transactions){
             if(temp.checkIfCorresponding(transaction, submitter))
             {
