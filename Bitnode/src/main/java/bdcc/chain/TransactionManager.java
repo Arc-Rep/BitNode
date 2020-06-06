@@ -17,6 +17,12 @@ public class TransactionManager {
             if(temp.checkIfCorresponding(transaction, submitter))
             {
                 halted_transactions.remove(temp);
+                if(temp.getTransaction().getBuyer().equals("Server"))
+                    System.out.println("Successfully transferred " + temp.getTransaction().getAmount() 
+                        + " to user " + Crypto.toHex(temp.getTransaction().getSeller()));
+                else if(temp.getTransaction().getSeller().equals("Server"))
+                System.out.println("Successfully received " + temp.getTransaction().getAmount() 
+                    + " from user " + Crypto.toHex(temp.getTransaction().getBuyer()));
                 return temp.getTransaction();
             }
         }

@@ -201,7 +201,7 @@ public class NodeOperationsServer {
           if(receiver_id.equals(user.getUserId())){
             replyBuilder = NodeResponse.newBuilder().setStatus("Ok");
             success = true;
-            System.out.println("Received transaction from " + Crypto.toHex(payer_id) + " with value " + amount);
+            System.out.println("Received transaction request from " + Crypto.toHex(payer_id) + " with value " + amount);
           }
           else replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
         } catch (Exception e) {
