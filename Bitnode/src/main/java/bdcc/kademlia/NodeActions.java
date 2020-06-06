@@ -271,7 +271,7 @@ public class NodeActions {
         
     }
 
-    public static void completeAuction(User current_user, KBucket user_bucket , int port){
+    public static void completeAuction(User current_user, KBucket user_bucket, TransactionManager t_manager, int port){
         int max_tries = 3;
         Auction my_auction = current_user.getUserAuction();
 
@@ -308,9 +308,8 @@ public class NodeActions {
                     Double transaction_amount = Crypto.doFullDoubleDecryption(return_pay.getAmount(), current_user.getPrivateKey());
 
                     if(current_user.proccessAuctionConclusion(transaction_seller, transaction_buyer, transaction_amount)){
-                        //update blockchain
                         registerTransaction(new Transaction(transaction_buyer, transaction_seller, transaction_amount), 
-                            user_bucket, current_user, port);
+                            user_bucket, current_user, t_manager,port);
                         System.out.println("Transaction registration was sent to master node. Awaiting confirmation...");
                     }
                     else {
