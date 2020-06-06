@@ -152,7 +152,6 @@ public class NodeActions {
                     if(numb_nodes_found == 0)       //first node is always the own server
                     {
                         userBucket.addNode(info.getUserId(), info.getUserAddress(), Crypto.convertStringToBytes(info.getPublicKey()));       //update server
-                        System.out.println("Server " + Crypto.toHex(info.getUserId()) + " found with address " + info.getUserAddress());
                     }
                     else
                     {
@@ -343,7 +342,7 @@ public class NodeActions {
         
     }
 
-    public static void performTransaction(KeyNode target_node, KBucket user_bucket, User current_user, double amount, int port){
+    public static void performTransaction(KeyNode target_node, KBucket user_bucket, User current_user, TransactionManager t_manager, double amount, int port){
 
         try{
             NodeOperationsClient transaction_requester = new NodeOperationsClient(
@@ -366,7 +365,7 @@ public class NodeActions {
                 return;
             }
             registerTransaction(new Transaction(current_user.getUserId(), target_node.getKey(), amount), 
-                user_bucket, current_user, port);
+                user_bucket, current_user, t_manager, port);
             //current_user.directPayment(amount);
 
         } catch(Exception e){
@@ -375,38 +374,43 @@ public class NodeActions {
         }
     }
 
-    public static Boolean registerTransaction(Transaction transaction, KBucket userBucket, User user, int port){
+    public static Boolean registerTransaction(Transaction transaction, KBucket userBucket, User user, TransactionManager t_manager, int port){
 
-        KeyNode server_node = NodeCompleteSearch("Server", port, userBucket, user);
+        if(user.getUserId().equals("Server"))
+            t_manager.addOrCheckTransaction(transaction, user.getUserId());
 
-        if(server_node == null || !server_node.getKey().equals("Server")){
-            System.out.println("Couldn't find master node to register transaction");
-            return false;
-        }
+        else{
+            KeyNode server_node = NodeCompleteSearch("Server", port, userBucket, user);
 
-        try{
-            NodeOperationsClient transaction_submitter = new NodeOperationsClient(
-                server_node.getValue(), port);
-            
-            NodeResponse response =
-                transaction_submitter.notifyTransaction(
-                    Crypto.doFullStringEncryption(transaction.getBuyer(), server_node.getPubKey()),
-                    Crypto.doFullStringEncryption(transaction.getSeller(), server_node.getPubKey()),
-                    Crypto.doFullDoubleEncryption(transaction.getAmount(), server_node.getPubKey()), 
-                    Crypto.doFullStringEncryption(user.getUserId(), server_node.getPubKey()));
-
-            transaction_submitter.shutdown();
-
-            if(!response.getStatus().equals("Ok")){
-                System.out.println("Error during transaction validation. Cancelling...");
+            if(server_node == null || !server_node.getKey().equals("Server")){
+                System.out.println("Couldn't find master node to register transaction");
                 return false;
             }
 
-            
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Error during connection to user. Cancelling...");
-            return false;
+            try{
+                NodeOperationsClient transaction_submitter = new NodeOperationsClient(
+                    server_node.getValue(), port);
+                
+                NodeResponse response =
+                    transaction_submitter.notifyTransaction(
+                        Crypto.doFullStringEncryption(transaction.getBuyer(), server_node.getPubKey()),
+                        Crypto.doFullStringEncryption(transaction.getSeller(), server_node.getPubKey()),
+                        Crypto.doFullDoubleEncryption(transaction.getAmount(), server_node.getPubKey()), 
+                        Crypto.doFullStringEncryption(user.getUserId(), server_node.getPubKey()));
+
+                transaction_submitter.shutdown();
+
+                if(!response.getStatus().equals("Ok")){
+                    System.out.println("Error during transaction validation. Cancelling...");
+                    return false;
+                }
+
+                
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("Error during connection to user. Cancelling...");
+                return false;
+            }
         }
         System.out.println("Transaction successfully registered. Wait for other party to complete");
         return true;

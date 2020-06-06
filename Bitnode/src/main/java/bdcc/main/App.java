@@ -182,7 +182,7 @@ public class App {
         String conf = scanner.nextLine();
         if(conf.equals("y")){
             System.out.println("Processing transfer...");
-            NodeActions.performTransaction(selected_node, userBucket,current_user, amount, server_port);
+            NodeActions.performTransaction(selected_node, userBucket,current_user,transaction_manager, amount, server_port);
         }
         else{
             System.out.println("Transfer canceled");
