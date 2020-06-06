@@ -67,11 +67,8 @@ public class User{
         return true;
     } 
 
-    public Boolean withdrawAmount(double amount_to_withdraw){
-        if(amount_to_withdraw > vaulted_amount)
-            return false;
+    public void withdrawAmount(double amount_to_withdraw){
         vaulted_amount-=amount_to_withdraw;
-        return true;
     }
 
     public void receiveMoneyTransfer(double amount_to_receive){

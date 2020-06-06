@@ -33,6 +33,7 @@ public class App {
     private static AuctionList auction_list;
     private static Thread thread_renewal;
     private static ServerSocket server_socket;
+    private static TransactionManager transaction_manager;
     public  static KBucket userBucket;
 
 
@@ -181,7 +182,7 @@ public class App {
         String conf = scanner.nextLine();
         if(conf.equals("y")){
             System.out.println("Processing transfer...");
-            NodeActions.performTransaction(selected_node, current_user, amount, server_port);
+            NodeActions.performTransaction(selected_node, userBucket,current_user, amount, server_port);
         }
         else{
             System.out.println("Transfer canceled");
@@ -406,11 +407,13 @@ public class App {
 
         if(!args[0].equals("Server"))
         {
+            transaction_manager = null;
             if(!initialSetup(args[0]))  return;
         }
         else{
             current_user = new User("Server");
             userBucket = new KBucket(current_user.getUserId(), 160); //SHA-1 key size
+            transaction_manager = new TransactionManager();
         }
 
         //current_user = new User();
@@ -425,7 +428,8 @@ public class App {
                     Crypto.convertBytesToString(Crypto.encrypt(modified_public_key, Crypto.convertStringToBytes("This is a string")))))));*/
             block_chain = NodeBlockChain.getChainManager();
             user_server = new NodeOperationsServer(server_port, current_user.getUserId(),
-                            InetAddress.getLocalHost().getHostAddress(), userBucket, current_user, auction_list);
+                            InetAddress.getLocalHost().getHostAddress(), userBucket, current_user, auction_list, 
+                            transaction_manager, block_chain);
             
             thread_renewal = new Thread(renew_manager);
             thread_renewal.start();

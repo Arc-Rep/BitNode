@@ -306,6 +306,68 @@ public final class NodeOperationsGrpc {
     return getResultsAuctionMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.TransactionSubmission,
+      bdcc.grpc.NodeResponse> getNotifyTransactionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "notifyTransaction",
+      requestType = bdcc.grpc.TransactionSubmission.class,
+      responseType = bdcc.grpc.NodeResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.TransactionSubmission,
+      bdcc.grpc.NodeResponse> getNotifyTransactionMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.TransactionSubmission, bdcc.grpc.NodeResponse> getNotifyTransactionMethod;
+    if ((getNotifyTransactionMethod = NodeOperationsGrpc.getNotifyTransactionMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getNotifyTransactionMethod = NodeOperationsGrpc.getNotifyTransactionMethod) == null) {
+          NodeOperationsGrpc.getNotifyTransactionMethod = getNotifyTransactionMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.TransactionSubmission, bdcc.grpc.NodeResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "notifyTransaction"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.TransactionSubmission.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("notifyTransaction"))
+              .build();
+        }
+      }
+    }
+    return getNotifyTransactionMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<bdcc.grpc.TransactionInfo,
+      bdcc.grpc.NodeResponse> getAddTransactionToBlockChainMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "addTransactionToBlockChain",
+      requestType = bdcc.grpc.TransactionInfo.class,
+      responseType = bdcc.grpc.NodeResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<bdcc.grpc.TransactionInfo,
+      bdcc.grpc.NodeResponse> getAddTransactionToBlockChainMethod() {
+    io.grpc.MethodDescriptor<bdcc.grpc.TransactionInfo, bdcc.grpc.NodeResponse> getAddTransactionToBlockChainMethod;
+    if ((getAddTransactionToBlockChainMethod = NodeOperationsGrpc.getAddTransactionToBlockChainMethod) == null) {
+      synchronized (NodeOperationsGrpc.class) {
+        if ((getAddTransactionToBlockChainMethod = NodeOperationsGrpc.getAddTransactionToBlockChainMethod) == null) {
+          NodeOperationsGrpc.getAddTransactionToBlockChainMethod = getAddTransactionToBlockChainMethod =
+              io.grpc.MethodDescriptor.<bdcc.grpc.TransactionInfo, bdcc.grpc.NodeResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "addTransactionToBlockChain"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.TransactionInfo.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  bdcc.grpc.NodeResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new NodeOperationsMethodDescriptorSupplier("addTransactionToBlockChain"))
+              .build();
+        }
+      }
+    }
+    return getAddTransactionToBlockChainMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -429,6 +491,20 @@ public final class NodeOperationsGrpc {
       asyncUnimplementedUnaryCall(getResultsAuctionMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void notifyTransaction(bdcc.grpc.TransactionSubmission request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getNotifyTransactionMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void addTransactionToBlockChain(bdcc.grpc.TransactionInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getAddTransactionToBlockChainMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -494,6 +570,20 @@ public final class NodeOperationsGrpc {
                 bdcc.grpc.ResultsAuction,
                 bdcc.grpc.TransactionInfo>(
                   this, METHODID_RESULTS_AUCTION)))
+          .addMethod(
+            getNotifyTransactionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                bdcc.grpc.TransactionSubmission,
+                bdcc.grpc.NodeResponse>(
+                  this, METHODID_NOTIFY_TRANSACTION)))
+          .addMethod(
+            getAddTransactionToBlockChainMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                bdcc.grpc.TransactionInfo,
+                bdcc.grpc.NodeResponse>(
+                  this, METHODID_ADD_TRANSACTION_TO_BLOCK_CHAIN)))
           .build();
     }
   }
@@ -595,6 +685,22 @@ public final class NodeOperationsGrpc {
       asyncUnaryCall(
           getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void notifyTransaction(bdcc.grpc.TransactionSubmission request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getNotifyTransactionMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void addTransactionToBlockChain(bdcc.grpc.TransactionInfo request,
+        io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getAddTransactionToBlockChainMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -688,6 +794,20 @@ public final class NodeOperationsGrpc {
       return blockingUnaryCall(
           getChannel(), getResultsAuctionMethod(), getCallOptions(), request);
     }
+
+    /**
+     */
+    public bdcc.grpc.NodeResponse notifyTransaction(bdcc.grpc.TransactionSubmission request) {
+      return blockingUnaryCall(
+          getChannel(), getNotifyTransactionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public bdcc.grpc.NodeResponse addTransactionToBlockChain(bdcc.grpc.TransactionInfo request) {
+      return blockingUnaryCall(
+          getChannel(), getAddTransactionToBlockChainMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -754,6 +874,22 @@ public final class NodeOperationsGrpc {
       return futureUnaryCall(
           getChannel().newCall(getResultsAuctionMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> notifyTransaction(
+        bdcc.grpc.TransactionSubmission request) {
+      return futureUnaryCall(
+          getChannel().newCall(getNotifyTransactionMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<bdcc.grpc.NodeResponse> addTransactionToBlockChain(
+        bdcc.grpc.TransactionInfo request) {
+      return futureUnaryCall(
+          getChannel().newCall(getAddTransactionToBlockChainMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_REGISTER_NODE = 0;
@@ -765,6 +901,8 @@ public final class NodeOperationsGrpc {
   private static final int METHODID_INFO_AUCTION = 6;
   private static final int METHODID_MAKE_BID = 7;
   private static final int METHODID_RESULTS_AUCTION = 8;
+  private static final int METHODID_NOTIFY_TRANSACTION = 9;
+  private static final int METHODID_ADD_TRANSACTION_TO_BLOCK_CHAIN = 10;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -818,6 +956,14 @@ public final class NodeOperationsGrpc {
         case METHODID_RESULTS_AUCTION:
           serviceImpl.resultsAuction((bdcc.grpc.ResultsAuction) request,
               (io.grpc.stub.StreamObserver<bdcc.grpc.TransactionInfo>) responseObserver);
+          break;
+        case METHODID_NOTIFY_TRANSACTION:
+          serviceImpl.notifyTransaction((bdcc.grpc.TransactionSubmission) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
+          break;
+        case METHODID_ADD_TRANSACTION_TO_BLOCK_CHAIN:
+          serviceImpl.addTransactionToBlockChain((bdcc.grpc.TransactionInfo) request,
+              (io.grpc.stub.StreamObserver<bdcc.grpc.NodeResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -889,6 +1035,8 @@ public final class NodeOperationsGrpc {
               .addMethod(getInfoAuctionMethod())
               .addMethod(getMakeBidMethod())
               .addMethod(getResultsAuctionMethod())
+              .addMethod(getNotifyTransactionMethod())
+              .addMethod(getAddTransactionToBlockChainMethod())
               .build();
         }
       }

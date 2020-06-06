@@ -1,9 +1,11 @@
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsFileDescriptorSupplier.class
+bdcc\grpc\TransactionSubmission$1.class
 bdcc\grpc\NodeResponse$Builder.class
 bdcc\grpc\NodeSecInfoOrBuilder.class
 bdcc\grpc\TransactionInfo$1.class
 bdcc\grpc\NodeAddress.class
 bdcc\grpc\NodeNotificationOrBuilder.class
+bdcc\grpc\TransactionSubmission$Builder.class
 bdcc\grpc\NodeOperationsGrpc$1.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsMethodDescriptorSupplier.class
 bdcc\grpc\NodeOperationsGrpc$MethodHandlers.class
@@ -31,11 +33,13 @@ bdcc\grpc\NodeResponse.class
 bdcc\grpc\TransactionInfoOrBuilder.class
 bdcc\grpc\InfoAuction$1.class
 bdcc\grpc\NodeSecInfo$Builder.class
+bdcc\grpc\TransactionSubmission.class
 bdcc\grpc\NodeResponseOrBuilder.class
 bdcc\grpc\MakeBid.class
 bdcc\grpc\MakeBid$1.class
 bdcc\grpc\NodeAddressOrBuilder.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsBlockingStub.class
+bdcc\grpc\TransactionSubmissionOrBuilder.class
 bdcc\grpc\NodeOperationsGrpc$NodeOperationsStub.class
 bdcc\grpc\NodeNotification.class
 bdcc\grpc\NodeNotification$Builder.class

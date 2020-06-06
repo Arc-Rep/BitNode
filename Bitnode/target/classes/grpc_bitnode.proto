@@ -25,6 +25,10 @@ service NodeOperations {
 
     rpc resultsAuction(ResultsAuction) returns (TransactionInfo) {}
 
+    rpc notifyTransaction(TransactionSubmission) returns (NodeResponse) {}
+
+    rpc addTransactionToBlockChain(TransactionInfo) returns (NodeResponse) {}
+
 }
 
 message NodeAddress {
@@ -48,6 +52,13 @@ message TransactionInfo {
   string buyer_id = 1;
   string amount = 2;
   string seller_id = 3;
+}
+
+message TransactionSubmission {
+  string buyer_id = 1;
+  string amount = 2;
+  string seller_id = 3;
+  string origin_id = 4;
 }
 
 message NodeNotification {

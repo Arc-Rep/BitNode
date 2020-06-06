@@ -47,7 +47,7 @@ public class NodeOperationsClient {
         NodeInfo response = blockingStub.registerNode(address);
 
         id = response.getUserId();
-        System.out.println(id);
+
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
@@ -164,6 +164,30 @@ public class NodeOperationsClient {
           .setSellerPublicKey(seller_public_key)
           .build();
         response = blockingStub.resultsAuction(resutltsauctionrequest);
+      } catch(RuntimeException e){
+        logger.log(Level.WARNING, "RCP failed", e);
+      }
+      return response;
+    }
+
+    public NodeResponse notifyTransaction(String buyer, String seller, String amount, String origin_id){
+      NodeResponse response = null;
+      try{
+        TransactionSubmission info = TransactionSubmission.newBuilder().
+          setBuyerId(buyer).setSellerId(seller).setAmount(amount).setOriginId(origin_id).build();
+        response = blockingStub.notifyTransaction(info);
+      } catch(RuntimeException e){
+        logger.log(Level.WARNING, "RCP failed", e);
+      }
+      return response;
+    }
+
+    public NodeResponse addTransactionToBlockChain(String buyer, String seller, String amount){
+      NodeResponse response = null;
+      try{
+        TransactionInfo info = TransactionInfo.newBuilder().
+          setBuyerId(buyer).setSellerId(seller).setAmount(amount).build();
+        response = blockingStub.addTransactionToBlockChain(info);
       } catch(RuntimeException e){
         logger.log(Level.WARNING, "RCP failed", e);
       }

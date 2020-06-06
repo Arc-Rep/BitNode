@@ -34,19 +34,18 @@ public class NodeBlockChain{
     }
 
     public Boolean verifyValidity(){
-        Boolean check = false;
-        NodeBlock current = new NodeBlock();
-        current = head_block;
-        while(current != null){
-            if(current.getHash() == current.generateHash()){
-                check = true;
-            }
-            else{
+        NodeBlock current = head_block;
+        
+        if(current.getCurrentTransactions() == 0)
+            return true;
+
+        while(current.has_previous){
+            if(!current.getPrevHash().equals(current.previous.generateHash()))
                 return false;
-            }
-            current = current.getNext();
+            
+            current = current.getPrevious();
         }
-        return check;
+        return current.getHash().equals(current.generateHash());
     }
 
     
@@ -60,7 +59,8 @@ public class NodeBlockChain{
         else
         {
             final NodeBlock new_head = new NodeBlock();
-            new_head.setNext(head_block);
+            new_head.setPrevious(head_block);
+            new_head.setPrevHash(this.head_block.generateHash());
             new_head.transactions.add(newTransaction);
             new_head.hash = new_head.generateHash();
             this.head_block = new_head;
@@ -70,8 +70,9 @@ public class NodeBlockChain{
     public class NodeBlock{
         private final int nonce;
         private String hash;
-        private NodeBlock next;
-        private Boolean hasNext;
+        private String prev_hash;
+        private NodeBlock previous;
+        private Boolean has_previous;
         private final int maxTransactions;
         private int currentTransactions;
         private final LinkedList<Transaction> transactions;
@@ -80,7 +81,9 @@ public class NodeBlockChain{
         public NodeBlock(){
             nonce = generateNonce();
             transactions = new LinkedList<Transaction>();
-            hasNext = false;
+            has_previous = false;
+            prev_hash = null;
+            hash = null;
             maxTransactions = 10;
             currentTransactions = 0;
         }
@@ -93,17 +96,21 @@ public class NodeBlockChain{
             return this.nonce;
         }
 
-        public NodeBlock getNext(){
-            return this.next;
+        public NodeBlock getPrevious(){
+            return this.previous;
         }
 
-        public void setNext(final NodeBlock block){
-            this.next = block;
-            this.hasNext = true;
+        public void setPrevious(final NodeBlock block){
+            this.previous = block;
+            this.has_previous = true;
         }
 
         public void setHash(String h){
             this.hash = h;
+        }
+
+        public void setPrevHash(String h){
+            this.prev_hash = h;
         }
 
         public int getMaxTransactions(){
@@ -116,6 +123,10 @@ public class NodeBlockChain{
 
         public String getHash(){
             return this.hash;
+        }
+
+        public String getPrevHash(){
+            return this.prev_hash;
         }
 
         public String generateHash(){

@@ -310,7 +310,9 @@ public class NodeActions {
 
                     if(current_user.proccessAuctionConclusion(transaction_seller, transaction_buyer, transaction_amount)){
                         //update blockchain
-                        System.out.println("Transaction successfull");
+                        registerTransaction(new Transaction(transaction_buyer, transaction_seller, transaction_amount), 
+                            user_bucket, current_user, port);
+                        System.out.println("Transaction registration was sent to master node. Awaiting confirmation...");
                     }
                     else {
                         System.out.println("Wrong information came from buyer. Fraud possibility. Cancelling transaction");
@@ -341,8 +343,7 @@ public class NodeActions {
         
     }
 
-    public static void performTransaction(KeyNode target_node, User current_user, double amount, int port){
-
+    public static void performTransaction(KeyNode target_node, KBucket user_bucket, User current_user, double amount, int port){
 
         try{
             NodeOperationsClient transaction_requester = new NodeOperationsClient(
@@ -354,7 +355,7 @@ public class NodeActions {
                     Crypto.doFullDoubleEncryption(amount, target_node.getPubKey()), 
                     Crypto.doFullStringEncryption(target_node.getKey(), target_node.getPubKey()));
             transaction_requester.shutdown();
-            
+
             if(response == null){
                 System.out.println("Error during transaction. Cancelling...");
                 return;
@@ -364,16 +365,78 @@ public class NodeActions {
                 System.out.println("Error on receiving side. Cancelling...");
                 return;
             }
+            registerTransaction(new Transaction(current_user.getUserId(), target_node.getKey(), amount), 
+                user_bucket, current_user, port);
+            //current_user.directPayment(amount);
 
-            current_user.directPayment(amount);
-            System.out.println("User " + Crypto.toHex(target_node.getKey()) + "received your payment");
         } catch(Exception e){
             System.out.println(e.getMessage());
             System.out.println("Error during connection to user. Cancelling...");
         }
     }
 
+    public static Boolean registerTransaction(Transaction transaction, KBucket userBucket, User user, int port){
 
+        KeyNode server_node = NodeCompleteSearch("Server", port, userBucket, user);
+
+        if(server_node == null || !server_node.getKey().equals("Server")){
+            System.out.println("Couldn't find master node to register transaction");
+            return false;
+        }
+
+        try{
+            NodeOperationsClient transaction_submitter = new NodeOperationsClient(
+                server_node.getValue(), port);
+            
+            NodeResponse response =
+                transaction_submitter.notifyTransaction(
+                    Crypto.doFullStringEncryption(transaction.getBuyer(), server_node.getPubKey()),
+                    Crypto.doFullStringEncryption(transaction.getSeller(), server_node.getPubKey()),
+                    Crypto.doFullDoubleEncryption(transaction.getAmount(), server_node.getPubKey()), 
+                    Crypto.doFullStringEncryption(user.getUserId(), server_node.getPubKey()));
+
+            transaction_submitter.shutdown();
+
+            if(!response.getStatus().equals("Ok")){
+                System.out.println("Error during transaction validation. Cancelling...");
+                return false;
+            }
+
+            
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Error during connection to user. Cancelling...");
+            return false;
+        }
+        System.out.println("Transaction successfully registered. Wait for other party to complete");
+        return true;
+    }
+    
+
+    public static void spreadTransactionAccrossNetwork(Transaction to_spread,KBucket node_bucket){
+        LinkedList<KeyNode> nodes_list = node_bucket.getNodesList();
+        
+        for(KeyNode node: nodes_list)
+        {
+            try{
+                NodeOperationsClient transaction_submitter = new NodeOperationsClient(
+                    node.getValue(), 4444);
+
+                String buyer_id = Crypto.doFullStringEncryption(to_spread.getBuyer(), node.getPubKey()),
+                    seller_id = Crypto.doFullStringEncryption(to_spread.getBuyer(), node.getPubKey()),
+                    amount = Crypto.doFullDoubleEncryption(to_spread.getAmount(), node.getPubKey());
+                
+                NodeResponse response = transaction_submitter.addTransactionToBlockChain(buyer_id, seller_id, amount);
+                
+                if(!response.getStatus().equals("Ok")) System.out.println("Something went wrong with one node");
+                
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        
+
+    }
 }
 
 

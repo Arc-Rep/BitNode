@@ -24,14 +24,20 @@ public class NodeOperationsServer {
     private AuctionList auction_list;
     private String server_address;
     private String server_id;
+    private TransactionManager transaction_manager;
+    private NodeBlockChain block_chain;
 
     public NodeOperationsServer(int port, String user_id, String address, 
-                                KBucket user_bucket, User this_user, AuctionList list) throws Exception {
+                                KBucket user_bucket, User this_user, AuctionList list, 
+                                TransactionManager t_manager, NodeBlockChain chain) throws Exception {
       this.server_id = user_id;
       this.server_address = address;
       this.userBucket = user_bucket;
       this.auction_list = list;
       this.user = this_user;
+      this.transaction_manager = t_manager;
+      this.block_chain = chain;
+
       server = ServerBuilder.forPort(port)
           .addService(new NodeOperationsService())
           .build()
@@ -186,9 +192,10 @@ public class NodeOperationsServer {
       public void makeTransaction(TransactionInfo transactionInfo, StreamObserver<NodeResponse> responseObserver) {
         Boolean success = false;
         NodeResponse.Builder replyBuilder;
+        String payer_id = "", receiver_id = "";
         Double amount = -1.0;
         try{
-          String payer_id =  Crypto.doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey()),
+          payer_id =  Crypto.doFullStringDecryption(transactionInfo.getBuyerId(), user.getPrivateKey());
           receiver_id = Crypto.doFullStringDecryption(transactionInfo.getSellerId(), user.getPrivateKey());
           amount = Crypto.doFullDoubleDecryption(transactionInfo.getAmount(), user.getPrivateKey());
           if(receiver_id.equals(user.getUserId())){
@@ -202,16 +209,12 @@ public class NodeOperationsServer {
           replyBuilder = NodeResponse.newBuilder().setStatus("Denied");
         }
         
-
-
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
 
         if(success) 
-        {
-          //por em blockchain
-          user.receiveMoneyTransfer(amount);
-        }
+          NodeActions.registerTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, 4444);
+        
       }
 
       @Override
@@ -259,13 +262,16 @@ public class NodeOperationsServer {
 
       @Override
       public void resultsAuction(ResultsAuction resultsAuction, StreamObserver<TransactionInfo> responseObserver){
+        Boolean success = false;
+        String seller_id = null;
+        Double amount;
         try {
-          String seller_id = resultsAuction.getSellerId(), seller_address = resultsAuction.getSellerAddress(),
+          String seller_address = resultsAuction.getSellerAddress(),
           buyer_id = Crypto.doFullStringDecryption(resultsAuction.getBuyerId(), user.getPrivateKey()),
           auction_id = Crypto.doFullStringDecryption(resultsAuction.getAuctionId(), user.getPrivateKey());
-          Double amount = Crypto.doFullDoubleDecryption(resultsAuction.getValue(), user.getPrivateKey());
+          amount = Crypto.doFullDoubleDecryption(resultsAuction.getValue(), user.getPrivateKey());
           byte[] seller_public_key = Crypto.convertStringToBytes(resultsAuction.getSellerPublicKey());
-          Boolean success = false;
+          seller_id = resultsAuction.getSellerId();
 
           Auction saved_auction = auction_list.getAuctionById(auction_id);
 
@@ -279,12 +285,10 @@ public class NodeOperationsServer {
           }
           else if(!saved_auction.getSeller().equals(seller_id) || (saved_auction.getCurrentHighestAmount() != amount))
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
-          else if(!user.withdrawAmount(amount))
-            System.out.println("Auction cancelled. For some reason you have no money");
           else{
             success = true;
             System.out.println("Auction " + auction_id + " has ended! You are the winner with a bid of " + 
-              Double.toString(amount) +"!");
+              Double.toString(amount) +"! Awaiting transaction confirmation from server.");
           }
           try{
             TransactionInfo.Builder replyBuilder = TransactionInfo.newBuilder()
@@ -300,10 +304,86 @@ public class NodeOperationsServer {
           responseObserver.onCompleted();
           userBucket.addNode(seller_id, seller_address, seller_public_key);
           auction_list.updateList(auction_id, saved_auction, 2);
+
+          if(success){
+            Transaction transaction = new Transaction(user.getUserId(),seller_id,amount);
+            NodeActions.registerTransaction(transaction, userBucket, user, 4444);
+          }
         } catch (Exception e) {
           System.out.println("Auction results server error: " + e.getMessage());
         }
       }
+
+      @Override
+      public void notifyTransaction(TransactionSubmission transaction, StreamObserver<NodeResponse> responseObserver){
+        Boolean success = false;
+        NodeResponse response;
+        Transaction to_register = null;
+        String origin_id = "";
+        try{
+          String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
+          seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
+          origin_id = Crypto.doFullStringDecryption(transaction.getOriginId(), user.getPrivateKey());
+          Double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
+
+          
+          if((!user.getUserId().equals("Server")) && (origin_id.equals(buyer_id) || origin_id.equals(seller_id)))
+            response = NodeResponse.newBuilder().setStatus("Rejected").build();
+          else
+          {
+            to_register = new Transaction(buyer_id, seller_id, amount);
+            response = NodeResponse.newBuilder().setStatus("Ok").build();
+            success = true;
+          }
+
+        } catch (Exception e){
+          response = NodeResponse.newBuilder().setStatus("Rejected").build();
+        }
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
+        if(success)
+        {
+          Transaction verified_transaction = transaction_manager.addOrCheckTransaction(to_register, origin_id);
+          
+          if(verified_transaction != null){
+            block_chain.addTransaction(verified_transaction);
+            NodeActions.spreadTransactionAccrossNetwork(verified_transaction, userBucket);
+          }
+  
+        }
+      }
+
+      @Override
+      public void addTransactionToBlockChain(TransactionInfo transaction, StreamObserver<NodeResponse> responseObserver){
+        NodeResponse response = null;
+
+        try{
+          String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
+          seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
+          Double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
+
+          Transaction to_register = new Transaction(buyer_id, seller_id, amount);
+
+          block_chain.addTransaction(to_register);
+          if(buyer_id.equals(user.getUserId())){ 
+            System.out.println("Successfully transferred " + amount + " to user " + Crypto.toHex(seller_id));
+            user.withdrawAmount(amount);
+          }
+          else if(seller_id.equals(user.getUserId())){ 
+            System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
+            user.receiveMoneyTransfer(amount);
+          }
+
+          response = NodeResponse.newBuilder().setStatus("Ok").build();
+        } catch (Exception e) {
+          response = NodeResponse.newBuilder().setStatus("ERROR").build();
+        }
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+      }
     }
-  }
+
+}
   

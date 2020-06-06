@@ -26,7 +26,7 @@ import javax.crypto.Cipher;
 public class Crypto {
 
     public static String hashBlock(NodeBlock nb, int Nonce) {
-        //final String password = "ListenToMyStory";
+
         LinkedList<Transaction> transactions = nb.getTransactions();
         StringBuffer sb = new StringBuffer("");
 
