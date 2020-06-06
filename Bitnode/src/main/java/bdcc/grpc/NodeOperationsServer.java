@@ -307,7 +307,10 @@ public class NodeOperationsServer {
 
           if(success){
             Transaction transaction = new Transaction(user.getUserId(),seller_id,amount);
-            NodeActions.registerTransaction(transaction, userBucket, user, 4444);
+            if(!user.getUserId().equals("Server"))
+              NodeActions.registerTransaction(transaction, userBucket, user, 4444);
+            else
+              transaction_manager.addOrCheckTransaction(transaction, user.getUserId());
           }
         } catch (Exception e) {
           System.out.println("Auction results server error: " + e.getMessage());
