@@ -212,10 +212,8 @@ public class NodeOperationsServer {
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
 
-        if(success && !user.getUserId().equals("Server")) 
+        if(success) 
           NodeActions.registerTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, 4444);
-        else if (success && user.getUserId().equals("Server"))
-          NodeActions.registerMasterTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, payer_id,4444);
         
       }
 
@@ -289,7 +287,6 @@ public class NodeOperationsServer {
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
           else{
             success = true;
-            auction_list.removeAuctionsOfNode(seller_id, user);
             System.out.println("Auction " + Crypto.toHex(auction_id) + " has ended! You are the winner with a bid of " + 
               Double.toString(amount) +"! Awaiting transaction confirmation from server.");
           }
@@ -310,9 +307,7 @@ public class NodeOperationsServer {
 
           if(success){
             Transaction transaction = new Transaction(user.getUserId(),seller_id,amount);
-            if(user.getUserId().equals("Server"))
-              NodeActions.registerMasterTransaction(transaction, userBucket, user, transaction_manager, user.getUserId(),4444);
-            else NodeActions.registerTransaction(transaction, userBucket, user, transaction_manager,4444);
+            NodeActions.registerTransaction(transaction, userBucket, user, transaction_manager,4444);
           }
         } catch (Exception e) {
           System.out.println("Auction results server error: " + e.getMessage());
@@ -325,7 +320,6 @@ public class NodeOperationsServer {
         NodeResponse response;
         Transaction to_register = null;
         String origin_id = "";
-        System.out.println("Entering");
         try{
           String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
           seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
@@ -339,7 +333,6 @@ public class NodeOperationsServer {
           {
             to_register = new Transaction(buyer_id, seller_id, amount);
             response = NodeResponse.newBuilder().setStatus("Ok").build();
-            System.out.println("Got here");
             success = true;
           }
 
@@ -350,8 +343,28 @@ public class NodeOperationsServer {
         responseObserver.onCompleted();
 
         if(success)
-          NodeActions.registerMasterTransaction(to_register, userBucket, user, transaction_manager, user.getUserId(), 4444);
-
+        {
+          Transaction verified_transaction = transaction_manager.addOrCheckTransaction(to_register, origin_id);
+          
+          if(verified_transaction != null){
+            block_chain.addTransaction(verified_transaction);
+            if(verified_transaction.getBuyer().equals("Server")){
+              System.out.println("Successfully transferred " + verified_transaction.getAmount() 
+                + " to user " + Crypto.toHex(verified_transaction.getSeller()));
+                user.directPayment(verified_transaction.getAmount());
+                System.out.println("You now have" + user.getWallet());
+              }
+              else if(verified_transaction.getSeller().equals("Server")){
+                System.out.println("Successfully received " + verified_transaction.getAmount() 
+                + " from user " + Crypto.toHex(verified_transaction.getBuyer()));
+                user.receiveMoneyTransfer(verified_transaction.getAmount());
+                System.out.println("You now have" + user.getWallet());
+              }
+            
+            NodeActions.spreadTransactionAccrossNetwork(verified_transaction, userBucket);
+          }
+  
+        }
       }
 
       @Override
@@ -361,25 +374,22 @@ public class NodeOperationsServer {
         try{
           String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
           seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
-          double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
+          Double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
 
           Transaction to_register = new Transaction(buyer_id, seller_id, amount);
 
           block_chain.addTransaction(to_register);
           if(buyer_id.equals(user.getUserId())){ 
             System.out.println("Successfully transferred " + amount + " to user " + Crypto.toHex(seller_id));
-            user.directPayment(amount);
-            System.out.println("You now have" + user.getWallet());
+            user.withdrawAmount(amount);
           }
           else if(seller_id.equals(user.getUserId())){ 
             System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
             user.receiveMoneyTransfer(amount);
-            System.out.println("You now have" + user.getWallet());
           }
 
           response = NodeResponse.newBuilder().setStatus("Ok").build();
         } catch (Exception e) {
-          System.out.println("Why am I here");
           response = NodeResponse.newBuilder().setStatus("ERROR").build();
         }
 

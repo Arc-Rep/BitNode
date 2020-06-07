@@ -375,34 +375,26 @@ public class NodeActions {
         }
     }
 
-    public static Boolean registerMasterTransaction(Transaction transaction, KBucket userBucket, User user, TransactionManager t_manager, String origin_id, int port){
-        if(!user.getUserId().equals("Server")) return false;
-
-        Transaction completed_transaction = t_manager.addOrCheckTransaction(transaction, user.getUserId());
-        if(completed_transaction != null)
-        {
-            if(completed_transaction.getBuyer().equals("Server")){
-                System.out.println("Successfully transferred " + completed_transaction.getAmount() 
-                    + " to user " + Crypto.toHex(completed_transaction.getSeller()));
-                user.directPayment(completed_transaction.getAmount());
-                System.out.println("You now have" + user.getWallet());
-            }
-            else if(completed_transaction.getSeller().equals("Server"))
-                System.out.println("Successfully received " + completed_transaction.getAmount() 
-                + " from user " + Crypto.toHex(completed_transaction.getBuyer()));
-                user.receiveMoneyTransfer(completed_transaction.getAmount());
-                System.out.println("You now have" + user.getWallet());
-
-            //immediately proceed to spread transaction
-            spreadTransactionAccrossNetwork(completed_transaction, userBucket);
-        }
-        else System.out.println("Transaction successfully registered. Waiting for other party to complete");
-        return true;
-    }
-
     public static Boolean registerTransaction(Transaction transaction, KBucket userBucket, User user, TransactionManager t_manager, int port){
 
-        if(user.getUserId().equals("Server")) return false;
+        if(user.getUserId().equals("Server")){
+            Transaction completed_transaction = t_manager.addOrCheckTransaction(transaction, user.getUserId());
+            if(completed_transaction != null)
+            {
+                if(completed_transaction.getBuyer().equals("Server")){
+                    System.out.println("Successfully transferred " + completed_transaction.getAmount() 
+                        + " to user " + Crypto.toHex(completed_transaction.getSeller()));
+                    user.directPayment(completed_transaction.getAmount());
+                    System.out.println("You now have" + user.getWallet());
+                }
+                else if(completed_transaction.getSeller().equals("Server")){
+                    System.out.println("Successfully received " + completed_transaction.getAmount() 
+                    + " from user " + Crypto.toHex(completed_transaction.getBuyer()));
+                    user.receiveMoneyTransfer(completed_transaction.getAmount());
+                    System.out.println("You now have" + user.getWallet());
+                }
+            }
+        }
 
         else{
             KeyNode server_node = NodeCompleteSearch("Server", port, userBucket, user);
@@ -436,9 +428,8 @@ public class NodeActions {
                 System.out.println("Error during connection to user. Cancelling...");
                 return false;
             }
-            System.out.println("Transaction successfully registered. Waiting for other party to complete");
         }
-        
+        System.out.println("Transaction successfully registered. Waiting for other party to complete");
         return true;
     }
     
