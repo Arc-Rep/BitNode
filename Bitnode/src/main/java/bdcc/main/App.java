@@ -81,7 +81,7 @@ public class App {
                 double bid_val = scanner.nextDouble();
                 scanner.skip("\\R");
                 if(bid_val > current_user.getWallet()){
-                    System.out.println("You do not have the necessary funds to make this bid...");
+                    System.out.println("You do not have the necessary funds to make this bid..." + current_user.getWallet());
                 }
                 else{
                     int result = NodeActions.makeBid(updated_auction.getAuctionId(), userBucket, bid_val, current_user, server_port, auction_list);
