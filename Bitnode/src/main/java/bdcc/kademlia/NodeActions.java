@@ -363,6 +363,8 @@ public class NodeActions {
                 System.out.println("Error on receiving side. Cancelling...");
                 return;
             }
+            else System.out.println("Successfully made transferrence request of " + amount + " to " + Crypto.toHex(target_node.getKey()));
+            
             registerTransaction(new Transaction(current_user.getUserId(), target_node.getKey(), amount), 
                 user_bucket, current_user, t_manager, port);
             //current_user.directPayment(amount);
@@ -432,6 +434,8 @@ public class NodeActions {
                 NodeResponse response = transaction_submitter.addTransactionToBlockChain(buyer_id, seller_id, amount);
                 
                 if(!response.getStatus().equals("Ok")) System.out.println("Something went wrong with one node");
+
+                transaction_submitter.shutdown();
                 
             } catch(Exception e){
                 System.out.println(e.getMessage());
