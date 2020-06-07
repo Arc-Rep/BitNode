@@ -352,13 +352,13 @@ public class NodeOperationsServer {
               System.out.println("Successfully transferred " + verified_transaction.getAmount() 
                 + " to user " + Crypto.toHex(verified_transaction.getSeller()));
                 user.directPayment(verified_transaction.getAmount());
-                System.out.println("You now have" + user.getWallet());
+                System.out.println("You now have " + user.getWallet());
               }
               else if(verified_transaction.getSeller().equals("Server")){
                 System.out.println("Successfully received " + verified_transaction.getAmount() 
                 + " from user " + Crypto.toHex(verified_transaction.getBuyer()));
                 user.receiveMoneyTransfer(verified_transaction.getAmount());
-                System.out.println("You now have" + user.getWallet());
+                System.out.println("You now have " + user.getWallet());
               }
             
             NodeActions.spreadTransactionAccrossNetwork(verified_transaction, userBucket);

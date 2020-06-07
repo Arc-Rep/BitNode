@@ -57,8 +57,7 @@ public class NodeActions {
             initial_requester.shutdown();
         }
         catch(UnknownHostException e){
-            //if node not found it is removed from the KBucket
-            userBucket.removeNode(node);
+
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -385,13 +384,13 @@ public class NodeActions {
                     System.out.println("Successfully transferred " + completed_transaction.getAmount() 
                         + " to user " + Crypto.toHex(completed_transaction.getSeller()));
                     user.directPayment(completed_transaction.getAmount());
-                    System.out.println("You now have" + user.getWallet());
+                    System.out.println("You now have " + user.getWallet());
                 }
                 else if(completed_transaction.getSeller().equals("Server")){
                     System.out.println("Successfully received " + completed_transaction.getAmount() 
                     + " from user " + Crypto.toHex(completed_transaction.getBuyer()));
                     user.receiveMoneyTransfer(completed_transaction.getAmount());
-                    System.out.println("You now have" + user.getWallet());
+                    System.out.println("You now have " + user.getWallet());
                 }
             }
         }
