@@ -370,10 +370,12 @@ public class NodeOperationsServer {
           if(buyer_id.equals(user.getUserId())){ 
             System.out.println("Successfully transferred " + amount + " to user " + Crypto.toHex(seller_id));
             user.directPayment(amount);
+            System.out.println("You now have" + user.getWallet());
           }
           else if(seller_id.equals(user.getUserId())){ 
             System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
             user.receiveMoneyTransfer(amount);
+            System.out.println("You now have" + user.getWallet());
           }
 
           response = NodeResponse.newBuilder().setStatus("Ok").build();
