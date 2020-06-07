@@ -428,7 +428,7 @@ public class NodeActions {
                     node.getValue(), 4444);
 
                 String buyer_id = Crypto.doFullStringEncryption(to_spread.getBuyer(), node.getPubKey()),
-                    seller_id = Crypto.doFullStringEncryption(to_spread.getBuyer(), node.getPubKey()),
+                    seller_id = Crypto.doFullStringEncryption(to_spread.getSeller(), node.getPubKey()),
                     amount = Crypto.doFullDoubleEncryption(to_spread.getAmount(), node.getPubKey());
                 
                 NodeResponse response = transaction_submitter.addTransactionToBlockChain(buyer_id, seller_id, amount);

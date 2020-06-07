@@ -349,7 +349,6 @@ public class NodeOperationsServer {
           if(verified_transaction != null){
             block_chain.addTransaction(verified_transaction);
             NodeActions.spreadTransactionAccrossNetwork(verified_transaction, userBucket);
-            System.out.println("Transaction was spread over network");
           }
   
         }
