@@ -380,6 +380,7 @@ public class NodeOperationsServer {
 
           response = NodeResponse.newBuilder().setStatus("Ok").build();
         } catch (Exception e) {
+          System.out.println(e.getMessage());
           response = NodeResponse.newBuilder().setStatus("ERROR").build();
         }
 
