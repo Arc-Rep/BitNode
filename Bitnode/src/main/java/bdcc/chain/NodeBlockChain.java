@@ -50,6 +50,12 @@ public class NodeBlockChain{
 
     
     public void addTransaction(final Transaction newTransaction){
+        //first check if the one who pays has enough money
+        if(checkUserWallet(newTransaction.getBuyer()) < 0){
+            System.out.println("Cancelled a transaction since payer doesn't have enough money");
+            return;
+        }
+
         if(head_block.getCurrentTransactions() < head_block.getMaxTransactions())
         {
             head_block.transactions.add(newTransaction);
@@ -65,6 +71,22 @@ public class NodeBlockChain{
             new_head.hash = new_head.generateHash();
             this.head_block = new_head;
         }
+    }
+
+    private double checkUserWallet(String user_id){
+        double wallet = 10.0;
+        NodeBlock block = head_block;
+        while(block != null){
+            for(Transaction temp: block.transactions){
+                if(user_id.equals(temp.getBuyer()))
+                    wallet -= temp.getAmount();
+                else if(user_id.equals(temp.getSeller()))
+                    wallet += temp.getAmount();
+            }
+            block = block.previous;
+        }
+        System.out.println("User has " + wallet + " coins");
+        return wallet;
     }
 
     public void printChainContents(){

@@ -11,10 +11,8 @@ public class TransactionManager {
 
     }
     public Transaction addOrCheckTransaction(Transaction transaction, String submitter){    //returns completed transactions
-        //first verify buyer can buy
-        checkUserWallet(transaction.getBuyer());
         
-        //then verify transactionexists
+        //first verify transactionexists
         for(TransactionRegistry temp: halted_transactions){
             if(temp.checkIfCorresponding(transaction, submitter))
             {
@@ -32,18 +30,6 @@ public class TransactionManager {
         halted_transactions.add(new TransactionRegistry(transaction, submitter));
         return null;
 
-    }
-
-    private double checkUserWallet(String user_id){
-        double wallet = 10.0;
-        for(TransactionRegistry temp: halted_transactions){
-            if(user_id.equals(temp.getTransaction().getBuyer()))
-                wallet -= temp.getTransaction().getAmount();
-            else if(user_id.equals(temp.getTransaction().getSeller()))
-                wallet += temp.getTransaction().getAmount();
-        }
-        System.out.println("User has " + wallet + " coins");
-        return wallet;
     }
 
     public class TransactionRegistry{
