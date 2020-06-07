@@ -212,9 +212,10 @@ public class NodeOperationsServer {
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
 
-        if(success) 
+        if(success && !user.getUserId().equals("Server")) 
           NodeActions.registerTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, 4444);
-
+        else if (success && user.getUserId().equals("Server"))
+          NodeActions.registerMasterTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, user.getUserId(),4444);
         
       }
 
@@ -309,7 +310,9 @@ public class NodeOperationsServer {
 
           if(success){
             Transaction transaction = new Transaction(user.getUserId(),seller_id,amount);
-            NodeActions.registerTransaction(transaction, userBucket, user, transaction_manager,4444);
+            if(user.getUserId().equals("Server"))
+              NodeActions.registerMasterTransaction(transaction, userBucket, user, transaction_manager, user.getUserId(),4444);
+            else NodeActions.registerTransaction(transaction, userBucket, user, transaction_manager,4444);
           }
         } catch (Exception e) {
           System.out.println("Auction results server error: " + e.getMessage());
@@ -347,7 +350,7 @@ public class NodeOperationsServer {
         responseObserver.onCompleted();
 
         if(success)
-          NodeActions.registerTransaction(to_register, userBucket, user, transaction_manager, 4444);
+          NodeActions.registerMasterTransaction(to_register, userBucket, user, transaction_manager, user.getUserId(), 4444);
 
       }
 
