@@ -85,7 +85,6 @@ public class NodeBlockChain{
             }
             block = block.previous;
         }
-        System.out.println("User has " + wallet + " coins");
         return wallet;
     }
 
@@ -168,13 +167,13 @@ public class NodeBlockChain{
         public void printBlockContents(){
             System.out.println("Block has " + currentTransactions + " out of " + maxTransactions + " transactions:");
             int index = 1;
-            for(Transaction current_transiction: transactions)
+            for(Transaction current_transaction: transactions)
             {
                 System.out.println("=============================================");
                 System.out.println("Transaction #" + index + ":");
-                System.out.println("Spender ID:" + Crypto.toHex(current_transiction.getBuyer()));
-                System.out.println("Receiver ID:" + Crypto.toHex(current_transiction.getSeller()));
-                System.out.println("Amount:" + current_transiction.getBuyer());
+                System.out.println("Spender ID: " + Crypto.toHex(current_transaction.getBuyer()));
+                System.out.println("Receiver ID: " + Crypto.toHex(current_transaction.getSeller()));
+                System.out.println("Amount: " + current_transaction.getAmount());
                 System.out.println("=============================================");
                 index++;
             }
