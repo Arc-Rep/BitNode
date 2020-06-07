@@ -20,7 +20,7 @@ public class NodeOperationsServer {
 
     private Server server;
     private KBucket userBucket;
-    private User user;
+    private static User user;
     private AuctionList auction_list;
     private String server_address;
     private String server_id;
@@ -287,6 +287,7 @@ public class NodeOperationsServer {
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
           else{
             success = true;
+            auction_list.removeAuctionsOfNode(seller_id, user);
             System.out.println("Auction " + Crypto.toHex(auction_id) + " has ended! You are the winner with a bid of " + 
               Double.toString(amount) +"! Awaiting transaction confirmation from server.");
           }
@@ -368,7 +369,7 @@ public class NodeOperationsServer {
           block_chain.addTransaction(to_register);
           if(buyer_id.equals(user.getUserId())){ 
             System.out.println("Successfully transferred " + amount + " to user " + Crypto.toHex(seller_id));
-            user.withdrawAmount(amount);
+            user.directPayment(amount);
           }
           else if(seller_id.equals(user.getUserId())){ 
             System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
