@@ -212,7 +212,7 @@ public class NodeOperationsServer {
         responseObserver.onNext(replyBuilder.build());
         responseObserver.onCompleted();
 
-        if(success) 
+        if(success && !user.getUserId().equals("Server")) 
           NodeActions.registerTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, 4444);
         
       }

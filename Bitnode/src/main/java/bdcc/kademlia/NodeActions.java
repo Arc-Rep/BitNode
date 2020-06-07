@@ -431,8 +431,9 @@ public class NodeActions {
                 System.out.println("Error during connection to user. Cancelling...");
                 return false;
             }
+            System.out.println("Transaction successfully registered. Waiting for other party to complete");
         }
-        System.out.println("Transaction successfully registered. Waiting for other party to complete");
+        
         return true;
     }
     
