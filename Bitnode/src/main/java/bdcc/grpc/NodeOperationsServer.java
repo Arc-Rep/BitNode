@@ -20,7 +20,7 @@ public class NodeOperationsServer {
 
     private Server server;
     private KBucket userBucket;
-    private static User user;
+    private User user;
     private AuctionList auction_list;
     private String server_address;
     private String server_id;
