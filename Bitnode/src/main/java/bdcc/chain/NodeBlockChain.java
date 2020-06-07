@@ -67,6 +67,16 @@ public class NodeBlockChain{
         }
     }
 
+    public void printChainContents(){
+        NodeBlock current_block = head_block;
+
+        for(int index = 1; current_block != null; index++){
+            System.out.println("Printing contents of Block #" + index + ":");
+            current_block.printBlockContents();
+            current_block = current_block.previous;
+        }
+    }
+
     public class NodeBlock{
         private final int nonce;
         private String hash;
@@ -131,6 +141,21 @@ public class NodeBlockChain{
 
         public String generateHash(){
             return Crypto.hashBlock(this, this.getNonce());
+        }
+
+        public void printBlockContents(){
+            System.out.println("Block has " + currentTransactions + " out of " + maxTransactions);
+            int index = 1;
+            for(Transaction current_transiction: transactions)
+            {
+                System.out.println("=============================================");
+                System.out.println("Transaction #" + index + ":");
+                System.out.println("Spender ID:" + current_transiction.getBuyer());
+                System.out.println("Receiver ID:" + current_transiction.getSeller());
+                System.out.println("Amount:" + current_transiction.getBuyer());
+                System.out.println("=============================================");
+                index++;
+            }
         }
 
     }

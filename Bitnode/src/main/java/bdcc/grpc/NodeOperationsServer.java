@@ -287,7 +287,7 @@ public class NodeOperationsServer {
             System.out.println("Participating auction has errors discrepancies in data. Possible fraud. Cancelling auction...");
           else{
             success = true;
-            System.out.println("Auction " + auction_id + " has ended! You are the winner with a bid of " + 
+            System.out.println("Auction " + Crypto.toHex(auction_id) + " has ended! You are the winner with a bid of " + 
               Double.toString(amount) +"! Awaiting transaction confirmation from server.");
           }
           try{

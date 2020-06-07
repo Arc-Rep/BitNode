@@ -88,8 +88,7 @@ public class App {
                     switch (result) {
                         case 1:
                             System.out.println("The bid attempt was accepted!");
-                            //updated_auction.setAuctionBid(new Bid(updated_auction.getAuctionId(), bid_val, ));
-                            //auction_list.enterAdoptedAuction(updated_auction, current_user);
+
                             if(noBids){
                                 noBids = false;
                             }
@@ -243,6 +242,7 @@ public class App {
         Boolean result = block_chain.verifyValidity();
         if (result) {
             System.out.println("Integrity check successful! The chain has NOT been tampered with.\n");
+            block_chain.printChainContents();
         } else {
             System.out.println("Integrity check failed... Please check the contents of the chain...\n");
         }
