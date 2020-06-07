@@ -362,7 +362,7 @@ public class NodeOperationsServer {
         try{
           String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
           seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
-          Double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
+          double amount = Crypto.doFullDoubleDecryption(transaction.getAmount(), user.getPrivateKey());
 
           Transaction to_register = new Transaction(buyer_id, seller_id, amount);
 
@@ -374,13 +374,14 @@ public class NodeOperationsServer {
           }
           else if(seller_id.equals(user.getUserId())){ 
             System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
+            System.out.println("You had" + user.getWallet());
             user.receiveMoneyTransfer(amount);
             System.out.println("You now have" + user.getWallet());
           }
 
           response = NodeResponse.newBuilder().setStatus("Ok").build();
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+          System.out.println("Why am I here");
           response = NodeResponse.newBuilder().setStatus("ERROR").build();
         }
 
