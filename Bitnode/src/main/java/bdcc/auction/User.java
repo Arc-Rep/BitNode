@@ -26,10 +26,6 @@ public class User{
         user_auction = null;  
     }
 
-    private void add_amount(double amount_to_add){
-        wallet+= amount_to_add;
-    }
-
     public String getUserId(){
         return user_id;
     }
@@ -72,7 +68,6 @@ public class User{
     }
 
     public void receiveMoneyTransfer(double amount_to_receive){
-        System.out.println("Received " + amount_to_receive);
         wallet += amount_to_receive;
     }
 
@@ -92,10 +87,9 @@ public class User{
     public Boolean proccessAuctionConclusion(String seller, String buyer, Double amount){
         Boolean success = false;
         if(buyer.equals(user_auction.getHighestBidder()) && seller.equals(getUserId()) 
-            && amount == user_auction.getHighestBid()){
-            add_amount(amount);
+            && amount == user_auction.getHighestBid())
             success = true;
-        }
+        
         return success;
     }
 
