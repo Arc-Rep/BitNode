@@ -275,9 +275,6 @@ public class NodeOperationsServer {
 
           Auction saved_auction = auction_list.getAuctionById(auction_id);
 
-          System.out.println("Amount " + amount);
-          System.out.println("Wallet " + user.getWallet() + " and " + user.getVaulted());
-
           if(saved_auction == null)
             System.out.println("Received result of unknown auction");
           else if(!(saved_auction.getHighestBidder().equals(buyer_id) && buyer_id.equals(user.getUserId()))){

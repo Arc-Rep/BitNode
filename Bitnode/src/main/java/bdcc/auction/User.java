@@ -72,6 +72,7 @@ public class User{
     }
 
     public void receiveMoneyTransfer(double amount_to_receive){
+        System.out.println("Received " + amount_to_receive);
         wallet += amount_to_receive;
     }
 

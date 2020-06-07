@@ -11,7 +11,7 @@ public class TransactionManager {
 
     }
     public Transaction addOrCheckTransaction(Transaction transaction, String submitter){    //returns completed transactions
-        System.out.println("Transaction has amount of:" + transaction.getAmount());
+
         //first verify transactionexists
         for(TransactionRegistry temp: halted_transactions){
             if(temp.checkIfCorresponding(transaction, submitter))
