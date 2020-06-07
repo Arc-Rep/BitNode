@@ -144,14 +144,14 @@ public class NodeBlockChain{
         }
 
         public void printBlockContents(){
-            System.out.println("Block has " + currentTransactions + " out of " + maxTransactions);
+            System.out.println("Block has " + currentTransactions + " out of " + maxTransactions + " transactions:");
             int index = 1;
             for(Transaction current_transiction: transactions)
             {
                 System.out.println("=============================================");
                 System.out.println("Transaction #" + index + ":");
-                System.out.println("Spender ID:" + current_transiction.getBuyer());
-                System.out.println("Receiver ID:" + current_transiction.getSeller());
+                System.out.println("Spender ID:" + Crypto.toHex(current_transiction.getBuyer()));
+                System.out.println("Receiver ID:" + Crypto.toHex(current_transiction.getSeller()));
                 System.out.println("Amount:" + current_transiction.getBuyer());
                 System.out.println("=============================================");
                 index++;
