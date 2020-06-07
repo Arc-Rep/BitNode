@@ -377,8 +377,23 @@ public class NodeActions {
 
     public static Boolean registerTransaction(Transaction transaction, KBucket userBucket, User user, TransactionManager t_manager, int port){
 
-        if(user.getUserId().equals("Server"))
-            t_manager.addOrCheckTransaction(transaction, user.getUserId());
+        if(user.getUserId().equals("Server")){
+            Transaction completed_transaction = t_manager.addOrCheckTransaction(transaction, user.getUserId());
+            if(completed_transaction != null)
+            {
+                if(completed_transaction.getBuyer().equals("Server")){
+                    System.out.println("Successfully transferred " + completed_transaction.getAmount() 
+                        + " to user " + Crypto.toHex(completed_transaction.getSeller()));
+                    user.directPayment(completed_transaction.getAmount());
+                    System.out.println("You now have" + user.getWallet());
+                }
+                else if(completed_transaction.getSeller().equals("Server"))
+                    System.out.println("Successfully received " + completed_transaction.getAmount() 
+                    + " from user " + Crypto.toHex(completed_transaction.getBuyer()));
+                    user.receiveMoneyTransfer(completed_transaction.getAmount());
+                    System.out.println("You now have" + user.getWallet());
+            }
+        }
 
         else{
             KeyNode server_node = NodeCompleteSearch("Server", port, userBucket, user);

@@ -374,7 +374,6 @@ public class NodeOperationsServer {
           }
           else if(seller_id.equals(user.getUserId())){ 
             System.out.println("Successfully received " + amount + " from user " + Crypto.toHex(buyer_id));
-            System.out.println("You had" + user.getWallet());
             user.receiveMoneyTransfer(amount);
             System.out.println("You now have" + user.getWallet());
           }
