@@ -413,7 +413,7 @@ public class NodeActions {
                 return false;
             }
         }
-        System.out.println("Transaction successfully registered. Wait for other party to complete");
+        System.out.println("Transaction successfully registered. Waiting for other party to complete");
         return true;
     }
     
