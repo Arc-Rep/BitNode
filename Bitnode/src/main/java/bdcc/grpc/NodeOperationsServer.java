@@ -321,6 +321,7 @@ public class NodeOperationsServer {
         NodeResponse response;
         Transaction to_register = null;
         String origin_id = "";
+        System.out.println("Entering");
         try{
           String buyer_id = Crypto.doFullStringDecryption(transaction.getBuyerId(), user.getPrivateKey()),
           seller_id = Crypto.doFullStringDecryption(transaction.getSellerId(), user.getPrivateKey());
@@ -334,6 +335,7 @@ public class NodeOperationsServer {
           {
             to_register = new Transaction(buyer_id, seller_id, amount);
             response = NodeResponse.newBuilder().setStatus("Ok").build();
+            System.out.println("Got here");
             success = true;
           }
 
