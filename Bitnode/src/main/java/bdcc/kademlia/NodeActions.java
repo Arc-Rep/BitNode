@@ -392,7 +392,11 @@ public class NodeActions {
                     + " from user " + Crypto.toHex(completed_transaction.getBuyer()));
                     user.receiveMoneyTransfer(completed_transaction.getAmount());
                     System.out.println("You now have" + user.getWallet());
+
+                //immediately proceed to spread transaction
+                spreadTransactionAccrossNetwork(completed_transaction, userBucket);
             }
+            
         }
 
         else{

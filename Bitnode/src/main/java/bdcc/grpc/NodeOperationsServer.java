@@ -344,15 +344,8 @@ public class NodeOperationsServer {
         responseObserver.onCompleted();
 
         if(success)
-        {
-          Transaction verified_transaction = transaction_manager.addOrCheckTransaction(to_register, origin_id);
-          
-          if(verified_transaction != null){
-            block_chain.addTransaction(verified_transaction);
-            NodeActions.spreadTransactionAccrossNetwork(verified_transaction, userBucket);
-          }
-  
-        }
+          NodeActions.registerTransaction(to_register, userBucket, user, transaction_manager, 4444);
+
       }
 
       @Override
