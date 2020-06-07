@@ -215,7 +215,7 @@ public class NodeOperationsServer {
         if(success && !user.getUserId().equals("Server")) 
           NodeActions.registerTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, 4444);
         else if (success && user.getUserId().equals("Server"))
-          NodeActions.registerMasterTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, user.getUserId(),4444);
+          NodeActions.registerMasterTransaction(new Transaction(payer_id, receiver_id, amount), userBucket, user, transaction_manager, payer_id,4444);
         
       }
 
